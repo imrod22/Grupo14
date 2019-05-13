@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ContactComponent implements OnInit {
 
+  changeCol: boolean = false;
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  changeColor() {
+    this.changeCol = !this.changeCol;
   }
 
 }
