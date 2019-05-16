@@ -7,9 +7,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CrearResidenciaComponent implements OnInit {
 
+  title: string = null;
+  ubication: string = null;
+  show: boolean = false;
+  
   constructor() { }
 
   ngOnInit() {
+  }
+
+  getInputs() {
+    this.title = (<HTMLInputElement> document.getElementById("title")).value;
+    this.ubication = (<HTMLInputElement> document.getElementById("ubication")).value;
+    this.show = true;
+
   }
 
 }

@@ -7,6 +7,7 @@ import { ContactComponent } from './contact/contact.component';
 import { HomeComponent } from './home/home.component';
 import { ServicesComponent } from './services/services.component';
 import { CrearResidenciaComponent } from './crear-residencia/crear-residencia.component';
+import { FinalizarResidenciaComponent } from './finalizar-residencia/finalizar-residencia.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { CrearResidenciaComponent } from './crear-residencia/crear-residencia.co
     ContactComponent,
     HomeComponent,
     ServicesComponent,
-    CrearResidenciaComponent
+    CrearResidenciaComponent,
+    FinalizarResidenciaComponent
   ],
   imports: [
     BrowserModule,
