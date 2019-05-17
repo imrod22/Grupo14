@@ -1,0 +1,11 @@
+.containerAux {
+    background-color: cornflowerblue;
+    margin: 100pt;
+    width: fit-content;
+    height: fit-content;
+    text-align: center;
+    align-self: center;
+    padding: 30pt;
+    border-radius: 25%;
+    font-family: 'Trebuchet MS';
+}

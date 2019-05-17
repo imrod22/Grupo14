@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-crear-residencia',
@@ -9,7 +10,7 @@ export class CrearResidenciaComponent implements OnInit {
 
   title: string = null;
   ubication: string = null;
-  show: boolean = false;
+  showForm: boolean = true;
   
   constructor() { }
 
@@ -19,8 +20,7 @@ export class CrearResidenciaComponent implements OnInit {
   getInputs() {
     this.title = (<HTMLInputElement> document.getElementById("title")).value;
     this.ubication = (<HTMLInputElement> document.getElementById("ubication")).value;
-    this.show = true;
-
+    this.showForm = false;
   }
 
 }

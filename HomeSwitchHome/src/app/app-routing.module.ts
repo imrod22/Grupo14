@@ -4,12 +4,15 @@ import { HomeComponent } from './home/home.component';
 import { ServicesComponent } from './services/services.component';
 import { ContactComponent } from './contact/contact.component';
 import { CrearResidenciaComponent } from './crear-residencia/crear-residencia.component';
+import { CrearSubastaComponent } from './crear-subasta/crear-subasta.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'services', component: ServicesComponent },
   { path: 'contact', component: ContactComponent },
-  { path: 'crearResidencia', component: CrearResidenciaComponent }
+  { path: 'crearResidencia', component: CrearResidenciaComponent },
+  { path: 'crearSubasta', component: CrearSubastaComponent }
+  
 ];
 
 @NgModule({

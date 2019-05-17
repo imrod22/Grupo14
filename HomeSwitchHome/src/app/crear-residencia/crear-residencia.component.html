@@ -7,28 +7,38 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 </head>
 
-<body> 
-<base href="./">
-<div class="container">
-  <h2>Crear residencia</h2>
-  <form>
-    <div class="form-group">
-      <label for="title">Título:</label>
-      <input type="text" class="form-control" id="title" placeholder="Ingrese el título de la residencia">
-      <small>Mayor a 8 caracteres.</small>
-    </div>
-    <div class="form-group">
-      <label for="ubication">Ubicación:</label>
-      <input type="text" class="form-control" id="ubication" placeholder="Ingrese la ubicación">
-      <small>Mayor a 20 caracteres.</small>
-    </div>
-    <button (click)="getInputs()" id="aceptar" class="btn btn-default">Aceptar</button>
-    <button id="cancelar" routerLink="/" class="btn btn-default">Cancelar</button>
-  </form>
-</div>
+<body>
+<ng-container *ngIf="showForm; else elseTemplate">
 
-<div *ngIf="show">Hola</div>
+  <base href="./">
+  <div class="container">
+    <h2>Crear residencia</h2>
+    <form>
+      <div class="form-group">
+        <label for="title">Título:</label>
+        <input type="text" class="form-control" id="title" placeholder="Ingrese el título de la residencia">
+        <small>Mayor a 8 caracteres.</small>
+      </div>
+      <div class="form-group">
+        <label for="ubication">Ubicación:</label>
+        <input type="text" class="form-control" id="ubication" placeholder="Ingrese la ubicación">
+        <small>Mayor a 20 caracteres.</small>
+      </div>
+    </form>
+  </div>
+
+  <div class="container">
+    <button (click)="getInputs()" id="aceptar" class="btn btn-default">Aceptar</button>
+    <button style="margin: 10px" id="cancelar" routerLink="/" class="btn btn-default">Cancelar</button>
+  </div>
+
+</ng-container>
+
+<ng-template #elseTemplate>
+  <div class="containerAux">
+    <h2>¡Perfecto, la residencia ha sido registrada!</h2>
+  </div>
+</ng-template>
 
 </body>
-
   
