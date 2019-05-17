@@ -5,6 +5,7 @@
       placeholder="Ingrese el título de la residencia" id="title" [(ngModel)]="title"
       (ngModelChange)="hasChanged()">
     <p style="margin: 10px" *ngIf="changed">Buscando {{title}} ...</p>
+    <br>
     <label for="title">Valor:</label>
     <input class="form-control" placeholder="Ingrese el valor incial" type="number" min="5" step="any">
     <small>En U$S | Ej: 550.000</small>

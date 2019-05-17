@@ -9,6 +9,7 @@ import { HomeComponent } from './home/home.component';
 import { ServicesComponent } from './services/services.component';
 import { CrearResidenciaComponent } from './crear-residencia/crear-residencia.component';
 import { CrearSubastaComponent } from './crear-subasta/crear-subasta.component';
+import { ListarResidenciasComponent } from './listar-residencias/listar-residencias.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { CrearSubastaComponent } from './crear-subasta/crear-subasta.component';
     HomeComponent,
     ServicesComponent,
     CrearResidenciaComponent,
-    CrearSubastaComponent
+    CrearSubastaComponent,
+    ListarResidenciasComponent
   ],
   imports: [
     BrowserModule,
