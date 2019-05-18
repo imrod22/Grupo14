@@ -1,26 +1,43 @@
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+
+<body>
 <ng-container *ngIf="showForm; else elseTemplate">
   <div class="container">
-    <div class="form-group" style="margin: 50pt">
+    <h2>Crear subasta</h2>
+    <div class="form-group">
       <label for="title">Título:</label>
-      <input type="text" class="form-control"
+      <input autocomplete="off" type="text" class="form-control"
         placeholder="Ingrese el título de la residencia" id="title" [(ngModel)]="title"
         (ngModelChange)="hasChanged()">
-      <select *ngIf="showResidence">
-        <option value="" disabled selected>Seleccione la residencia</option>
-        <option value="titleRes">{{titleRes}}</option>
-      </select>
-      <p style="margin: 10px" *ngIf="changed">Buscando {{title}} ...</p>
+      <div *ngIf="showResidence">
+        <p style="margin: 10px">Se han encontrado coincidencias</p>
+        <select class="form-control selectpicker show-tick" style="width: auto; margin-top: 10px">
+          <option value="" disabled selected>Seleccione la residencia</option>
+          <option value="titleRes">{{titleRes}}</option>
+        </select> 
+      </div>
+      <p style="margin: 10px" *ngIf="changed && !showResidence">Buscando {{title}} ...</p>
       <br>
       <label for="title">Valor:</label>
       <input class="form-control" placeholder="Ingrese el valor incial" type="number" min="5" step="any" id="valor">
-      <small>En U$S | Ej: 550.000</small>
-      <select id="semana">
+      <small>En U$S | Ej: 550000</small>
+      <br>
+      <label for="semana" style="margin-top: 10px">Semana:</label>
+      <select id="semana" class="form-control selectpicker" style="width: auto">
         <option value="" disabled selected>Seleccione una semana</option>
-        <option value="2020-00-01">1er semana de enero de 2020</option>
-        <option value="2020-00-08">2da semana de enero de 2020</option>
-        <option value="2020-00-15">3ra semana de enero de 2020</option>
-        <option value="2020-00-22">4ta semana de enero de 2020</option>
+        <option value="2020-01-01">1er semana de enero de 2020</option>
+        <option value="2020-01-08">2da semana de enero de 2020</option>
+        <option value="2020-01-15">3ra semana de enero de 2020</option>
+        <option value="2020-01-22">4ta semana de enero de 2020</option>
       </select>
+
     </div>
   </div>
 
@@ -39,3 +56,4 @@
     </div>
   </div>
 </ng-template>
+</body>

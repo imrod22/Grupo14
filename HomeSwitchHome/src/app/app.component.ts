@@ -23,4 +23,10 @@ export var subastas = [
   new Subasta(residencias[0], 500000, (new Date(2019, 4, 19)))
 ]
 
+export const formatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+  minimumFractionDigits: 2
+})
+
 

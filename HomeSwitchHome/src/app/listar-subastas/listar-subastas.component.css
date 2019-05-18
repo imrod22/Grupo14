@@ -1,0 +1,28 @@
+.myClickText {
+    color: blue;
+}
+
+.myClickText:hover {
+    cursor: pointer;
+    color: #0000a0
+}
+
+.myButton {
+    color: blue;
+    margin-top: 10px;
+    padding: 10px;
+    border: none;
+    background-color: transparent;
+}
+
+.myButton:hover {
+    border: 1px solid blue;
+}
+
+.myInput {
+    padding:8px;
+    display:block;
+    border:none;
+    border-bottom:1px solid #ccc;
+    width:100%
+}

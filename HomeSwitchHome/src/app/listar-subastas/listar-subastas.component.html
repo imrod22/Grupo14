@@ -5,11 +5,14 @@
           <div class="card" style="width: 18rem;">
             <div class="card-body">
               <h5 class="card-title">{{s.residencia.title}}</h5>
-              <h6 class="card-subtitle mb-2 text-muted">{{s.valor}}U$S</h6>
-              <p class="card-text">{{s.semana}}</p>
-              <p class="card-text">Comenzará dentro de {{hoursLeft(s)}} meses.</p>
-              <a href="#" class="card-link">Card link</a>
-              <a href="#" class="card-link">Another link</a>
+              <h6 class="card-subtitle mb-2 text-muted">{{formatterAux.format(s.valor)}} U$S (dólar estadounidense)</h6>
+              <p class="card-text">{{s.semana.getDate()}}-{{s.semana.getMonth()+1}}-{{s.semana.getFullYear()}}</p>
+              <p class="card-text">Comenzará dentro de {{hoursLeft(s)}} día/s.</p>
+              <div *ngIf="!canModify" class="myClickText" (click)="modify()">Modificar valor</div>
+              <div *ngIf="canModify">
+                <input class="myInput" id="newValue" *ngIf="canModify" placeholder="Introduzca el nuevo valor">
+                <button class="myButton" (click)="modified(s)">Confirmar</button>
+              </div>
             </div>
           </div>
         </li>
