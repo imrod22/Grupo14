@@ -1,0 +1,18 @@
+<div class="container" style="margin: 50px">
+    <div style="margin: 5%" class="grid-container">
+      <ul *ngFor="let s of arraySub">
+        <li>
+          <div class="card" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title">{{s.residencia.title}}</h5>
+              <h6 class="card-subtitle mb-2 text-muted">{{s.valor}}U$S</h6>
+              <p class="card-text">{{s.semana}}</p>
+              <p class="card-text">Comenzará dentro de {{hoursLeft(s)}} meses.</p>
+              <a href="#" class="card-link">Card link</a>
+              <a href="#" class="card-link">Another link</a>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>

@@ -10,6 +10,7 @@ import { ServicesComponent } from './services/services.component';
 import { CrearResidenciaComponent } from './crear-residencia/crear-residencia.component';
 import { CrearSubastaComponent } from './crear-subasta/crear-subasta.component';
 import { ListarResidenciasComponent } from './listar-residencias/listar-residencias.component';
+import { ListarSubastasComponent } from './listar-subastas/listar-subastas.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { ListarResidenciasComponent } from './listar-residencias/listar-residenc
     ServicesComponent,
     CrearResidenciaComponent,
     CrearSubastaComponent,
-    ListarResidenciasComponent
+    ListarResidenciasComponent,
+    ListarSubastasComponent
   ],
   imports: [
     BrowserModule,

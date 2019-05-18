@@ -6,6 +6,7 @@ import { ContactComponent } from './contact/contact.component';
 import { CrearResidenciaComponent } from './crear-residencia/crear-residencia.component';
 import { CrearSubastaComponent } from './crear-subasta/crear-subasta.component';
 import { ListarResidenciasComponent } from './listar-residencias/listar-residencias.component';
+import { ListarSubastasComponent } from './listar-subastas/listar-subastas.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -13,7 +14,8 @@ const routes: Routes = [
   { path: 'contact', component: ContactComponent },
   { path: 'crearResidencia', component: CrearResidenciaComponent },
   { path: 'crearSubasta', component: CrearSubastaComponent },
-  { path: 'listarResidencias', component: ListarResidenciasComponent }
+  { path: 'listarResidencias', component: ListarResidenciasComponent },
+  { path: 'listarSubastas', component: ListarSubastasComponent },
   
 ];
 

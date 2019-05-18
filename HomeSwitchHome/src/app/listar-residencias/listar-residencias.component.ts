@@ -9,17 +9,12 @@ import { Residencia } from '../residencia';
 })
 export class ListarResidenciasComponent implements OnInit {
 
-  mostrar = false;
   arrayRes: Residencia[] = [];
 
   constructor() { }
 
   ngOnInit() {
     this.inicializarResidencias();
-  }
-
-  listarResidencias() {
-    this.mostrar = true;
   }
 
   inicializarResidencias() {
