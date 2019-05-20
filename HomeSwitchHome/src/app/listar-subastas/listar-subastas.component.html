@@ -1,10 +1,17 @@
 <div class="container" style="margin: 50px">
+    <p>Filtro por ubicación</p>
+    <select id="ubicacion" class="form-control selectpicker" (click)="getInputs()">
+      <option disabled selected>Elija la ubicación</option>
+      <option>Sin filtro</option>
+      <option *ngFor="let u of ubicaciones">{{u}}</option>
+    </select>
     <div style="margin: 5%" class="grid-container">
-      <ul *ngFor="let s of arraySub">
+      <ul *ngFor="let s of arraySubToShow">
         <li>
           <div class="card" style="width: 18rem;">
             <div class="card-body">
               <h5 class="card-title">{{s.residencia.title}}</h5>
+              <h6 class="card-subtitle mb-4 text-muted">{{s.residencia.ubication}}</h6>
               <h6 class="card-subtitle mb-2 text-muted">{{formatterAux.format(s.valor)}} U$S (dólar estadounidense)</h6>
               <p class="card-text">{{s.semana.getDate()}}-{{s.semana.getMonth()+1}}-{{s.semana.getFullYear()}}</p>
               <p class="card-text">Comenzará dentro de {{hoursLeft(s)}} día/s.</p>

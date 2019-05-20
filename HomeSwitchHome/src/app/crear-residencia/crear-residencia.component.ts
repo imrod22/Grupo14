@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { residencias } from '../app.component';
 import { Residencia } from '../residencia';
+import { ubicaciones } from '../app.component';
 
 @Component({
   selector: 'app-crear-residencia',
@@ -24,6 +25,7 @@ export class CrearResidenciaComponent implements OnInit {
     this.title = (<HTMLInputElement> document.getElementById("title")).value;
     this.ubication = (<HTMLInputElement> document.getElementById("ubication")).value;
     this.description = (<HTMLInputElement> document.getElementById("description")).value;
+    ubicaciones.push(this.ubication);
     residencias.push(new Residencia(this.title, this.ubication, this.description));
     this.showForm = false;
   }

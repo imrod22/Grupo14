@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { subastas } from '../app.component';
 import { Subasta } from '../subasta';
 import { formatter } from '../app.component';
+import { ubicaciones } from '../app.component';
 
 @Component({
   selector: 'app-listar-subastas',
@@ -11,6 +12,8 @@ import { formatter } from '../app.component';
 export class ListarSubastasComponent implements OnInit {
 
   arraySub: Subasta[] = [];
+  arraySubToShow: Subasta[] = [];
+  ubicaciones: string[] = ubicaciones;
   formatterAux = formatter; 
   canModify = false;
 
@@ -18,6 +21,7 @@ export class ListarSubastasComponent implements OnInit {
 
   ngOnInit() {
     this.inicializarSubastas();
+    this.getInputs();
   }
 
   inicializarSubastas() {
@@ -38,5 +42,20 @@ export class ListarSubastasComponent implements OnInit {
   modified(sub: Subasta) {
     this.canModify = false;
     sub.valor = +(<HTMLInputElement>document.getElementById("newValue")).value;
+  }
+
+  getInputs() {
+    var u = (<HTMLSelectElement>document.getElementById("ubicacion")).selectedOptions[0].text;
+    if (!(u == "Elija la ubicación" || u == "Sin filtro")) {
+      this.arraySubToShow = [];
+      for (let i = 0; i < this.arraySub.length; i++) {
+        if (this.arraySub[i].residencia.ubication == u) {
+          this.arraySubToShow.push(this.arraySub[i]);
+        }
+      }
+    }
+    else {
+      this.arraySubToShow = this.arraySub;
+    }
   }
 }

@@ -20,7 +20,9 @@ export var residencias = [
 ]
 
 export var subastas = [
-  new Subasta(residencias[0], 500000, (new Date(2019, 4, 19)))
+  new Subasta(residencias[0], 500000, (new Date(2019, 4, 19))),
+  new Subasta(residencias[1], 650000, (new Date(2019, 8, 2))),
+  new Subasta(residencias[1], 550000, (new Date(2019, 7, 26)))
 ]
 
 export const formatter = new Intl.NumberFormat('en-US', {
@@ -28,5 +30,9 @@ export const formatter = new Intl.NumberFormat('en-US', {
   currency: 'USD',
   minimumFractionDigits: 2
 })
+
+export var ubicaciones: string[] = [
+  'Mar del Plata', 'Buenos Aires', 'Gonnet', 'Olmos', 'Corrientes', 'Miami Beach', 'New York', 'Cancún'
+]
 
 
