@@ -30,7 +30,7 @@ export class ListarResidenciasComponent implements OnInit {
   }
 
   getInputs() {
-    var u = (<HTMLSelectElement>document.getElementById("ubicacion")).selectedOptions[0].text;
+    var u = (<HTMLSelectElement>document.getElementById("ubicacion")).value;
     if (!(u == "Elija la ubicación" || u == "Sin filtro")) {
       this.arrayResToShow = [];
       for (let i = 0; i < this.arrayRes.length; i++) {
@@ -43,4 +43,13 @@ export class ListarResidenciasComponent implements OnInit {
       this.arrayResToShow = this.arrayRes;
     }
   }
+
+  cantResWithUbication(u: string) {
+    var cont = 0;
+    for (let i = 0; i<this.arrayRes.length; i++) {
+      if (this.arrayRes[i].ubication == u) cont++
+    }
+    return cont;
+  }
+
 }

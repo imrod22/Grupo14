@@ -1,9 +1,10 @@
 <div class="container" style="margin: 50px">
+  <h1>Nuestras residencias</h1>
   <p>Filtro por ubicación</p>
   <select id="ubicacion" class="form-control selectpicker" (click)="getInputs()">
     <option disabled selected>Elija la ubicación</option>
     <option>Sin filtro</option>
-    <option *ngFor="let u of ubicaciones">{{u}}</option>
+    <option value="{{u}}" *ngFor="let u of ubicaciones">{{u}} ({{cantResWithUbication(u)}} residencias)</option>
   </select>
   <div style="margin: 5%" class="grid-container">
     <ul *ngFor="let r of arrayResToShow">

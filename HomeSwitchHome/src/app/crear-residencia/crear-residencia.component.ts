@@ -25,7 +25,7 @@ export class CrearResidenciaComponent implements OnInit {
     this.title = (<HTMLInputElement> document.getElementById("title")).value;
     this.ubication = (<HTMLInputElement> document.getElementById("ubication")).value;
     this.description = (<HTMLInputElement> document.getElementById("description")).value;
-    ubicaciones.push(this.ubication);
+    if (!ubicaciones.includes(this.ubication)) ubicaciones.push(this.ubication);
     residencias.push(new Residencia(this.title, this.ubication, this.description));
     this.showForm = false;
   }

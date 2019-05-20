@@ -45,7 +45,7 @@ export class ListarSubastasComponent implements OnInit {
   }
 
   getInputs() {
-    var u = (<HTMLSelectElement>document.getElementById("ubicacion")).selectedOptions[0].text;
+    var u = (<HTMLSelectElement>document.getElementById("ubicacion")).value;
     if (!(u == "Elija la ubicación" || u == "Sin filtro")) {
       this.arraySubToShow = [];
       for (let i = 0; i < this.arraySub.length; i++) {
@@ -58,4 +58,13 @@ export class ListarSubastasComponent implements OnInit {
       this.arraySubToShow = this.arraySub;
     }
   }
+
+  cantSubWithUbication(u: string) {
+    var cont = 0;
+    for (let i = 0; i<this.arraySub.length; i++) {
+      if (this.arraySub[i].residencia.ubication == u) cont++
+    }
+    return cont;
+  }
+
 }
