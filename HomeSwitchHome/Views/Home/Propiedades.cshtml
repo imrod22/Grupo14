@@ -1,0 +1,34 @@
+﻿@using HomeSwitchHome.ViewModels;
+
+@{
+    ViewBag.Title = "Propiedades";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/app/Home.js"></script>
+
+<div class="container" style="margin: 50px">
+    <h1>Nuestras residencias</h1>
+    <p>Filtro por ubicación</p>
+    <select id="ubicacion" class="form-control selectpicker" (click)="getInputs()">
+        <option disabled selected>Elija la ubicación</option>
+        <option>Sin filtro</option>
+        <option value="{{propiedadesList}}" ng-repeat="propiedad in propiedadesList">
+            {{propiedad.Pais}}> {{propiedadesList}} ({{cantResWithUbication(u)}} propiedades)
+        </option>
+    </select>
+    <div style="margin: 5%" class="grid-container">
+        <ul ng-repeat="propiedad in propiedadesList">
+            <li>
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{propiedad.nombre}}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{propiedad.pais}}</h6>
+                        <p class="card-text">{{r.description}}</p>
+                        <p class="card-text">{{r.direccion}}</p>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
