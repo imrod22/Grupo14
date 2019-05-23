@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "Crear subasta";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <div ng-controller="subastasController">
+        <div class="container">
+            <h2>Pujar en una subasta</h2>
+            <h3>Valor: {{(valorMinimo != 0) ? 'valorMinimo' : 'valorActual'}}</h3>
+            <form>
+                <div class="form-group">
+                    <label for="valor">Nuevo valor:</label>
+                    <input ng-model="valorActual" type="number" class="form-control" id="valorActual" placeholder="Ingrese un valor superior al actual o mínimo">
+                    <small>Por ejemplo 500000.</small>
+                </div>
+            </form>
+        </div>
+
+        <div class="container">
+            <button ng-click="confirmar()" id="confirmar" class="btn btn-default">Confirmar puja</button>
+            <button ng-click="cancelar()" style="margin: 10px" id="cancelar" class="btn btn-default">Cancelar</button>
+        </div>
+    </div>
+</div>
