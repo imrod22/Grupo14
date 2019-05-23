@@ -1,0 +1,49 @@
+﻿@{
+    ViewBag.Title = "Crear propiedad";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/app/Home.js"></script>
+
+<section class="py-5">
+    <div class="container">
+
+        <div ng-controller="propiedadesController">
+            <div class="container">
+                <h4>Crear residencia</h4>
+                <div class="card">
+                    <form class="card-body">
+                        <div class="form-group">
+                            <label for="nombre">Nombre:</label>
+                            <input ng-model="nombre" type="text" class="form-control" id="nombre" placeholder="Ingrese el título de la residencia">
+
+                        </div>
+                        <div class="form-group">
+                            <label for="domicilio">Domicilio:</label>
+                            <input ng-model="domicilio" type="text" class="form-control" id="domicilio" placeholder="Ingrese el domicilio">
+
+                        </div>
+                        <div class="form-group">
+                            <label for="pais">País:</label>
+                            <input ng-model="pais" type="text" class="form-control" id="pais" placeholder="Ingrese el país">
+
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Descripción:</label>
+                            <input ng-model="descripcion" type="text" class="form-control" id="descripcion" placeholder="Ingrese una descripción">
+
+                        </div>
+                    </form>
+                </div>
+                
+                
+            </div>
+
+            <div class="container">
+                <button ng-click="aceptar()" id="aceptar" class="btn btn-primary">Aceptar</button>
+                <a href="@Url.Action("Propiedades", "Home")" style="margin: 10px" id="cancelar" class="btn btn-danger">Cancelar</a>
+            </div>
+        </div>
+
+    </div>
+</section>

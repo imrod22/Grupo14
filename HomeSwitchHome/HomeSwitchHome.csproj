@@ -1091,6 +1091,9 @@
     <Content Include="Views\Propiedad\Edit.cshtml" />
     <Content Include="Views\Propiedad\Index.cshtml" />
     <Content Include="Scripts\version.json" />
+    <Content Include="Views\Home\CrearPropiedad.cshtml" />
+    <Content Include="Views\Home\CrearSubasta.cshtml" />
+    <Content Include="Views\Home\ModificarPropiedad.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
