@@ -15,16 +15,16 @@
 
         <table class="table table-bordered">
             <thead>
-                <th></th>
-                <th>Nombre</th>
-                <th>Pais</th>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Pais</th>
+                </tr>                
             </thead>
             <tbody>
                 <tr ng-repeat="propiedad in propiedadesList">
-                    <td>{{propiedad.IdPropiedad}}</td>
                     <td>{{propiedad.Nombre}}</td>
                     <td>{{propiedad.Pais}}</td>
-                    <td> <button class="btn btn-primary"> Modificar</button></td>
+                    <td> <button id="{{propiedad.IdPropiedad}}"  class="btn btn-primary"> Modificar</button></td>
                 </tr>
             </tbody>
         </table>

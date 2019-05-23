@@ -253,7 +253,9 @@
     <Content Include="Scripts\angular-touch.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
-    <Content Include="Scripts\app\Home.js" />
+    <Content Include="Scripts\app\propiedadSection.js" />
+    <Content Include="Scripts\app\Propiedad_AngularJS.js" />
+    <Content Include="Scripts\app\SubastasJS.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -1094,6 +1096,7 @@
     <Content Include="Views\Home\CrearPropiedad.cshtml" />
     <Content Include="Views\Home\CrearSubasta.cshtml" />
     <Content Include="Views\Home\ModificarPropiedad.cshtml" />
+    <Content Include="Views\PartialViews\_AddEditPropiedad.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
