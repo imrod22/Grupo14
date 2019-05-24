@@ -100,8 +100,8 @@
     <Reference Include="System.Numerics.Vectors, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Numerics.Vectors.4.4.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
     </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.1\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -167,6 +167,24 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Abstractions, Version=4.1.3.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.Abstractions.4.1.3\lib\net47\Unity.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Container, Version=5.10.3.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.Container.5.10.3\lib\net47\Unity.Container.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Mvc, Version=5.10.1.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.Mvc.5.10.1\lib\net47\Unity.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Mvc3, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.Mvc3.1.2\lib\net40\Unity.Mvc3.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Mvc5, Version=1.3.0.0, Culture=neutral, PublicKeyToken=43da31bc42a85347, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.Mvc5.1.3.0\lib\net45\Unity.Mvc5.dll</HintPath>
+    </Reference>
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebActivatorEx.2.2.0\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
@@ -182,7 +200,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\PropiedadController.cs" />
     <Compile Include="Models\ADMINISTRADOR.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -202,9 +222,11 @@
     <Compile Include="Models\RESERVA.cs" />
     <Compile Include="Models\SUBASTA.cs" />
     <Compile Include="Models\USUARIO.cs" />
-    <Compile Include="Services\SubastaController.cs" />
+    <Compile Include="Services\IPropiedadService.cs" />
+    <Compile Include="Services\ISubastaService.cs" />
+    <Compile Include="Services\SubastaService.cs" />
     <Compile Include="ViewModels\ImagenViewModel.cs" />
-    <Compile Include="Services\PropiedadController.cs" />
+    <Compile Include="Services\PropiedadService.cs" />
     <Compile Include="ViewModels\PropiedadViewModel.cs" />
     <Compile Include="ViewModels\SubastaViewModel.cs" />
   </ItemGroup>
@@ -1097,6 +1119,11 @@
     <Content Include="Views\Home\CrearSubasta.cshtml" />
     <Content Include="Views\Home\ModificarPropiedad.cshtml" />
     <Content Include="Views\PartialViews\_AddEditPropiedad.cshtml" />
+    <Content Include="Views\PropiedadSeccion\Create.cshtml" />
+    <Content Include="Views\PropiedadSeccion\Delete.cshtml" />
+    <Content Include="Views\PropiedadSeccion\Details.cshtml" />
+    <Content Include="Views\PropiedadSeccion\Edit.cshtml" />
+    <Content Include="Views\PropiedadSeccion\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

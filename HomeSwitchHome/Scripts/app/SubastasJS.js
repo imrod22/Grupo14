@@ -20,4 +20,4 @@ switchHomeApp.controller('subastasController', function ($scope, $http) {
             alert("No se ha podido crear la subasta con los campos ingresados.")
         });
     }
-}
+})
