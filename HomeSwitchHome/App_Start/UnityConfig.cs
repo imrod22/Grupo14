@@ -1,7 +1,7 @@
 using HomeSwitchHome.Services;
 using System.Web.Mvc;
 using Unity;
-using Unity.AspNet.Mvc;
+using Unity.Mvc5;
 
 namespace HomeSwitchHome
 {
@@ -10,14 +10,13 @@ namespace HomeSwitchHome
         public static void RegisterComponents()
         {
 			var container = new UnityContainer();
-
+            
             // register all your components with the container here
             // it is NOT necessary to register your controllers
-
-            // e.g. container.RegisterType<ITestService, TestService>();
-
-            container.RegisterType<ISubastaService, SubastaService>();
             
+            container.RegisterType<ISubastaService, SubastaService>();
+            container.RegisterType<IPropiedadService, PropiedadService>();
+
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }
     }

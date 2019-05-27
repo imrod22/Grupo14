@@ -13,10 +13,9 @@ namespace HomeSwitchHome.Controllers
             this.subastaService = subastaServicio;
         }
 
-
         public ActionResult Index()
         {
-            return View();
+            return View(this.subastaService.ObtenerSubastas());
         }
 
         public ActionResult Propiedades()

@@ -1,111 +1,70 @@
-﻿using HomeSwitchHome.ViewModels;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using LazyCache;
-using System.Web.Mvc;
+using HomeSwitchHome.ViewModels;
 
 namespace HomeSwitchHome.Services
 {
     public class PropiedadService :IPropiedadService
     {
         private HomeSwitchHomeDB HomeSwitchDB;
-        IAppCache HomeSwitchCache = new CachingService();
 
         public PropiedadService()
         {
             this.HomeSwitchDB = new HomeSwitchHomeDB();
         }
 
-        public List<PropiedadViewModel> GetPropiedades()
+        public List<PropiedadViewModel> ObtenerPropiedades()
         {
-            List<PropiedadViewModel> propiedadesToShow = (List<PropiedadViewModel>)HomeSwitchCache.CacheProvider.Get("propiedades");
+            List<PropiedadViewModel> propiedadesActuales;
 
-            if (propiedadesToShow == null)
+            if (!CacheHomeSwitchHome.ExistOnCache("Propiedades"))
             {
-                propiedadesToShow = new List<PropiedadViewModel>();
-                var propiedadesBD = this.HomeSwitchDB.PROPIEDAD.ToList();
-
-                foreach (var propiedad in propiedadesBD) {
-
-                    propiedadesToShow.Add(new PropiedadViewModel().ToViewModel(propiedad));             
-                }
-
-                HomeSwitchCache.CacheProvider.Set("propiedades", propiedadesToShow, null);
-            }    
-
-            return propiedadesToShow;
-        }       
-
-        public string SavePropiedad(PROPIEDAD nuevaPropiedad)
-        {
-            List<PropiedadViewModel> propiedades = (List<PropiedadViewModel>)HomeSwitchCache.CacheProvider.Get("propiedades");
-
-            if (propiedades.Where(t => t.Nombre == nuevaPropiedad.Nombre).Any())
-            {
-                return null;
-            }
-
-            try
-            {
-                this.HomeSwitchDB.PROPIEDAD.Add(nuevaPropiedad);
-                this.HomeSwitchDB.SaveChanges();
-
-                var propiedadesToShow = new List<PropiedadViewModel>();
-                var propiedadesBD = this.HomeSwitchDB.PROPIEDAD.ToList();
+                propiedadesActuales = new List<PropiedadViewModel>();
+                var propiedadesBD = HomeSwitchDB.PROPIEDAD.ToList();
 
                 foreach (var propiedad in propiedadesBD)
                 {
-
-                    propiedadesToShow.Add(new PropiedadViewModel().ToViewModel(propiedad));
+                    propiedadesActuales.Add(new PropiedadViewModel().ToViewModel(propiedad));
                 }
 
-                HomeSwitchCache.CacheProvider.Set("propiedades", propiedadesToShow, null);
-
-                return "Ok";
+                CacheHomeSwitchHome.SaveToCache("Propiedades", propiedadesActuales);
             }
-            catch (Exception)
-            {
 
-                return null;
-            }            
+            propiedadesActuales = (List<PropiedadViewModel>)CacheHomeSwitchHome.GetFromCache("Propiedades");
+            
+            return propiedadesActuales;
+        }       
+
+        public void CrearPropiedad(PROPIEDAD nuevaPropiedad)
+        {
+            List<PropiedadViewModel> propiedadesActuales = this.ObtenerPropiedades();
+
+            if (!propiedadesActuales.Where(t => t.Nombre == nuevaPropiedad.Nombre).Any())
+            {
+                this.HomeSwitchDB.PROPIEDAD.Add(nuevaPropiedad);
+                this.HomeSwitchDB.SaveChanges();
+                CacheHomeSwitchHome.RemoveOnCache("Propiedades");
+                this.ObtenerPropiedades();
+            }
         }
 
-        public string UpdatePropiedad(PROPIEDAD propiedad)
+        public void ActualizarPropiedad(PROPIEDAD datosPrioridad)
         {
-            using (this.HomeSwitchDB)
+            var propiedadesActuales = this.ObtenerPropiedades();
+
+            if (!propiedadesActuales.Where(t => t.Nombre == datosPrioridad.Nombre).Any())
             {
-                var propiedadesBD = this.HomeSwitchDB.PROPIEDAD;
-                if (propiedadesBD.Where(t => t.Nombre == propiedad.Nombre).Any())
-                {
-                    return null;
-                }
-                else {
-                    var currentProp = this.HomeSwitchDB.PROPIEDAD.SingleOrDefault(t => t.IdPropiedad == propiedad.IdPropiedad);
+                var propiedadModelo = this.HomeSwitchDB.PROPIEDAD.SingleOrDefault(t => t.IdPropiedad == datosPrioridad.IdPropiedad);
 
-                    currentProp.Nombre = propiedad.Nombre;
-                    currentProp.Descripcion = propiedad.Descripcion;
-                    currentProp.Domicilio = propiedad.Domicilio;
-                    currentProp.Pais = propiedad.Pais;
-                    this.HomeSwitchDB.SaveChanges();
+                propiedadModelo.Nombre = datosPrioridad.Nombre;
+                propiedadModelo.Descripcion = datosPrioridad.Descripcion;
+                propiedadModelo.Domicilio = datosPrioridad.Domicilio;
+                propiedadModelo.Pais = datosPrioridad.Pais;
 
-                    var propiedadesToShow = new List<PropiedadViewModel>();
-                    propiedadesBD = this.HomeSwitchDB.PROPIEDAD;
+                this.HomeSwitchDB.SaveChanges();
 
-                    foreach (var propiedadNew in propiedadesBD.ToList())
-                    {
-
-                        propiedadesToShow.Add(new PropiedadViewModel().ToViewModel(propiedadNew));
-                    }
-
-                    HomeSwitchCache.CacheProvider.Set("propiedades", propiedadesToShow, null);
-
-                    return "ok";
-                }
+                this.ObtenerPropiedades();
             }
-
-
         }
     }
 }
