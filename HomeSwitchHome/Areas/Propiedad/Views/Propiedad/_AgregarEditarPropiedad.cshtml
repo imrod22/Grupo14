@@ -1,0 +1,39 @@
+﻿<div ng-controller="propiedadesController">
+    <div class="container">
+        <form>
+            <div class="form-group">
+                <label for="nombre">Nombre:</label>
+                <input ng-model="nombre" type="text" class="form-control" id="nombrePropiedad">
+                <small>Mayor a 8 caracteres.</small>
+            </div>
+            <div class="form-group">
+                <label for="domicilio">Ubicacion:</label>
+                <input ng-model="domicilio" type="text" class="form-control" id="ubicacion" placeholder="Ingrese una ubicacion">
+                <small>Mayor a 20 caracteres.</small>
+            </div>
+            <div class="form-group">
+                <label for="pais">País:</label>
+                <select ng-model="pais" type="text" class="form-control" id="pais" placeholder="Ingrese el país">
+                    <option>ARGENTINA</option>
+                    <option>MEXICO</option>
+                    <option>ANTARTIDA</option>
+                    <option>ESTADOS UNIDOS</option>
+                    <option>MADAGASCAR</option>
+                    <option>EGIPTO</option>
+                    <option>ITALIA</option>
+                </select>
+
+            </div>
+            <div class="form-group">
+                <label for="description">Descripción:</label>
+                <textarea ng-model="descripcion" type="text" class="form-control" id="descripcion" placeholder="Ingrese una descripción"></textarea>
+                <small>Mayor a 20 caracteres.</small>
+            </div>
+        </form>
+    </div>
+
+    <div class="container">
+        <button ng-click="modificar()" id="aceptar" class="btn btn-default">Modificar</button>
+        <button ng-click="salir()" style="margin: 10px" id="cancelar" class="btn btn-default">Cancelar</button>
+    </div>
+</div>

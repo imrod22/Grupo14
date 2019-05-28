@@ -1,0 +1,68 @@
+﻿@using HomeSwitchHome.ViewModels;
+
+@{
+    ViewBag.Title = "Crear subasta";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="searchy">
+    <h3>SUBASTAS ACTUALES</h3>
+    <div ng-controller="subastasController" class="container" style="margin: 50px">
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Nombre de la Residencia</th>
+                    <th>Pais</th>
+                    <th>Fecha de la semana</th>
+                    <th>Monto Actual</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                
+                @foreach (SubastaViewModel subasta in Model)
+                {
+                <tr>
+                    <td>@subasta.Propiedad.Nombre</td>
+                    <td>@subasta.Propiedad.Pais</td>
+                    <td>@subasta.FechaComienzo</td>
+                    <td>@subasta.ValorActual </td>
+                </tr>
+
+            }
+                </tbody>
+            </table>
+    </div>
+</div>
+
+<div ng-init="showModal=false">
+    <button class="btn btn-primary btn-lg" ng-click="showModal = !showModal">
+        Ingresar a Subastas
+    </button>
+    <div class="modal fade in" aria-hidden="false" style="display: block;" ng-show="showModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <input ng-model="idSubasta" type="text" name="city" list="propiedad">
+
+                <datalist id="propiedad">
+                    <option ng-repeat="sub in subastasList" value="{{sub.IdSubasta}}">{{sub.propiedad.Nombre}}
+                </datalist>
+
+                <input type="number" ng-model="valornuevo" />VALOR EN DOLAR
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="pujar()">PUJAR</button>
+                    <button type="button" class="btn btn-primary" ng-click="showModal=false">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="py-5">
+    <div class="container">
+        <a href="@Url.Action("CrearSubasta", "Home")" class="btn btn-primary">NUEVA SUBASTA</a>
+    </div>
+</section>

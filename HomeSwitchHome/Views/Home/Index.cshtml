@@ -1,0 +1,76 @@
+﻿@using HomeSwitchHome.ViewModels;
+
+@{
+    ViewBag.Title = "Welcome";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+        </ol>
+        <div>
+            <div class="carousel-inner" role="listbox">
+
+                @{int i = 0;}
+                @foreach (SubastaViewModel subasta in Model)
+                {
+                    i++;  
+                    var active = i == 1 ? "active" : "";
+
+                    <div class="carousel-item @active" style="background-image: url('../..@subasta.Propiedad.Imagenes.First().path')">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h4 class="display-4">@subasta.Propiedad.Nombre - @subasta.Propiedad.Pais</h4>
+                            <p class="lead"> Comenzando <strong>@subasta.FechaComienzo</strong> en <strong style="color:red;">@subasta.ValorMinimo</strong> U$S </p>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+</div>
+
+<section class="py-5">
+    <div class="container ">
+
+        <div class="album py-5 bg-light">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="wrimagecard wrimagecard-topimage">
+                            @Html.ActionLink("SUBASTAS", "Index", "Subasta", new { area = "Subasta" }, null)
+                            <div class="wrimagecard-topimage_header" style="background-color: rgba(255, 255, 255, 0.89)">
+                                <div class="d-flex justify-content-around grid-divider">
+                                    <i class="fas fa-thermometer-half" style="color:rgb(252, 122, 122);width: 12%; height: 20%;"></i>
+
+                                    <text style="font-size: 160%;color:rgb(252, 122, 122);">SUBASTAS</text>
+                                </div>
+                            </div>
+                            <div class="wrimagecard-topimage_title">
+                            </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    
+
+                    <div class="col-md-6">
+                        <div class="wrimagecard wrimagecard-topimage">
+                            
+                            <div class="wrimagecard-topimage_header" style="background-color: rgba(255, 255, 255, 0.89)">
+                                <div class="d-flex justify-content-around grid-divider">
+                                    <i class="fas fa-address-book" style="color:rgb(236, 199, 96);width: 12%; height: 20%;"></i>                                                                       
+                                </div>
+                            </div>
+                            <div class="wrimagecard-topimage_title">
+                                @Html.ActionLink("PROPIEDADES", "Index", "Propiedad", new { area = "Propiedad" }, new { @class = "section-card" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
