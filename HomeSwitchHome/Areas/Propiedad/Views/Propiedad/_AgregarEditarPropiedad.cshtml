@@ -1,39 +1,59 @@
-﻿<div ng-controller="propiedadesController">
-    <div class="container">
-        <form>
-            <div class="form-group">
-                <label for="nombre">Nombre:</label>
-                <input ng-model="nombre" type="text" class="form-control" id="nombrePropiedad">
-                <small>Mayor a 8 caracteres.</small>
-            </div>
-            <div class="form-group">
-                <label for="domicilio">Ubicacion:</label>
-                <input ng-model="domicilio" type="text" class="form-control" id="ubicacion" placeholder="Ingrese una ubicacion">
-                <small>Mayor a 20 caracteres.</small>
-            </div>
-            <div class="form-group">
-                <label for="pais">País:</label>
-                <select ng-model="pais" type="text" class="form-control" id="pais" placeholder="Ingrese el país">
-                    <option>ARGENTINA</option>
-                    <option>MEXICO</option>
-                    <option>ANTARTIDA</option>
-                    <option>ESTADOS UNIDOS</option>
-                    <option>MADAGASCAR</option>
-                    <option>EGIPTO</option>
-                    <option>ITALIA</option>
-                </select>
+﻿<div class="modal-dialog modal-dialog-centered modal-lg" role="document" ng-controller="propiedadesController">
+    <div class="modal-content px-4 py-2">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle">Gestion de Residencias</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            
+            <form>
+                <div class="form-row">
+                    
+                    <div class="form-group col-md-6">
+                        <label for="nombre">Nombre:</label>
+                        <input ng-model="nombre" type="text" class="form-control" id="nombrePropiedad">
+                        <small>Mayor a 8 caracteres.</small>
+                    </div>
+                    
+                    <div class="form-group col-md-6">
+                        <label for="domicilio">Ubicacion:</label>
+                        <input ng-model="domicilio" type="text" class="form-control" id="ubicacionPropiedad" placeholder="Ingrese una ubicacion">
+                        <small>Mayor a 20 caracteres.</small>
+                    </div>
+                
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="description">Descripción:</label>
+                        <textarea ng-model="descripcion" type="text" class="form-control" id="descripcionPropiedad" placeholder="Ingrese una descripción"></textarea>
+                        <small>Mayor a 20 caracteres.</small>
+                    </div>
+                </div>
 
-            </div>
-            <div class="form-group">
-                <label for="description">Descripción:</label>
-                <textarea ng-model="descripcion" type="text" class="form-control" id="descripcion" placeholder="Ingrese una descripción"></textarea>
-                <small>Mayor a 20 caracteres.</small>
-            </div>
-        </form>
-    </div>
+                <div class="form-row">
+                    <div class="form-group col-md-8">
+                        <label for="pais">País:</label>
+                        <select ng-model="pais" type="text" class="form-control" id="paisPropiedad" placeholder="Ingrese el país">
+                            <option>ARGENTINA</option>
+                            <option>MEXICO</option>
+                            <option>ANTARTIDA</option>
+                            <option>ESTADOS UNIDOS</option>
+                            <option>MADAGASCAR</option>
+                            <option>EGIPTO</option>
+                            <option>ITALIA</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
 
-    <div class="container">
-        <button ng-click="modificar()" id="aceptar" class="btn btn-default">Modificar</button>
-        <button ng-click="salir()" style="margin: 10px" id="cancelar" class="btn btn-default">Cancelar</button>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            <button type="button" id="boton-crear-propiedad" style="display:none" ng-click="aceptar()" class="btn btn-primary">Agregar</button>
+            <button type="button" id="boton-modificar-propiedad" style="display:none" ng-click="modificar()" class="btn btn-primary">Guardar Cambios</button>
+        </div>
     </div>
 </div>

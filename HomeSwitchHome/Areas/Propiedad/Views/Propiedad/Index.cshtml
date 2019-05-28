@@ -3,39 +3,51 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div ng-controller="propiedadesController" class="container" style="margin: 50px">
+    <div class="container">
 
-    <div class="container card-header">
-        <h4>Residencias</h4>
-    </div>
+        <div class="row justify-content-center pb-5">
+            <div class="col-md-7 text-center heading-section ftco-animate fadeInUp ftco-animated">
+                <h4 class="subheading">Residencias</h4>
+            </div>
+            </div>
+        </div>
 
-    <a href="@Url.Action("CrearPropiedad", "Propiedad")" class="btn btn-sm btn-primary">NUEVA RESIDENCIA</a>
+        <div ng-controller="propiedadesController">
+                <section class="ftco-section services-section" id="destacados">
+                    <div class="container">
+                        <div class="row">
+                            <div class="btn-toolbar py-2" role="toolbar" aria-label="Toolbar with button groups">
+                                <div class="btn-group btn-group-sm mr-2" role="group" aria-label="First group">
+                                    <button type="button" class="btn btn-success add-nueva-propiedad" data-toggle="modal" data-target="#addEditPropiedadModal"><i class="fa fa-fw fas fa-edit"></i></button>
+                                </div>
+                            </div>
 
-    <div class="container jumbotron-fluid">
-        <table class="table table-fixed propiedades-scrollbar table-wrapper-scroll-y">
-            <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Pais (Ubicacion)</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="propiedad in propiedadesList">
-                    <td>{{propiedad.Nombre}}</td>
-                    <td>{{propiedad.Pais}} ({{propiedad.Domicilio}})</td>
-                    <td> <button id="{{propiedad.IdPropiedad}}" class="btn btn-group-sm btn-primary propiedad-seleccionada"> Modificar</button></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
+                            <table class="table table-sm table-borderless scrolled" style="text-align: left;">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 25%;" scope="col">NOMBRE</th>
+                                        <th style="width: 55px;" scope="col">PAIS (UBICACION)</th>
+                                        <th style="width: 10px;" scope="col"></th>
+                                        <th style="width: 10px;" scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="propiedad in propiedadesList">
+                                        <td>{{propiedad.Nombre}}</td>
+                                        <td>{{propiedad.Pais}} ({{propiedad.Domicilio}})</td>
+                                        <td> <button id="{{propiedad.IdPropiedad}}" class="btn btn-group-sm btn-primary propiedad-seleccionada" data-toggle="modal" data-target="#addEditPropiedadModal"><i class="fa fa-fw fas fa-adjust"></i></button></td>
+                                        <td> <button id="{{propiedad.IdPropiedad}}" class="btn btn-group-sm btn-danger propiedad-a-borrar"> <i class="fa fa-fw fas fa-remove"></i></button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </div>
 
-<div id="modalAgregarEditar" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    @Html.Partial("_AgregarEditarPropiedad")
-</div>
+        <div class="modal fade" id="addEditPropiedadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            @Html.Partial("_AgregarEditarPropiedad")
+        </div>
 
-
-<script src="~/Scripts/app/propiedadSection.js"></script>
-<script src="~/Scripts/app/Propiedad_AngularJS.js"></script>
-
-
+        <script src="~/Scripts/app/propiedadSection.js"></script>
+        <script src="~/Scripts/app/Propiedad_AngularJS.js"></script>

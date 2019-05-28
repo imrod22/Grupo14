@@ -26,7 +26,7 @@ namespace HomeSwitchHome
         public string Descripcion { get; set; }
 
         [Required]
-        public string Domicilio { get; set; }
+        public string Ubicacion { get; set; }
 
         [Required]
         public string Pais { get; set; }

@@ -62,7 +62,7 @@ namespace HomeSwitchHome.Services
 
                 propiedadModelo.Nombre = datosPrioridad.Nombre;
                 propiedadModelo.Descripcion = datosPrioridad.Descripcion;
-                propiedadModelo.Domicilio = datosPrioridad.Domicilio;
+                propiedadModelo.Ubicacion = datosPrioridad.Ubicacion;
                 propiedadModelo.Pais = datosPrioridad.Pais;
 
                 this.HomeSwitchDB.SaveChanges();

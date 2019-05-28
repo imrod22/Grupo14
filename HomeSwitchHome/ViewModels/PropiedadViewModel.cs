@@ -26,7 +26,7 @@ namespace HomeSwitchHome.ViewModels
             this.IdPropiedad = propiedad.IdPropiedad;
             this.Nombre = propiedad.Nombre;
             this.Descripcion = propiedad.Descripcion;
-            this.Domicilio = propiedad.Domicilio;
+            this.Domicilio = propiedad.Ubicacion;
             this.Pais = propiedad.Pais;
             this.Imagenes = new List<ImagenViewModel>();
             this.Reservas = new List<RESERVA>();

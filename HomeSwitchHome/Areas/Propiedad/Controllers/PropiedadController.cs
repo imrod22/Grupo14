@@ -32,7 +32,7 @@ namespace HomeSwitchHome.Areas.Propiedad.Controllers
             nuevaResidencia.Nombre = nombre;
             nuevaResidencia.Pais = pais;
             nuevaResidencia.Descripcion = descripcion;
-            nuevaResidencia.Domicilio = domicilio;
+            nuevaResidencia.Ubicacion = domicilio;
 
             return Json(this.propiedadService.CrearPropiedad(nuevaResidencia), JsonRequestBehavior.AllowGet);
         }
