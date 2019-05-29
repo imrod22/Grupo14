@@ -7,9 +7,9 @@ namespace HomeSwitchHome.Services
     {
         List<PropiedadViewModel> ObtenerPropiedades();
 
-        string CrearPropiedad(PROPIEDAD nuevaPropiedad);
+        bool CrearPropiedad(PROPIEDAD nuevaPropiedad);
 
-        string ActualizarPropiedad(PROPIEDAD datosPrioridad);
+        bool ActualizarPropiedad(PROPIEDAD datosPrioridad, int idPropiedad);
 
     }
 }

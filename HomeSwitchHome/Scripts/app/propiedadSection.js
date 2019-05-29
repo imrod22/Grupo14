@@ -13,6 +13,7 @@
             success: function (response) {
 
                 console.log(response);
+                $("#identificadorPropiedad").val(response.IdPropiedad)
                 $("#nombrePropiedad").val(response.Nombre);
                 $("#ubicacionPropiedad").val(response.Ubicacion);
                 $("#descripcionPropiedad").val(response.Descripcion);

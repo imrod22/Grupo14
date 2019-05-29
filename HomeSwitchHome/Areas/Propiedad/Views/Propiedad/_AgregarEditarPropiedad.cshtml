@@ -1,4 +1,4 @@
-﻿<div class="modal-dialog modal-dialog-centered modal-lg" role="document" ng-controller="propiedadesController">
+﻿<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
     <div class="modal-content px-4 py-2">
         <div class="modal-header">
             <h5 class="modal-title" id="exampleModalCenterTitle">Gestion de Residencias</h5>
@@ -10,19 +10,20 @@
             
             <form>
                 <div class="form-row">
-                    
+
+                    <input style="display : none" id="identificadorPropiedad">
                     <div class="form-group col-md-6">
                         <label for="nombre">Nombre:</label>
                         <input ng-model="nombre" type="text" class="form-control" id="nombrePropiedad">
                         <small>Mayor a 8 caracteres.</small>
                     </div>
-                    
+
                     <div class="form-group col-md-6">
                         <label for="domicilio">Ubicacion:</label>
                         <input ng-model="domicilio" type="text" class="form-control" id="ubicacionPropiedad" placeholder="Ingrese una ubicacion">
                         <small>Mayor a 20 caracteres.</small>
                     </div>
-                
+
                 </div>
                 
                 <div class="form-row">
@@ -39,11 +40,13 @@
                         <select ng-model="pais" type="text" class="form-control" id="paisPropiedad" placeholder="Ingrese el país">
                             <option>ARGENTINA</option>
                             <option>MEXICO</option>
-                            <option>ANTARTIDA</option>
+                            <option>ALEMANIA</option>
                             <option>ESTADOS UNIDOS</option>
                             <option>MADAGASCAR</option>
                             <option>EGIPTO</option>
                             <option>ITALIA</option>
+                            <option>ISLANDIA</option>
+                            <option>FIJI</option>
                         </select>
                     </div>
                 </div>

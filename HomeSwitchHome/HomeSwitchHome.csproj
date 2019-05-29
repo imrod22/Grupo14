@@ -246,9 +246,16 @@
   <ItemGroup>
     <Content Include="app-content\adrede_egipto.jpg" />
     <Content Include="app-content\albuquerque_nm.jpg" />
+    <Content Include="app-content\alemania_casa.jpg" />
     <Content Include="app-content\antartidaisland.jpg" />
+    <Content Include="app-content\australia_house.jpg" />
+    <Content Include="app-content\fiji_house.jpg" />
     <Content Include="app-content\fogo_canada.jpg" />
+    <Content Include="app-content\franceplace.jpg" />
+    <Content Include="app-content\icelandhouse.jpg" />
+    <Content Include="app-content\irelandhouse.png" />
     <Content Include="app-content\madagascar_home.jpg" />
+    <Content Include="app-content\whitehouse_rusia.png" />
     <Content Include="app-content\woodland_us.jpg" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />

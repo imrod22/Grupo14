@@ -1,8 +1,6 @@
 ﻿using HomeSwitchHome.Services;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace HomeSwitchHome.Areas.Propiedad.Controllers
@@ -34,7 +32,10 @@ namespace HomeSwitchHome.Areas.Propiedad.Controllers
             nuevaResidencia.Descripcion = descripcion;
             nuevaResidencia.Ubicacion = domicilio;
 
-            return Json(this.propiedadService.CrearPropiedad(nuevaResidencia), JsonRequestBehavior.AllowGet);
+            if(this.propiedadService.CrearPropiedad(nuevaResidencia))
+               return Json(this.propiedadService.ObtenerPropiedades().ToArray(), JsonRequestBehavior.AllowGet);
+
+            return null;
         }
 
         public JsonResult ObtenerInformacionPropiedad(int idPropiedad)
@@ -44,6 +45,20 @@ namespace HomeSwitchHome.Areas.Propiedad.Controllers
             var currentPropiedad = propiedadesActuales.Where(t => t.IdPropiedad == idPropiedad).SingleOrDefault();
 
             return Json(currentPropiedad, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult ModificarPropiedad(string idpropiedad, string nombre, string domicilio, string descripcion, string pais)
+        {
+            PROPIEDAD nuevaResidencia = new PROPIEDAD();
+            nuevaResidencia.Nombre = nombre;
+            nuevaResidencia.Pais = pais;
+            nuevaResidencia.Descripcion = descripcion;
+            nuevaResidencia.Ubicacion = domicilio;
+
+            if (this.propiedadService.ActualizarPropiedad(nuevaResidencia, Int32.Parse(idpropiedad)))
+                return Json(this.propiedadService.ObtenerPropiedades().ToArray(), JsonRequestBehavior.AllowGet);
+
+            return null;
         }
     }
 }

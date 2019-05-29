@@ -35,30 +35,31 @@ namespace HomeSwitchHome.Services
             return propiedadesActuales;
         }       
 
-        public string CrearPropiedad(PROPIEDAD nuevaPropiedad)
+        public bool CrearPropiedad(PROPIEDAD nuevaPropiedad)
         {
             List<PropiedadViewModel> propiedadesActuales = this.ObtenerPropiedades();
 
-            if (!propiedadesActuales.Where(t => t.Nombre == nuevaPropiedad.Nombre).Any() || nuevaPropiedad.Nombre != null)
+            if (!propiedadesActuales.Any(t => t.Nombre == nuevaPropiedad.Nombre) || nuevaPropiedad.Nombre != null)
             {
                 this.HomeSwitchDB.PROPIEDAD.Add(nuevaPropiedad);
                 this.HomeSwitchDB.SaveChanges();
                 CacheHomeSwitchHome.RemoveOnCache("Propiedades");
+                
                 this.ObtenerPropiedades();
 
-                return nuevaPropiedad.Nombre;
+                return true;
             }
 
-            else return null;
+            else return false;
         }
 
-        public string ActualizarPropiedad(PROPIEDAD datosPrioridad)
+        public bool ActualizarPropiedad(PROPIEDAD datosPrioridad, int idPropiedad)
         {
             var propiedadesActuales = this.ObtenerPropiedades();
 
-            if (!propiedadesActuales.Where(t => t.Nombre == datosPrioridad.Nombre).Any())
+            if (!propiedadesActuales.Any(t => t.Nombre == datosPrioridad.Nombre))
             {
-                var propiedadModelo = this.HomeSwitchDB.PROPIEDAD.SingleOrDefault(t => t.IdPropiedad == datosPrioridad.IdPropiedad);
+                var propiedadModelo = this.HomeSwitchDB.PROPIEDAD.SingleOrDefault(t => t.IdPropiedad == idPropiedad);
 
                 propiedadModelo.Nombre = datosPrioridad.Nombre;
                 propiedadModelo.Descripcion = datosPrioridad.Descripcion;
@@ -67,12 +68,13 @@ namespace HomeSwitchHome.Services
 
                 this.HomeSwitchDB.SaveChanges();
 
+                CacheHomeSwitchHome.RemoveOnCache("Propiedades");
                 this.ObtenerPropiedades();
 
-                return datosPrioridad.Nombre;
+                return true;
             }
 
-            else return null;
+            else return false;
         }
     }
 }
