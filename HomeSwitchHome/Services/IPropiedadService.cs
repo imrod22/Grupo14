@@ -11,5 +11,7 @@ namespace HomeSwitchHome.Services
 
         bool ActualizarPropiedad(PROPIEDAD datosPrioridad, int idPropiedad);
 
+        bool RemoverPropiedad(int idPropiedad);
+
     }
 }

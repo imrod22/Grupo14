@@ -11,8 +11,12 @@ namespace HomeSwitchHome.Services
     {
         List<SubastaViewModel> ObtenerSubastas();
 
-        void CrearSubasta(SUBASTA nuevaSubasta);
+        bool CrearSubasta(SUBASTA nuevaSubasta);
 
-        void PujarSubasta(SUBASTA subastaPujada);
+        bool PujarSubasta(SUBASTA subastaPujada, int idSubasta);
+
+        bool ActualizarSubasta(SUBASTA subastaActualizada, int idSubasta);
+
+        bool RemoverSubasta(int idSubasta);
     }
 }

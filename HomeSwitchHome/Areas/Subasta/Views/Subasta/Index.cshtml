@@ -1,0 +1,50 @@
+﻿@{
+    ViewBag.Title = "SUBASTAS";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+
+    <div class="row justify-content-center pb-5">
+        <div class="col-md-7 text-center heading-section ftco-animate fadeInUp ftco-animated">
+            <h4 class="subheading">Residencias</h4>
+        </div>
+    </div>
+</div>
+
+<div ng-controller="subastasController">
+    <section class="ftco-section services-section" id="destacados">
+        <div class="container">
+            <div class="row">
+                <div class="btn-toolbar py-2" role="toolbar" aria-label="Toolbar with button groups">
+                    <div class="btn-group btn-group-sm mr-2" role="group" aria-label="First group">
+                        <button type="button" class="btn btn-success add-nueva-subasta" data-toggle="modal" data-target="#addEditSubastaModal"><i class="fa fa-fw fas fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col col-lg-4" ng-repeat="subasta in subastasList">
+                <div class="card flexcss">
+                    <div class="card-body">
+                        <h4 class="card-title">Propiedad que se subasta: {{subasta.Propiedad.Nombre}}</h4>
+                        <p class="card-text"> <h5>Fecha de comienzo : {{subasta.FechaComienzo}}</h5> <br> {{}}</p>
+                        <a href="#!/women/details/{{woman._id}}" class="btn btn-primary">Learn more</a>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+</section>
+
+    <div class="modal fade" id="pujaSubastaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        @Html.Partial("_PujaSubasta")
+    </div>
+
+    <div class="modal fade" id="addEditSubastaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        @Html.Partial("_AgregarEditarSubasta")
+    </div>
+
+</div>
+
+<script src="~/Scripts/app/SubastasJS.js"></script>

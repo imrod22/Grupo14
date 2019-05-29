@@ -36,35 +36,71 @@ namespace HomeSwitchHome.Services
             return subastasActuales;
         }
         
-        public void CrearSubasta(SUBASTA nuevaSubasta)
+        public bool CrearSubasta(SUBASTA nuevaSubasta)
         {
             List<SubastaViewModel> subastas = this.ObtenerSubastas();
 
-            if (!subastas.Where(t => t.FechaComienzo >= nuevaSubasta.FechaComienzo && t.FechaComienzo.AddDays(7) < nuevaSubasta.FechaComienzo).Any())
-            {              
+            if (!subastas.Any(t => t.FechaComienzo >= nuevaSubasta.FechaComienzo && t.FechaComienzo.AddDays(7) < nuevaSubasta.FechaComienzo))
+            {
                 this.HomeSwitchDB.SUBASTA.Add(nuevaSubasta);
                 this.HomeSwitchDB.SaveChanges();
 
                 CacheHomeSwitchHome.RemoveOnCache("Subastas");
-                this.ObtenerSubastas();
+
+                return true;
             }
+            else
+                return false;
         }
         
-        public void PujarSubasta(SUBASTA subastaPujada)
+        public bool PujarSubasta(SUBASTA subastaPujada, int idSubasta)
         {
-            using (this.HomeSwitchDB)
-            {
-                var subastaConNuevoValor = this.HomeSwitchDB.SUBASTA.SingleOrDefault(t => t.IdSubasta == subastaPujada.IdSubasta);
+                var subastaActualizar = this.HomeSwitchDB.SUBASTA.SingleOrDefault(t => t.IdSubasta == idSubasta);
 
-                if (subastaConNuevoValor != null && subastaPujada.FechaComienzo >= DateTime.Now && subastaConNuevoValor.ValorActual < subastaPujada.ValorActual && subastaPujada.ValorMinimo < subastaConNuevoValor.ValorActual)
+                if (subastaActualizar != null && subastaPujada.FechaComienzo >= DateTime.Now && subastaActualizar.ValorActual < subastaPujada.ValorActual && subastaActualizar.ValorMinimo < subastaPujada.ValorActual)
                 {
-                    subastaConNuevoValor.ValorActual = subastaPujada.ValorActual;
-                    this.HomeSwitchDB.SaveChanges();
+                    subastaActualizar.ValorActual = subastaPujada.ValorActual;
+                    subastaActualizar.IdCliente = 1; //HARCODEADO SIEMPRE PUJA EL 1er USUARIO.
 
+                    this.HomeSwitchDB.SaveChanges();
                     CacheHomeSwitchHome.RemoveOnCache("Subastas");
-                    this.ObtenerSubastas();
+
+                    return true;
                 }
-            }            
+                else
+                    return false;
+        }
+
+        public bool ActualizarSubasta(SUBASTA subastaActualizada, int idSubasta)
+        {
+            if (subastaActualizada.FechaComienzo.CompareTo(DateTime.Now) > 0 && subastaActualizada.ValorMinimo > 0)
+            {
+                var propiedadModelo = this.HomeSwitchDB.SUBASTA.SingleOrDefault(t => t.IdSubasta == idSubasta);
+                propiedadModelo.FechaComienzo = subastaActualizada.FechaComienzo;
+                propiedadModelo.ValorMinimo = subastaActualizada.ValorMinimo;
+                this.HomeSwitchDB.SaveChanges();
+                CacheHomeSwitchHome.RemoveOnCache("Subastas");
+
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public bool RemoverSubasta(int idSubasta)
+        {
+            var subastaABorrar = this.HomeSwitchDB.SUBASTA.SingleOrDefault(t => t.IdPropiedad == idSubasta);
+            
+            if (subastaABorrar != null && subastaABorrar.FechaComienzo.AddDays(3).CompareTo(DateTime.Now) == 0)
+            {
+                this.HomeSwitchDB.SUBASTA.Remove(subastaABorrar);
+                this.HomeSwitchDB.SaveChanges();
+                CacheHomeSwitchHome.RemoveOnCache("Subastas");
+
+                return true;
+            }
+            else
+                return false;
         }
     }
 }

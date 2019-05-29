@@ -44,8 +44,6 @@ namespace HomeSwitchHome.Services
                 this.HomeSwitchDB.PROPIEDAD.Add(nuevaPropiedad);
                 this.HomeSwitchDB.SaveChanges();
                 CacheHomeSwitchHome.RemoveOnCache("Propiedades");
-                
-                this.ObtenerPropiedades();
 
                 return true;
             }
@@ -55,26 +53,41 @@ namespace HomeSwitchHome.Services
 
         public bool ActualizarPropiedad(PROPIEDAD datosPrioridad, int idPropiedad)
         {
-            var propiedadesActuales = this.ObtenerPropiedades();
 
-            if (!propiedadesActuales.Any(t => t.Nombre == datosPrioridad.Nombre))
+            if (datosPrioridad.Descripcion != null && datosPrioridad.Pais != null)
             {
                 var propiedadModelo = this.HomeSwitchDB.PROPIEDAD.SingleOrDefault(t => t.IdPropiedad == idPropiedad);
-
-                propiedadModelo.Nombre = datosPrioridad.Nombre;
                 propiedadModelo.Descripcion = datosPrioridad.Descripcion;
-                propiedadModelo.Ubicacion = datosPrioridad.Ubicacion;
                 propiedadModelo.Pais = datosPrioridad.Pais;
-
                 this.HomeSwitchDB.SaveChanges();
-
                 CacheHomeSwitchHome.RemoveOnCache("Propiedades");
-                this.ObtenerPropiedades();
 
                 return true;
             }
+            else 
+            {
+                return false;
+            }
+        }
+        
+        public bool RemoverPropiedad(int idPropiedad)
+        {
+            var propiedadABorrar = this.HomeSwitchDB.PROPIEDAD.SingleOrDefault(t => t.IdPropiedad == idPropiedad);
 
-            else return false;
+            var subastaService = new SubastaService();
+
+            var propiedadAsViewModel = new PropiedadViewModel().ToViewModel(propiedadABorrar);
+
+            if (propiedadABorrar != null && !propiedadAsViewModel.Reservas.Any() && !subastaService.ObtenerSubastas().Any(t => t.Propiedad.IdPropiedad == idPropiedad))
+            {
+                this.HomeSwitchDB.PROPIEDAD.Remove(propiedadABorrar);
+                this.HomeSwitchDB.SaveChanges();
+                CacheHomeSwitchHome.RemoveOnCache("Propiedades");
+
+                return true;
+            }
+            else
+                return false;            
         }
     }
 }

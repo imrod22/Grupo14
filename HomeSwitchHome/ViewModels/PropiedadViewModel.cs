@@ -11,8 +11,6 @@ namespace HomeSwitchHome.ViewModels
 
         public string Descripcion { get; set; }
 
-        public string Domicilio { get; set; }
-
         public string Pais { get; set; }
 
         public List<RESERVA> Reservas { get; set; }
@@ -26,7 +24,6 @@ namespace HomeSwitchHome.ViewModels
             this.IdPropiedad = propiedad.IdPropiedad;
             this.Nombre = propiedad.Nombre;
             this.Descripcion = propiedad.Descripcion;
-            this.Domicilio = propiedad.Ubicacion;
             this.Pais = propiedad.Pais;
             this.Imagenes = new List<ImagenViewModel>();
             this.Reservas = new List<RESERVA>();

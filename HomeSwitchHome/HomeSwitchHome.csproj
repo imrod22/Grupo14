@@ -214,6 +214,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Propiedad\Controllers\PropiedadController.cs" />
     <Compile Include="Areas\Propiedad\PropiedadAreaRegistration.cs" />
+    <Compile Include="Areas\Subasta\Controllers\SubastaController.cs" />
     <Compile Include="Areas\Subasta\SubastaAreaRegistration.cs" />
     <Compile Include="Models\ADMINISTRADOR.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -354,6 +355,11 @@
     <Content Include="Content\fonts\TitilliumWeb-Regular.ttf" />
     <Content Include="Content\fonts\TitilliumWeb-SemiBold.ttf" />
     <Content Include="Content\fonts\TitilliumWeb-SemiBoldItalic.ttf" />
+    <Content Include="Areas\Propiedad\Views\Propiedad\_DetallePropiedad.cshtml" />
+    <Content Include="Areas\Subasta\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Subasta\Views\Subasta\Index.cshtml" />
+    <Content Include="Areas\Subasta\Views\Subasta\_PujaSubasta.cshtml" />
+    <Content Include="Areas\Subasta\Views\Subasta\_AgregarEditarSubasta.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\i18n\angular-locale_af-na.js" />
     <Content Include="Scripts\i18n\angular-locale_af-za.js" />
@@ -1153,9 +1159,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Propiedad\Models\" />
-    <Folder Include="Areas\Subasta\Controllers\" />
     <Folder Include="Areas\Subasta\Models\" />
-    <Folder Include="Areas\Subasta\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

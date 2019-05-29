@@ -3,7 +3,7 @@
 switchHomeApp.controller('subastasController', function ($scope, $http) {
 
     $scope.subastasList;
-    $http.get("/Home/GetSubastas").sucess(function (result) {
+    $http.get("").sucess(function (result) {
         $scope.subastasList = result.data;
     });
 
