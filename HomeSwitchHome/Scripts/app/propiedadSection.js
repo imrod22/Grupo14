@@ -8,7 +8,6 @@
         $('#boton-modificar-propiedad').css('display', 'block');
         $('#boton-crear-propiedad').css('display', 'none');
 
-
         $.ajax({
             type: "GET",
             url: "/Propiedad/Propiedad/ObtenerInformacionPropiedad",
@@ -19,8 +18,6 @@
                 $("#nombrePropiedad").val(response.Nombre);
                 $("#descripcionPropiedad").val(response.Descripcion);
                 $("#paisPropiedad").val(response.Pais);
-
-
 
             },
             error: function () {
@@ -41,6 +38,3 @@
         $('#boton-modificar-propiedad').css('display', 'none');
     });
 });
-
-
-

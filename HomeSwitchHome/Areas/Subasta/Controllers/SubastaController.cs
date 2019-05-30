@@ -49,7 +49,18 @@ namespace HomeSwitchHome.Areas.Subasta.Controllers
             if (this.servicioSubasta.ActualizarSubasta(subastaActualizada, Int32.Parse(idSubasta)))
                 return Json(this.servicioSubasta.ObtenerSubastas().ToArray(), JsonRequestBehavior.AllowGet);
 
-            return null;
+            return Json(new { errorMessage = "Error" });
+        }
+
+        public JsonResult PujarEnSubasta(string idSubasta, string valorPujado)
+        {
+            SUBASTA subastaPujada = new SUBASTA();
+            subastaPujada.ValorActual = Convert.ToDecimal(valorPujado);
+
+            if (this.servicioSubasta.PujarSubasta(subastaPujada, Int32.Parse(idSubasta)))
+                return Json(this.servicioSubasta.ObtenerSubastas().ToArray(), JsonRequestBehavior.AllowGet);
+
+            return Json(new { errorMessage = "Error" });
         }
 
         public JsonResult BorrarPropiedad(string idSubasta)
@@ -57,7 +68,16 @@ namespace HomeSwitchHome.Areas.Subasta.Controllers
             if (this.servicioSubasta.RemoverSubasta(Int32.Parse(idSubasta)))
                 return Json(this.servicioSubasta.ObtenerSubastas().ToArray(), JsonRequestBehavior.AllowGet);
 
-            return null;
+            return Json(new { errorMessage = "Error" });
+        }
+
+        public JsonResult ObtenerInformacionSubasta(int idSubasta)
+        {
+            var subastasActuales = this.servicioSubasta.ObtenerSubastas();
+
+            var currentPropiedad = subastasActuales.Where(t => t.IdSubasta == idSubasta).SingleOrDefault();
+
+            return Json(currentPropiedad, JsonRequestBehavior.AllowGet);
         }
 
     }

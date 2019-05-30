@@ -39,7 +39,7 @@ namespace HomeSwitchHome.Services
         {
             List<PropiedadViewModel> propiedadesActuales = this.ObtenerPropiedades();
 
-            if (!propiedadesActuales.Any(t => t.Nombre == nuevaPropiedad.Nombre) || nuevaPropiedad.Nombre != null)
+            if (nuevaPropiedad.Nombre != null && nuevaPropiedad.Pais != null && !propiedadesActuales.Any(t => t.Nombre == nuevaPropiedad.Nombre && t.Pais == nuevaPropiedad.Pais))
             {
                 this.HomeSwitchDB.PROPIEDAD.Add(nuevaPropiedad);
                 this.HomeSwitchDB.SaveChanges();
@@ -54,7 +54,7 @@ namespace HomeSwitchHome.Services
         public bool ActualizarPropiedad(PROPIEDAD datosPrioridad, int idPropiedad)
         {
 
-            if (datosPrioridad.Descripcion != null && datosPrioridad.Pais != null)
+            if (datosPrioridad.Descripcion != null && datosPrioridad.Pais != null && datosPrioridad.Descripcion.Length >= 20)
             {
                 var propiedadModelo = this.HomeSwitchDB.PROPIEDAD.SingleOrDefault(t => t.IdPropiedad == idPropiedad);
                 propiedadModelo.Descripcion = datosPrioridad.Descripcion;

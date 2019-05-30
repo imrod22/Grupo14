@@ -39,7 +39,7 @@
                         <div class="carousel-imagen carousel-item @active" style="background-image: url('../..@subasta.Propiedad.Imagenes.First().path')">
                             <div class="d-none d-md-block" style="color:#ffffff;">
                                 <h5 class="display-4">@subasta.Propiedad.Nombre</h5>
-                                <h6 class="card-subtitle"> comenzando el <strong style="color:#ffffff;"> @subasta.FechaComienzo.Day/@subasta.FechaComienzo.Month/@subasta.FechaComienzo.Year</strong> en <strong>@subasta.ValorMinimo</strong> U$S </h6>
+                                <h6 class="card-subtitle"> comenzando el <strong style="color:#ffffff;"> @Convert.ToDateTime(subasta.FechaComienzo).Day/@Convert.ToDateTime(subasta.FechaComienzo).Month/@Convert.ToDateTime(subasta.FechaComienzo).Year</strong> en <strong>@subasta.ValorMinimo</strong> U$S </h6>
                             </div>
                         </div>
                     }
@@ -78,7 +78,7 @@
                                 </div>
                             </div>
                             <div class="wrimagecard-topimage_title">
-                                @Html.ActionLink("PROPIEDADES", "Index", "Propiedad", new { area = "Propiedad" }, new { @class = "section-card" })
+                                @Html.ActionLink("RESIDENCIAS", "Index", "Propiedad", new { area = "Propiedad" }, new { @class = "section-card" })
                             </div>
                         </div>
                     </div>

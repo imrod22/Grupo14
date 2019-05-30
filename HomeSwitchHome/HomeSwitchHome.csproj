@@ -298,7 +298,8 @@
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\app\propiedadSection.js" />
     <Content Include="Scripts\app\Propiedad_AngularJS.js" />
-    <Content Include="Scripts\app\SubastasJS.js" />
+    <Content Include="Scripts\app\subastaSection.js" />
+    <Content Include="Scripts\app\Subastas_AngularJS.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />

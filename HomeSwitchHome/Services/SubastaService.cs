@@ -40,7 +40,7 @@ namespace HomeSwitchHome.Services
         {
             List<SubastaViewModel> subastas = this.ObtenerSubastas();
 
-            if (!subastas.Any(t => t.FechaComienzo >= nuevaSubasta.FechaComienzo && t.FechaComienzo.AddDays(7) < nuevaSubasta.FechaComienzo))
+            if (!subastas.Any(t => Convert.ToDateTime(t.FechaComienzo) >= nuevaSubasta.FechaComienzo && Convert.ToDateTime(t.FechaComienzo).AddDays(7) < nuevaSubasta.FechaComienzo))
             {
                 this.HomeSwitchDB.SUBASTA.Add(nuevaSubasta);
                 this.HomeSwitchDB.SaveChanges();
@@ -57,7 +57,10 @@ namespace HomeSwitchHome.Services
         {
                 var subastaActualizar = this.HomeSwitchDB.SUBASTA.SingleOrDefault(t => t.IdSubasta == idSubasta);
 
-                if (subastaActualizar != null && subastaPujada.FechaComienzo >= DateTime.Now && subastaActualizar.ValorActual < subastaPujada.ValorActual && subastaActualizar.ValorMinimo < subastaPujada.ValorActual)
+                if (subastaActualizar != null 
+                        && DateTime.Now < subastaActualizar.FechaComienzo.AddDays(3) 
+                        && subastaActualizar.FechaComienzo <= DateTime.Now 
+                        && subastaActualizar.ValorActual < subastaPujada.ValorActual && subastaActualizar.ValorMinimo < subastaPujada.ValorActual)
                 {
                     subastaActualizar.ValorActual = subastaPujada.ValorActual;
                     subastaActualizar.IdCliente = 1; //HARCODEADO SIEMPRE PUJA EL 1er USUARIO.
@@ -68,7 +71,7 @@ namespace HomeSwitchHome.Services
                     return true;
                 }
                 else
-                    return false;
+                    return true;
         }
 
         public bool ActualizarSubasta(SUBASTA subastaActualizada, int idSubasta)
