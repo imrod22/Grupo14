@@ -27,10 +27,10 @@ namespace HomeSwitchHome.Areas.Subasta.Controllers
             return Json(this.servicioSubasta.ObtenerSubastas().ToArray(), JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult CrearSubasta(string idPropiedad, string fechaComienzo, string valorMinimo)
+        public JsonResult CrearSubasta(string propiedad, string fechaComienzo, string valorMinimo)
         {
             SUBASTA nuevaSubasta = new SUBASTA();
-            nuevaSubasta.IdPropiedad = Int32.Parse(idPropiedad);
+            nuevaSubasta.IdPropiedad = Int32.Parse(propiedad);
             nuevaSubasta.FechaComienzo = DateTime.Parse(fechaComienzo);
             nuevaSubasta.ValorMinimo = Convert.ToDecimal(valorMinimo);
 
@@ -49,7 +49,7 @@ namespace HomeSwitchHome.Areas.Subasta.Controllers
             if (this.servicioSubasta.ActualizarSubasta(subastaActualizada, Int32.Parse(idSubasta)))
                 return Json(this.servicioSubasta.ObtenerSubastas().ToArray(), JsonRequestBehavior.AllowGet);
 
-            return Json(new { errorMessage = "Error" });
+            return null;
         }
 
         public JsonResult PujarEnSubasta(string idSubasta, string valorPujado)
@@ -60,15 +60,15 @@ namespace HomeSwitchHome.Areas.Subasta.Controllers
             if (this.servicioSubasta.PujarSubasta(subastaPujada, Int32.Parse(idSubasta)))
                 return Json(this.servicioSubasta.ObtenerSubastas().ToArray(), JsonRequestBehavior.AllowGet);
 
-            return Json(new { errorMessage = "Error" });
+            return null;
         }
 
-        public JsonResult BorrarPropiedad(string idSubasta)
+        public JsonResult BorrarSubasta(string idSubasta)
         {
             if (this.servicioSubasta.RemoverSubasta(Int32.Parse(idSubasta)))
                 return Json(this.servicioSubasta.ObtenerSubastas().ToArray(), JsonRequestBehavior.AllowGet);
 
-            return Json(new { errorMessage = "Error" });
+            return null;
         }
 
         public JsonResult ObtenerInformacionSubasta(int idSubasta)
@@ -79,6 +79,5 @@ namespace HomeSwitchHome.Areas.Subasta.Controllers
 
             return Json(currentPropiedad, JsonRequestBehavior.AllowGet);
         }
-
     }
 }

@@ -3,15 +3,24 @@
 switchHomeApp.controller('subastasController', function ($scope, $http) {
 
     $scope.subastasList;
+    $scope.propiedadesList;
 
     $http.get("/Subasta/Subasta/Subastas").then(function (result) {
         $scope.subastasList = result.data;
     });
 
+    $http.get("/Propiedad/Propiedad/Propiedades").then(function (result) {
+
+        $scope.propiedadesList = result.data;
+    });
+
+
     $scope.aceptar = function () {
 
+        var idPropiedad = $('#propiedadSelect option:selected').attr('id');
+
         $http.post("/Subasta/Subasta/CrearSubasta", {
-            'propiedad': $scope.propiedad,
+            'propiedad': idPropiedad,
             'valorMinimo': $scope.valorMinimo,
             'fechaComienzo': $scope.fechaComienzo
 
@@ -31,16 +40,24 @@ switchHomeApp.controller('subastasController', function ($scope, $http) {
     $scope.modificar = function () {
         if (!sonDatosInvalidos()) {
             $http.post("/Subasta/Subasta/ModificarSubasta", {
-
+            
                 'idSubasta': $("#identificadorSubasta").val(),
                 'fechaComienzo': $("#fechaSubasta").val(),
                 'valorMinimo': $("#valorMinimo").val()
 
             }).then(function successCallback(response) {
 
+                if (result.data == "") {
+                    alert("No se ha podido actualizar la subasta con los campos ingresados.");
+                    
+                }
+                else {
+                    alert("Se ha actualizado la subasta con éxito.");
+                    $scope.subastasList = response.data;
+
+                }
+
                 $('#addEditSubastaModal').modal('hide');
-                alert("Se ha actualizado la subasta con éxito.");
-                $scope.subastasList = response.data;
 
             }, function errorCallback() {
                 $('#addEditSubastaModal').modal('hide');
@@ -63,9 +80,17 @@ switchHomeApp.controller('subastasController', function ($scope, $http) {
 
         ).then(function successCallback(result) {
 
-            alert("Ha pujado satisfactoriamente en la subasta!");
+            if (result.data == "") {
+                alert("El valor ingresado es menor al valor actual! o La subasta ya a terminado/finalizado.");
+            }
+
+            else {
+                alert("Ha pujado satisfactoriamente en la subasta!");
+                $scope.subastasList = result.data;
+            }
+            
             $('#pujaSubastaModal').modal('hide');            
-            $scope.subastasList = result.data;
+            
 
         }, function errorCallback() {
 

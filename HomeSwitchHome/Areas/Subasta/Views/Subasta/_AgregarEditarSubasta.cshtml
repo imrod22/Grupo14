@@ -25,12 +25,13 @@
                     </div>
                 </div>
 
-                <div ng-controller="propiedadesController" class="form-row">
+                <div class="form-row">
                     <div class="form-group col-md-8">
-                        <label for="pais">País:</label>
-                        <select ng-model="propiedad" type="text" class="form-control" id="propiedadSubasta" placeholder="Seleccione el país">
-                            <option ng-repeat="propiedad in propiedadesList">{{propiedad.Nombre}}</option>
+                        <label for="pais">Residencia:</label>
+                        <select ng-model="propiedad" type="text" class="form-control" id="propiedadSelect" placeholder="Seleccione una propiedad">
+                            <option id="{{ prop.IdPropiedad }}" ng-repeat="prop in propiedadesList"> {{ prop.Nombre}} ({{prop.Pais}})</option>
                         </select>
+
                     </div>
                 </div>
             </form>

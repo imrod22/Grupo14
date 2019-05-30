@@ -71,7 +71,7 @@ namespace HomeSwitchHome.Services
                     return true;
                 }
                 else
-                    return true;
+                    return false;
         }
 
         public bool ActualizarSubasta(SUBASTA subastaActualizada, int idSubasta)
