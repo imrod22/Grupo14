@@ -50,40 +50,59 @@
     </div>
 </section>
 
-<section class="ftco-section">
+<section class="ftco-section testimony-section bg-light">
     <div class="container">
-
-        <div class="album py-5 bg-light">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="wrimagecard wrimagecard-topimage">
-                            <div class="wrimagecard-topimage_header" style="background-color: #d37952">
-                                <div class="d-flex justify-content-around grid-divider">
-                                    <i class="fa fa-2x fa-fw fas fa-bullhorn" style="color: #ffffff"></i>
-                                </div>
-                            </div>
-                            <div class="wrimagecard-topimage_title">
-                                @Html.ActionLink("SUBASTAS", "Index", "Subasta", new { area = "Subasta" }, new { @class = "section-card" })
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="wrimagecard wrimagecard-topimage">
-
-                            <div class="wrimagecard-topimage_header" style="background-color: #0a3e7d">
-                                <div class="d-flex justify-content-around grid-divider">
-                                    <i class="fa fa-2x fa-fw fas fa-home" style="color: #ffffff"></i>
-                                </div>
-                            </div>
-                            <div class="wrimagecard-topimage_title">
-                                @Html.ActionLink("RESIDENCIAS", "Index", "Propiedad", new { area = "Propiedad" }, new { @class = "section-card" })
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="row justify-content-center mb-1 pb-3">
+        
+        <div class="text-body"> Bienvenido al sitio de Home Switch Home </div>    
+        
         </div>
     </div>
 </section>
+
+            @{if (User.Identity.IsAuthenticated)
+                {
+                    <section class="ftco-section">
+                        <div class="container">
+                            <div class="album py-5 bg-light">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="wrimagecard wrimagecard-topimage">
+                                                <div class="wrimagecard-topimage_header" style="background-color: #d37952">
+                                                    <div class="d-flex justify-content-around grid-divider">
+                                                        <i class="fa fa-2x fa-fw fas fa-bullhorn" style="color: #ffffff"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="wrimagecard-topimage_title">
+                                                    @Html.ActionLink("SUBASTAS", "Index", "Subasta", new { area = "Subasta" }, new { @class = "section-card" })
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="wrimagecard wrimagecard-topimage">
+
+                                                <div class="wrimagecard-topimage_header" style="background-color: #0a3e7d">
+                                                    <div class="d-flex justify-content-around grid-divider">
+                                                        <i class="fa fa-2x fa-fw fas fa-home" style="color: #ffffff"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="wrimagecard-topimage_title">
+                                                    @Html.ActionLink("RESIDENCIAS", "Index", "Propiedad", new { area = "Propiedad" }, new { @class = "section-card" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                }
+            }
+
+            <div class="modal fade" id="LoginModal" tabindex="-1" role="dialog" aria-hidden="true">
+                @Html.Partial("_Login")
+            </div>
+
+            <script src="~/Scripts/app/HomePage.js"></script>

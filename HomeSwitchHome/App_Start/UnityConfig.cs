@@ -11,11 +11,9 @@ namespace HomeSwitchHome
         {
 			var container = new UnityContainer();
             
-            // register all your components with the container here
-            // it is NOT necessary to register your controllers
-            
             container.RegisterType<ISubastaService, SubastaService>();
             container.RegisterType<IPropiedadService, PropiedadService>();
+            container.RegisterType<IUsuarioService, UsuarioService>();
 
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }

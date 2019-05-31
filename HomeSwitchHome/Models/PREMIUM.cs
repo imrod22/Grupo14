@@ -12,8 +12,6 @@ namespace HomeSwitchHome
         [Key]
         public int IdPremium { get; set; }
 
-        public int IdPropiedad { get; set; }
-
-        public virtual PROPIEDAD PROPIEDAD { get; set; }
+        public int IdCliente { get; set; }
     }
 }

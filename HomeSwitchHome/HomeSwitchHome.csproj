@@ -238,7 +238,10 @@
     <Compile Include="Services\CacheHomeSwitchHome.cs" />
     <Compile Include="Services\IPropiedadService.cs" />
     <Compile Include="Services\ISubastaService.cs" />
+    <Compile Include="Services\IUsuarioService.cs" />
     <Compile Include="Services\SubastaService.cs" />
+    <Compile Include="Services\UsuarioService.cs" />
+    <Compile Include="ViewModels\ClienteViewModel.cs" />
     <Compile Include="ViewModels\ImagenViewModel.cs" />
     <Compile Include="Services\PropiedadService.cs" />
     <Compile Include="ViewModels\PropiedadViewModel.cs" />
@@ -296,6 +299,7 @@
     <Content Include="Scripts\angular-touch.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\app\HomePage.js" />
     <Content Include="Scripts\app\propiedadSection.js" />
     <Content Include="Scripts\app\Propiedad_AngularJS.js" />
     <Content Include="Scripts\app\subastaSection.js" />
@@ -1140,7 +1144,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\Subastas.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
@@ -1152,15 +1155,13 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Scripts\version.json" />
-    <Content Include="Views\Home\CrearPropiedad.cshtml" />
-    <Content Include="Views\Home\CrearSubasta.cshtml" />
-    <Content Include="Views\Home\ModificarPropiedad.cshtml" />
-    <Content Include="Views\PartialViews\_AddEditPropiedad.cshtml" />
+    <Content Include="Views\Home\_Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Propiedad\Models\" />
     <Folder Include="Areas\Subasta\Models\" />
+    <Folder Include="Views\PartialViews\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

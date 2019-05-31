@@ -40,9 +40,7 @@ namespace HomeSwitchHome.Areas.Propiedad.Controllers
         public JsonResult ObtenerInformacionPropiedad(int idPropiedad)
         {
             var propiedadesActuales = this.propiedadService.ObtenerPropiedades();
-
             var currentPropiedad = propiedadesActuales.Where(t => t.IdPropiedad == idPropiedad).SingleOrDefault();
-
             return Json(currentPropiedad, JsonRequestBehavior.AllowGet);
         }
 

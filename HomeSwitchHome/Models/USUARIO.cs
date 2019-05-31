@@ -21,7 +21,7 @@ namespace HomeSwitchHome
 
         [Column("Usuario")]
         [Required]
-        public string Usuario1 { get; set; }
+        public string Usuario { get; set; }
 
         [Required]
         public string Password { get; set; }

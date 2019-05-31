@@ -63,7 +63,7 @@ namespace HomeSwitchHome.Services
                         && subastaActualizar.ValorActual < subastaPujada.ValorActual && subastaActualizar.ValorMinimo < subastaPujada.ValorActual)
                 {
                     subastaActualizar.ValorActual = subastaPujada.ValorActual;
-                    subastaActualizar.IdCliente = 1; //HARCODEADO SIEMPRE PUJA EL 1er USUARIO.
+                    subastaActualizar.IdCliente = 1;
 
                     this.HomeSwitchDB.SaveChanges();
                     CacheHomeSwitchHome.RemoveOnCache("Subastas");

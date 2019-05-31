@@ -30,25 +30,38 @@
 
             <div class="collapse navbar-collapse" id="ftco-nav">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">@Html.ActionLink("RESIDENCIAS", "Index", "Propiedad", new { area = "Propiedad" }, new { @class = "nav-link" })</li>
-                    <li class="nav-item">@Html.ActionLink("SUBASTAS", "Index", "Subasta", new { area = "Subasta" }, new { @class = "nav-link" })</li>
+
+                    @{
+                        if (User.Identity.IsAuthenticated)
+                        {
+
+                            <li class="nav-item">@Html.ActionLink("RESIDENCIAS", "Index", "Propiedad", new { area = "Propiedad" }, new { @class = "nav-link" })</li>
+                            <li class="nav-item">@Html.ActionLink("SUBASTAS", "Index", "Subasta", new { area = "Subasta" }, new { @class = "nav-link" })</li>
+
+                            <li class="nav-item">@Html.ActionLink("CERRAR SESION", "Index", "Subasta", new { area = "Subasta" }, new { @class = "nav-link" })</li>
+
+                        }
+                        else
+                        {
+                            <li class="nav-item"><a href="#LoginModal" class="nav-link">INICIAR SESION</a></li>
+                        }
+
+                    }
+
                 </ul>
             </div>
         </div>
     </nav>
+            <div class="container body-content">
+                @RenderBody()
 
-    <div class="container body-content">
-        @RenderBody()
-                      
-        <footer>
-            <p class="float-right">
-                <a href="#">Back to top</a>
-            </p>
-            <p>&copy; @DateTime.Now.Year - Home Switch Home</p>
-        </footer>
-    </div>
-</body>
-
-
+                <footer>
+                    <p class="float-right">
+                        <a href="#">Back to top</a>
+                    </p>
+                    <p>&copy; @DateTime.Now.Year - Home Switch Home</p>
+                </footer>
+            </div>
+        </body>
 
 </html>
