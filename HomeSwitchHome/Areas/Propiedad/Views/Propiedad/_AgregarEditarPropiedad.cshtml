@@ -1,0 +1,58 @@
+﻿<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content px-4 py-2">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle">GESTION DE RESIDENCIA</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            
+            <form>
+                <div class="form-row">
+
+                    <input style="display : none" id="identificadorPropiedad">
+                    <div class="form-group col-md-8">
+                        <label for="nombre">Nombre:</label>
+                        <input ng-model="nombre" type="text" class="form-control" id="nombrePropiedad" placeholder="Ingrese un nombre">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="description">Descripción:</label>
+                        <textarea ng-model="descripcion" type="text" class="form-control" id="descripcionPropiedad" placeholder="Ingrese una descripción"></textarea>
+                        
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-8">
+                        <label for="pais">País:</label>
+                        <select ng-model="pais" type="text" class="form-control" id="paisPropiedad" placeholder="Seleccione el país">
+                            <option>ARGENTINA</option>
+                            <option>MEXICO</option>
+                            <option>ALEMANIA</option>
+                            <option>ESTADOS UNIDOS</option>
+                            <option>MADAGASCAR</option>
+                            <option>EGIPTO</option>
+                            <option>ITALIA</option>
+                            <option>ISLANDIA</option>
+                            <option>COREA</option>
+                            <option>AUSTRALIA</option>
+                            <option>TUNEZ</option>
+                            <option>RUSIA</option>
+                            <option>CANADA</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            <button type="button" id="boton-crear-propiedad" style="display:none" ng-click="aceptar()" class="btn btn-primary">Agregar</button>
+            <button type="button" id="boton-modificar-propiedad" style="display:none" ng-click="modificar()" class="btn btn-primary">Guardar Cambios</button>
+        </div>
+    </div>
+</div>

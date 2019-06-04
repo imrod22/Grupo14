@@ -1,0 +1,127 @@
+﻿@{
+    Layout = null;
+}
+
+<head>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    <script type="text/javascript" src="~/Scripts/angular.min.js"></script>
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar" id="ftco-navbar" style="background-color: #2c5fa1; z-index: 4; color: #fff;">
+
+        <div class="container barra">
+            <a class="navbar-brand" href="~/">HOME SWITCH HOME</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="oi oi-menu"></span>
+            </button>
+        </div>
+    </nav>
+
+    <section class="ftco-section testimony-section bg-light">
+        <div class="container">
+            <div class="mb-1 pb-3">
+                <h2>FORMULARIO DE REGISTRO</h2>
+            </div>
+        </div>
+    </section>
+
+    <section class="ftco-section testimony-section bg-light">
+        <div class="container">
+            <div class="mb-1 pb-3">
+
+                <form id="registro-form">
+
+                    <div class="form-row">
+
+                        <div class="form-group col-md-6">
+                            <label for="Usuario">Usuario:</label>
+                            <input type="text" class="form-control" id="Usuario" name="Usuario">
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="Password">Password:</label>
+                            <input type="password" class="form-control" id="Password" name="Password">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-5">
+                            <label for="Nombre">Nombre:</label>
+                            <input type="text" class="form-control" id="Nombre" name="Nombre">
+                        </div>
+                        <div class="form-group col-md-5">
+                            <label for="Apellido">Apellido:</label>
+                            <input type="text" class="form-control" id="Apellido" name="Apellido">
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="FechaDeNacimiento">Fecha de Nacimiento:</label>
+                            <input type="date" class="form-control" id="FechaDeNacimiento" name="FechaDeNacimiento">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="DNI">Numero de Identidad:</label>
+                            <input type="text" class="form-control" id="DNI" name="DNI">
+                        </div>
+                        <div class="form-group col-md-5">
+                            <label for="DomicioFiscal">Domicilio:</label>
+                            <input type="text" class="form-control" id="DomicioFiscal" name="DomicioFiscal">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="Email">Correo Electronico:</label>
+                            <input type="email" class="form-control" id="Email" name="Email">
+                        </div>
+
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="CBU">CBU:</label>
+                            <input type="text" class="form-control" id="CBU" name="CBU">
+                        </div>
+
+                        <div class="form-group col-md-3">
+                            <label for="Banco">Banco:</label>
+                            <select type="text" class="form-control" id="Banco" name="Banco">
+                                <option>NO</option>
+                                <option>NACION</option>
+                                <option>PROVINCIA</option>
+                                <option>HSBC</option>
+                                <option>GALICIA</option>
+                                <option>SANTANDER</option>
+                                <option>ICBC</option>
+                                <option>FRANCES</option>
+                                <option>OTRO</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="MedioDePago">Medio de Pago:</label>
+                            <select type="text" class="form-control" id="MedioDePago" name="MedioDePago">
+                                <option>DEBITO</option>
+                                <option>CREDITO</option>
+                                <option>EFECTIVO</option>
+                                <option>OTROS</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="row">
+                    @Html.ActionLink("CANCELAR", "Index", "Home", new { @class = "nav-link" })
+                    <button type="button" class="btn btn-primary" id="boton-registro">REGISTRARSE</button>
+                </div>
+            </div>
+            </div>
+        </section>
+</body>
+
+<script src="~/Scripts/app/RegistroSection.js"></script>

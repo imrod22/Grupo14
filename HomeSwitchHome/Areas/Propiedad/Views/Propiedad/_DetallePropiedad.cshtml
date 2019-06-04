@@ -1,0 +1,56 @@
+﻿<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content px-4 py-2">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle">INFORMACION DETALLADA</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="modal-body">
+
+            <form>
+                <div class="form-row">
+
+                    <div class="form-group col-md-6">
+                        <label for="nombre">Nombre:</label>
+                        <input ng-model="detallenombre" class="form-control" style="background-color:transparent; border: 0; font-size: 1em;" readonly>
+                    </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="pais">País:</label>
+                            <input ng-model="detallepais" class="form-control" style="background-color:transparent; border: 0; font-size: 1em;" readonly>                              
+                        </div>
+                    
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="description">Descripción:</label>
+                        <textarea ng-model="detalledescripcion" class="form-control" style="background-color:transparent; border: 0; font-size: 1em;" readonly></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <div>
+                            <label for="description">Imagenes:</label>
+
+                                <div>
+                                    <carousel interval="intervaloimagen">
+                                        <slide ng-repeat="imagen in detalleimagenes" active="imagen.active">
+                                            <img ng-src="{{imagen.path}}" style="margin:auto; width: 200px; height: 200px">
+                                        </slide>
+                                    </carousel>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        </div>
+    </div>
+</div>

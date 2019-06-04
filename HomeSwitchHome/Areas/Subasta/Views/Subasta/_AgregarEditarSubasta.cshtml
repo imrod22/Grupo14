@@ -1,0 +1,46 @@
+﻿<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content px-4 py-2">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle">GESTION DE SUBASTA</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="modal-body">
+
+            <form>
+                <div class="form-row">
+
+                    <input style="display : none" id="identificadorSubasta">
+                    <div class="form-group col-md-8">
+                        <label for="nombre">Fecha de Comienzo:</label>
+                        <input ng-model="fechaComienzo" type="date" class="form-control" id="fechaSubasta">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="description">Valor minimo:</label>
+                        <input ng-model="valorMinimo" type="number" class="form-control" id="valorMinimo">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-8">
+                        <label for="pais">Residencia:</label>
+                        <select ng-model="propiedad" type="text" class="form-control" id="propiedadSelect" placeholder="Seleccione una propiedad">
+                            <option id="{{ prop.IdPropiedad }}" ng-repeat="prop in propiedadesList"> {{ prop.Nombre}} ({{prop.Pais}})</option>
+                        </select>
+
+                    </div>
+                </div>
+            </form>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            <button type="button" id="boton-crear-propiedad" style="display:none" ng-click="aceptar()" class="btn btn-primary">Agregar</button>
+            <button type="button" id="boton-modificar-propiedad" style="display:none" ng-click="modificar()" class="btn btn-primary">Guardar Cambios</button>
+        </div>
+    </div>
+</div>
