@@ -38,23 +38,34 @@ namespace HomeSwitchHome.Services
             return this.HomeSwitchDB.ADMINISTRADOR.Any(t => t.IdUsuario == IdUsuario);
         }
 
-        public void RegistrarNuevoCliente(ClienteViewModel nuevoCliente)
-        {
-            var clienteACrear = new CLIENTE();
+        public bool RegistrarNuevoCliente(ClienteViewModel nuevoCliente)
+        {   
+            if(!this.ExisteCliente(nuevoCliente) && this.CrearUsuario(nuevoCliente.Usuario, nuevoCliente.Password))
+            {                               
+                var clienteACrear = new CLIENTE();
 
-            clienteACrear.Nombre = nuevoCliente.Nombre;
-            clienteACrear.Apellido = nuevoCliente.Apellido;
-            clienteACrear.Banco = nuevoCliente.Banco;
-            clienteACrear.CBU = nuevoCliente.CBU;
-            clienteACrear.DomicioFiscal = nuevoCliente.DomicioFiscal;
-            clienteACrear.FechaDeNacimiento = nuevoCliente.FechaDeNacimiento;
-            clienteACrear.MedioDePago = nuevoCliente.MedioDePago;
-            clienteACrear.DNI = nuevoCliente.DNI;
+                clienteACrear.Nombre = nuevoCliente.Nombre;
+                clienteACrear.Apellido = nuevoCliente.Apellido;
 
-            this.HomeSwitchDB.CLIENTE.Add(clienteACrear);
-            this.HomeSwitchDB.SaveChanges();
+                clienteACrear.IdUsuario = this.HomeSwitchDB.USUARIO.Where(t => t.Usuario == nuevoCliente.Usuario).Select(t => t.IdUsuario).FirstOrDefault();
 
-            CacheHomeSwitchHome.RemoveOnCache("Clientes");
+                clienteACrear.Banco = nuevoCliente.Banco;
+                clienteACrear.CBU = nuevoCliente.CBU;
+                clienteACrear.DomicioFiscal = nuevoCliente.DomicioFiscal;
+                clienteACrear.FechaDeNacimiento = nuevoCliente.FechaDeNacimiento;
+                clienteACrear.MedioDePago = nuevoCliente.MedioDePago;
+                clienteACrear.DNI = nuevoCliente.DNI;
+                clienteACrear.Email = nuevoCliente.Email;
+
+                this.HomeSwitchDB.CLIENTE.Add(clienteACrear);
+                this.HomeSwitchDB.SaveChanges();
+
+                CacheHomeSwitchHome.RemoveOnCache("Clientes");
+
+                return true;
+            }
+
+            return false;
 
         }
 
@@ -86,6 +97,36 @@ namespace HomeSwitchHome.Services
             clientes = (List<ClienteViewModel>)CacheHomeSwitchHome.GetFromCache("Clientes");
 
             return clientes;
+        }
+
+        public PREMIUM ObtenerInformacionPremium(int IdCliente) {
+
+            var premiumActual = this.HomeSwitchDB.PREMIUM.Where(t => t.IdCliente == IdCliente).FirstOrDefault();
+            return premiumActual;
+        }
+
+        private bool ExisteCliente(ClienteViewModel clienteACrear)
+        {
+            return this.HomeSwitchDB.CLIENTE.Any(t => t.Email == clienteACrear.Email);
+        }
+
+        private bool CrearUsuario(string usuario, string contrasenia)
+        {
+
+            if (!this.HomeSwitchDB.USUARIO.Any(t => t.Usuario == usuario))
+            {
+                var nuevoUsuario = new USUARIO()
+                {
+                    Usuario = usuario,
+                    Password = contrasenia
+                };
+
+                this.HomeSwitchDB.USUARIO.Add(nuevoUsuario);
+                this.HomeSwitchDB.SaveChanges();
+
+                return true;
+            }
+            else return false;            
         }
 
     }

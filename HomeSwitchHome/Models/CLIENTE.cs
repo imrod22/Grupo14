@@ -39,6 +39,8 @@ namespace HomeSwitchHome
 
         public int? DNI { get; set; }
 
+        public string Email { get; set; }
+
         public virtual USUARIO USUARIO { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

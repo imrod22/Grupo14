@@ -302,6 +302,7 @@
     <Content Include="Scripts\app\HomePage.js" />
     <Content Include="Scripts\app\propiedadSection.js" />
     <Content Include="Scripts\app\Propiedad_AngularJS.js" />
+    <Content Include="Scripts\app\RegistroSection.js" />
     <Content Include="Scripts\app\subastaSection.js" />
     <Content Include="Scripts\app\Subastas_AngularJS.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -1156,6 +1157,7 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Scripts\version.json" />
     <Content Include="Views\Home\_Login.cshtml" />
+    <Content Include="Views\Home\Registro.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

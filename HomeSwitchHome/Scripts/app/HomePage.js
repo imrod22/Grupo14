@@ -3,7 +3,7 @@
         $('#LoginModal').modal('show');
     });
 
-    $('#boton-login').('click', function () {
+    $('#boton-login').click(function () {
 
         $.ajax({
             type: "POST",
@@ -13,10 +13,10 @@
                 password: $('#contrasenia').val()
             },
             success: function (response) {
-                
+                window.location.href = response;
             },
             error: function () {
-                alert("Ha habido un problema en el servidor.");
+                alert("No hay usuario registrado con la información ingresada.");
             }
         });
 

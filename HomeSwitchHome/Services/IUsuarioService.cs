@@ -9,11 +9,13 @@ namespace HomeSwitchHome.Services
 
         ClienteViewModel ObtenerInformacionCliente(int IdUsuario);
 
+        PREMIUM ObtenerInformacionPremium(int IdCliente);
+
         bool EsUsuarioPremium(int IdCliente);
 
         bool EsAdmin(int IdUsuario);
 
-        void RegistrarNuevoCliente(ClienteViewModel nuevoCliente);
+        bool RegistrarNuevoCliente(ClienteViewModel nuevoCliente);
 
         void RegistrarComoPremium(int IdCliente);
 

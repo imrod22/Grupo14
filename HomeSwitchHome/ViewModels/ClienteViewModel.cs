@@ -10,9 +10,9 @@ namespace HomeSwitchHome.ViewModels
     {
         public int IdCliente { get; set; }
 
-        public int IdUsuario { get; set; }
-        
-        public string IsPremium { get; set; }
+        public string Usuario { get; set; }
+
+        public string Password { get; set; }
 
         public PREMIUM Premium { get; set; }
 
@@ -32,6 +32,8 @@ namespace HomeSwitchHome.ViewModels
 
         public int? DNI { get; set; }
 
+        public string Email { get; set; }
+
         public List<RESERVA> Reservas { get; set; }
 
         public List<NOVEDAD_PROPIEDAD> Notificaciones { get; set; }
@@ -41,7 +43,6 @@ namespace HomeSwitchHome.ViewModels
         public ClienteViewModel ToViewModel(CLIENTE cliente)
         {
             this.IdCliente = cliente.IdCliente;
-            this.IdUsuario = cliente.IdUsuario;
             this.Nombre = cliente.Nombre;
             this.Apellido = cliente.Apellido;
             this.DNI = cliente.DNI;
@@ -50,6 +51,7 @@ namespace HomeSwitchHome.ViewModels
             this.CBU = cliente.CBU;
             this.Banco = cliente.Banco;
             this.MedioDePago = cliente.MedioDePago;
+            this.Email = cliente.Email;
 
             return this;
         }

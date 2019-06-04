@@ -16,6 +16,7 @@ namespace HomeSwitchHome.Controllers
         public HomeController(ISubastaService subastaServicio, IUsuarioService usuarioServicio)
         {
             this.subastaService = subastaServicio;
+            this.usuarioService = usuarioServicio;
         }
 
         public ActionResult Index()
@@ -34,41 +35,50 @@ namespace HomeSwitchHome.Controllers
                 if (this.usuarioService.EsAdmin(usuarioActual.IdUsuario))
                 {
                     FormsAuthentication.SetAuthCookie("ADMIN", true);
-
                     return RedirectToAction("Index", "Admin", new { });
 
                 }
                 else {
+
+                    var clienteActual = this.usuarioService.ObtenerInformacionCliente(usuarioActual.IdUsuario);                    
                     var rol = "CLIENTE";
+
                     if (this.usuarioService.EsUsuarioPremium(usuarioActual.IdUsuario))
                     {
+                        clienteActual.Premium = this.usuarioService.ObtenerInformacionPremium(clienteActual.IdCliente);
                         rol = "PREMIUM";
                     }
 
-                    FormsAuthentication.SetAuthCookie(rol, true);
-                    return RedirectToAction("Index", "Admin");
-                }
+                    Session.Add("ClienteActual", clienteActual);
 
-                
-                
+                    FormsAuthentication.SetAuthCookie(rol, true);
+                    return Json(Url.Action("Index", "Home"));
+                }
             }
              
             return null;
         }
 
         [System.Web.Mvc.Authorize]
-        public ActionResult Logout()
+        public ActionResult CerrarSesion()
         {
             FormsAuthentication.SignOut();
             return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult Registrarse([FromBody] ClienteViewModel nuevoUsuario)
+        public ActionResult Registro()
         {
+            return this.View();
+        }
 
+        public ActionResult RegistrarUsuario([FromBody] ClienteViewModel nuevoUsuario)
+        {
+            var seRegistro = this.usuarioService.RegistrarNuevoCliente(nuevoUsuario);
 
+            if (seRegistro)
+                return Json(Url.Action("Index", "Home"));
 
-            return RedirectToAction("Index", "Home");
+            else return Json(null);
         }
 
     }
