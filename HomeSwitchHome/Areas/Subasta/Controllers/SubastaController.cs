@@ -24,7 +24,7 @@ namespace HomeSwitchHome.Areas.Subasta.Controllers
 
         public JsonResult Subastas()
         {
-            return Json(this.servicioSubasta.ObtenerSubastas().ToArray(), JsonRequestBehavior.AllowGet);
+            return Json(this.servicioSubasta.ObtenerSubastasActivas().ToArray(), JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult CrearSubasta(string propiedad, string fechaComienzo, string valorMinimo)
@@ -35,7 +35,7 @@ namespace HomeSwitchHome.Areas.Subasta.Controllers
             nuevaSubasta.ValorMinimo = Convert.ToDecimal(valorMinimo);
 
             if (this.servicioSubasta.CrearSubasta(nuevaSubasta))
-                return Json(this.servicioSubasta.ObtenerSubastas().ToArray(), JsonRequestBehavior.AllowGet);
+                return Json(this.servicioSubasta.ObtenerSubastasFuturas().ToArray(), JsonRequestBehavior.AllowGet);
 
             return null;
         }
@@ -47,7 +47,7 @@ namespace HomeSwitchHome.Areas.Subasta.Controllers
             subastaActualizada.ValorMinimo = Convert.ToDecimal(valorMinimo);
 
             if (this.servicioSubasta.ActualizarSubasta(subastaActualizada, Int32.Parse(idSubasta)))
-                return Json(this.servicioSubasta.ObtenerSubastas().ToArray(), JsonRequestBehavior.AllowGet);
+                return Json(this.servicioSubasta.ObtenerSubastasFuturas().ToArray(), JsonRequestBehavior.AllowGet);
 
             return null;
         }
@@ -58,7 +58,7 @@ namespace HomeSwitchHome.Areas.Subasta.Controllers
             subastaPujada.ValorActual = Convert.ToDecimal(valorPujado);
 
             if (this.servicioSubasta.PujarSubasta(subastaPujada, Int32.Parse(idSubasta)))
-                return Json(this.servicioSubasta.ObtenerSubastas().ToArray(), JsonRequestBehavior.AllowGet);
+                return Json(this.servicioSubasta.ObtenerSubastasFuturas().ToArray(), JsonRequestBehavior.AllowGet);
 
             return null;
         }
@@ -66,14 +66,14 @@ namespace HomeSwitchHome.Areas.Subasta.Controllers
         public JsonResult BorrarSubasta(string idSubasta)
         {
             if (this.servicioSubasta.RemoverSubasta(Int32.Parse(idSubasta)))
-                return Json(this.servicioSubasta.ObtenerSubastas().ToArray(), JsonRequestBehavior.AllowGet);
+                return Json(this.servicioSubasta.ObtenerSubastasFuturas().ToArray(), JsonRequestBehavior.AllowGet);
 
             return null;
         }
 
         public JsonResult ObtenerInformacionSubasta(int idSubasta)
         {
-            var subastasActuales = this.servicioSubasta.ObtenerSubastas();
+            var subastasActuales = this.servicioSubasta.ObtenerSubastasActivas();
 
             var currentPropiedad = subastasActuales.Where(t => t.IdSubasta == idSubasta).SingleOrDefault();
 

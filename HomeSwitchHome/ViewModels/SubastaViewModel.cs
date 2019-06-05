@@ -14,18 +14,20 @@ namespace HomeSwitchHome.ViewModels
 
         public decimal ValorActual { get; set; }
 
-        public CLIENTE Cliente { get; set; }
+        public ClienteViewModel Cliente { get; set; }
 
         public SubastaViewModel() { }
 
         public SubastaViewModel ToViewModel(SUBASTA subasta)
         {
-
             this.IdSubasta = subasta.IdSubasta;
             this.Propiedad = new PropiedadViewModel().ToViewModel(subasta.PROPIEDAD);
             this.FechaComienzo = Convert.ToString(subasta.FechaComienzo.Date);
             this.ValorMinimo = subasta.ValorMinimo;
             this.ValorActual = subasta.ValorActual;
+            
+            if(subasta.CLIENTE != null)
+                this.Cliente = new ClienteViewModel().ToViewModel(subasta.CLIENTE);
 
             return this;
         }

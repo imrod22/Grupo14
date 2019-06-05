@@ -21,7 +21,7 @@ namespace HomeSwitchHome.Controllers
 
         public ActionResult Index()
         {
-            return View(this.subastaService.ObtenerSubastas());
+            return View(this.subastaService.ObtenerSubastasFuturas());
         }
 
         [System.Web.Mvc.HttpPost]
@@ -35,7 +35,7 @@ namespace HomeSwitchHome.Controllers
                 if (this.usuarioService.EsAdmin(usuarioActual.IdUsuario))
                 {
                     FormsAuthentication.SetAuthCookie("ADMIN", true);
-                    return RedirectToAction("Index", "Admin", new { });
+                    return Json(Url.Action("Index", "Administrador", new { area = "Administrador"}));
 
                 }
                 else {

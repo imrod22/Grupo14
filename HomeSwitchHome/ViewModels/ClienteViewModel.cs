@@ -14,7 +14,9 @@ namespace HomeSwitchHome.ViewModels
 
         public string Password { get; set; }
 
-        public PREMIUM Premium { get; set; }
+        public bool Login { get; set; }
+
+        public bool Premium { get; set; }
 
         public string Nombre { get; set; }
 

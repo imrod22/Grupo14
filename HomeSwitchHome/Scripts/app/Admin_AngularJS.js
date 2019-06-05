@@ -1,0 +1,23 @@
+﻿var adminsection = angular.module('adminsection', []);
+
+adminsection.controller('admincontroller', function ($scope, $http) {
+
+    $scope.subastasoff;
+    $scope.subastasfin;
+
+    $scope.propiedades;
+
+    $http.get("/Administrador/Administrador/SubastasSinEmpezar").then(function (result) {
+        $scope.subastasoff = result.data;
+    });
+
+    $http.get("/Administrador/Administrador/SubastasCerradas").then(function (result) {
+        $scope.subastasfin = result.data;
+    });
+
+
+    $http.get("/Administrador/Administrador/Propiedades").then(function (result) {
+        $scope.propiedades = result.data;
+    });
+
+});

@@ -1,0 +1,229 @@
+﻿@{
+    Layout = null;
+}
+
+<head>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    <script type="text/javascript" src="~/Scripts/angular.js"></script>
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+
+</head>
+
+<body ng-app="adminsection">
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar" id="ftco-navbar" style="background-color: #2c5fa1; z-index: 4; color: #fff;">
+
+        <div class="container barra">
+            <a class="navbar-brand">SECCION DE ADMINISTRADOR</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="oi oi-menu"></span>
+            </button>
+        </div>
+    </nav>
+
+    <div ng-controller="admincontroller">
+
+        <section class="ftco-section services-section" id="residencias">
+            <div class="container">
+                <div class="album py-5">
+                    <div class="row">
+                        <h4>RESIDENCIAS</h4>
+                    </div>
+
+                    <div class="row">
+                        <div class="btn-toolbar py-2" role="toolbar" aria-label="Toolbar with button groups">
+                            <div class="btn-group btn-group-sm mr-2" role="group" aria-label="First group">
+                                <button type="button" class="btn btn-success add-nueva-propiedad" data-toggle="modal" data-target="#addEditPropiedadModal"><i class="fa fa-fw fas fa-plus"></i></button>
+                            </div>
+                        </div>
+
+                        <table class="table table-sm table-borderless scrolled" style="text-align: left;">
+                            <thead>
+                                <tr>
+                                    <th style="width: 30%;" scope="col">NOMBRE</th>
+                                    <th style="width: 50px;" scope="col">PAIS</th>
+                                    <th style="width: 20px;" scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="propiedad in propiedades">
+
+                                    <td>{{propiedad.Nombre}}</td>
+                                    <td>{{propiedad.Pais}}</td>
+
+                                    <td>
+                                        <button id="{{propiedad.IdPropiedad}}" class="btn btn-group-sm btn-primary propiedad-seleccionada" data-toggle="modal" data-target="#addEditPropiedadModal"><i class="fa fa-fw fas fa-pencil-square-o"></i></button>
+                                        <button id="{{propiedad.IdPropiedad}}" ng-click="borrar($event.currentTarget.id)" class="btn btn-group-sm btn-danger propiedad-a-borrar"> <i class="fa fa-fw fas fa-remove"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="ftco-section testimony-section">
+            <div class="container mt-8">
+
+                <div class="row ftco-animate justify-content-center">
+                    <div class="col-md-12">
+                        <div class="item">
+                            <div class="row">
+                                <h4>SUBASTAS</h4>
+                            </div>
+
+                            <div class="btn-toolbar py-2" role="toolbar" aria-label="Toolbar with button groups">
+                                <div class="btn-group btn-group-sm mr-2" role="group" aria-label="First group">
+                                    <button type="button" class="btn btn-success add-nueva-propiedad" data-toggle="modal" data-target="#addEditPropiedadModal"><i class="fa fa-fw fas fa-plus"></i></button>
+                                </div>
+                            </div>
+
+
+                            <div class="testimony-wrap p-4 pb-5 pl-5">
+
+                                <div class="card-group">
+
+                                    <div class="card bg-transparent" style="border: none !important;">
+                                        <div class="card-body">
+                                            <h6 class="card-title"><b>SUBASTAS FUTURAS</b></h6>
+
+
+
+                                            <table class="table table-sm table-borderless scrolled" style="text-align: left;">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 30%;" scope="col">NOMBRE</th>
+                                                        <th style="width: 20%;" scope="col">VALOR MINIMO</th>
+                                                        <th style="width: 20%;" scope="col">FECHA DE COMIENZO</th>
+                                                        <th style="width: 10%;"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="subasta in subastasoff" | filter: {Pais : filtroSubasta}">
+
+                                                        <td>{{subasta.Propiedad.Nombre}}</td>
+                                                        <td>{{subasta.ValorMinimo}} USD</td>
+                                                        <td>{{subasta.FechaDeComienzo}}</td>
+
+                                                        <td>
+                                                            <button id="{{subasta.IdSubasta}}" class="btn btn-group-sm btn-primary propiedad-seleccionada" data-toggle="modal" data-target="#addEditPropiedadModal"><i class="fa fa-fw fas fa-pencil-square-o"></i></button>
+                                                            <button id="{{subasta.IdSubasta}}" ng-click="borrar($event.currentTarget.id)" class="btn btn-group-sm btn-danger propiedad-a-borrar"> <i class="fa fa-fw fas fa-remove"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div class="card bg-transparent" style="border: none !important;">
+                                        <div class="card-body">
+                                            <h6 class="card-title"><b>SUBASTAS FINALIZADAS</b></h6>
+                                            <table class="table table-sm table-borderless scrolled" style="text-align: left;">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 30%;" scope="col">NOMBRE</th>
+                                                        <th style="width: 20%;" scope="col">VALOR MAXIMO</th>
+                                                        <th style="width: 20%;" scope="col">CLIENTE</th>
+                                                        <th style="width: 10%;"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="subasta in subastasfin">
+
+                                                        <td>{{subasta.Propiedad.Nombre}}</td>
+                                                        <td>{{subasta.ValorMaximo}}</td>
+                                                        <td>{{subasta.Cliente.Usuario}}</td>
+
+                                                        <td>
+                                                            <button id="{{subasta.IdSubasta}}" ng-click="confirmarsubasta($event.currentTarget.id)" class="btn btn-group-sm btn-success subasta-seleccionada" data-toggle="modal"><i class="fa fa-fw fas fa-check"></i></button>
+                                                            <button id="{{subasta.IdSubasta}}" ng-click="rechazarsubasta($event.currentTarget.id)" class="btn btn-group-sm btn-danger propiedad-a-borrar"> <i class="fa fa-fw fas fa-ban"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="ftco-section testimony-section">
+            <div class="container mt-8">
+
+                <div class="row ftco-animate justify-content-center">
+                    <div class="col-md-12">
+                        <div class="item">
+                            <div class="row">
+                                <h4>CLIENTES</h4>
+                            </div>
+
+                            <div class="testimony-wrap p-4 pb-5 pl-5">
+
+                                <div class="card-group">
+
+                                    <div class="card bg-transparent" style="border: none !important;">
+                                        <div class="card-body">
+                                            <h6 class="card-title"><b>NUEVOS CLIENTES</b></h6>
+                                            <table class="table table-sm table-borderless" style="text-align: left;">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Nombre</th>
+                                                        <th scope="col">Apellido</th>
+                                                        <th scope="col"></th>
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div class="card bg-transparent" style="border: none !important;">
+                                        <div class="card-body">
+                                            <h6 class="card-title"><b>NUEVOS PREMIUM</b></h6>
+                                            <table class="table table-sm table-borderless" style="text-align: left;">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Nombre</th>
+                                                        <th scope="col">Apellido</th>
+                                                        <th scope="col"></th>
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="~/Scripts/app/Admin_AngularJS.js"></script>
+</body>

@@ -18,7 +18,7 @@ namespace HomeSwitchHome.Services
 
         public USUARIO ObtenerUsuarioRegistrado(string usuario, string password)
         {
-            var usuarioActual = this.HomeSwitchDB.USUARIO.Where(t => t.Usuario == usuario && t.Password == password).FirstOrDefault();
+            var usuarioActual = this.HomeSwitchDB.USUARIO.Where(t => t.Usuario == usuario && t.Password == password && t.Login).FirstOrDefault();
             return usuarioActual; 
         }
 
@@ -78,7 +78,7 @@ namespace HomeSwitchHome.Services
             this.HomeSwitchDB.SaveChanges();
         }
 
-        public List<ClienteViewModel> ObtenerListaDeClientes()
+        private List<ClienteViewModel> ObtenerListaDeClientes()
         {
             List<ClienteViewModel> clientes;
 
@@ -88,7 +88,9 @@ namespace HomeSwitchHome.Services
 
                 foreach (var cliente in this.HomeSwitchDB.CLIENTE.ToList())
                 {
-                    clientes.Add(new ClienteViewModel().ToViewModel(cliente));
+                    var clienteActual = new ClienteViewModel().ToViewModel(cliente);
+
+                    clientes.Add(clienteActual);
                 }
 
                 CacheHomeSwitchHome.SaveToCache("Clientes", clientes);
@@ -105,6 +107,27 @@ namespace HomeSwitchHome.Services
             return premiumActual;
         }
 
+        public List<ClienteViewModel> ObtenerNuevosClientes()
+        {
+            var clientes = this.ObtenerListaDeClientes();
+
+            return clientes.Where(t => !t.Login).ToList();
+        }
+
+        public List<ClienteViewModel> ObtenerSolicitudesPremium()
+        {
+            var clientes = this.ObtenerListaDeClientes();
+
+            foreach (var cliente in clientes)
+            {
+                var premium = this.ObtenerInformacionPremium(cliente.IdCliente);
+
+                cliente.Premium = premium != null ? false : premium.Aceptado;
+            }
+
+            return clientes.Where(t => !t.Premium).ToList();
+        }
+
         private bool ExisteCliente(ClienteViewModel clienteACrear)
         {
             return this.HomeSwitchDB.CLIENTE.Any(t => t.Email == clienteACrear.Email);
@@ -118,7 +141,8 @@ namespace HomeSwitchHome.Services
                 var nuevoUsuario = new USUARIO()
                 {
                     Usuario = usuario,
-                    Password = contrasenia
+                    Password = contrasenia,
+                    Login = false
                 };
 
                 this.HomeSwitchDB.USUARIO.Add(nuevoUsuario);
@@ -128,6 +152,6 @@ namespace HomeSwitchHome.Services
             }
             else return false;            
         }
-
+             
     }
 }

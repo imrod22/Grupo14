@@ -19,12 +19,14 @@ namespace HomeSwitchHome
         [Key]
         public int IdUsuario { get; set; }
 
-        [Column("Usuario")]
         [Required]
         public string Usuario { get; set; }
 
         [Required]
         public string Password { get; set; }
+
+        public bool Login { get; set; }
+
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ADMINISTRADOR> ADMINISTRADOR { get; set; }

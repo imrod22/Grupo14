@@ -14,28 +14,8 @@ namespace HomeSwitchHome.Services
             this.HomeSwitchDB = new HomeSwitchHomeDB();
         }
 
-        public List<SubastaViewModel> ObtenerSubastas()
-            {
-            List<SubastaViewModel> subastasActuales;
+       
 
-            if (!CacheHomeSwitchHome.ExistOnCache("Subastas"))
-            {
-                subastasActuales = new List<SubastaViewModel>();
-                var subastasBD = HomeSwitchDB.SUBASTA.ToList();
-
-                foreach (var subasta in subastasBD)
-                {
-                    subastasActuales.Add(new SubastaViewModel().ToViewModel(subasta));
-                }
-
-                CacheHomeSwitchHome.SaveToCache("Subastas", subastasActuales);
-            }
-
-            subastasActuales = (List<SubastaViewModel>)CacheHomeSwitchHome.GetFromCache("Subastas");
-
-            return subastasActuales;
-        }
-        
         public bool CrearSubasta(SUBASTA nuevaSubasta)
         {
             List<SubastaViewModel> subastas = this.ObtenerSubastas();
@@ -104,6 +84,49 @@ namespace HomeSwitchHome.Services
             }
             else
                 return false;
+        }
+
+        public List<SubastaViewModel> ObtenerSubastasActivas()
+        {
+            var subastas = this.ObtenerSubastas();
+
+            return subastas.Where(t => Convert.ToDateTime(t.FechaComienzo) <= DateTime.Now && DateTime.Now <= Convert.ToDateTime(t.FechaComienzo).AddDays(3)).ToList();
+        }
+
+        public List<SubastaViewModel> ObtenerSubastasFinalizadas()
+        {
+            var subastas = this.ObtenerSubastas();
+
+            return subastas.Where(t => Convert.ToDateTime(t.FechaComienzo).AddDays(3) < DateTime.Now).ToList();
+        }
+
+        public List<SubastaViewModel> ObtenerSubastasFuturas()
+        {
+            var subastas = this.ObtenerSubastas();
+
+            return subastas.Where(t => DateTime.Now < Convert.ToDateTime(t.FechaComienzo)).ToList();
+        }
+
+        private List<SubastaViewModel> ObtenerSubastas()
+        {
+            List<SubastaViewModel> subastasActuales;
+
+            if (!CacheHomeSwitchHome.ExistOnCache("Subastas"))
+            {
+                subastasActuales = new List<SubastaViewModel>();
+                var subastasBD = HomeSwitchDB.SUBASTA.ToList();
+
+                foreach (var subasta in subastasBD)
+                {
+                    subastasActuales.Add(new SubastaViewModel().ToViewModel(subasta));
+                }
+
+                CacheHomeSwitchHome.SaveToCache("Subastas", subastasActuales);
+            }
+
+            subastasActuales = (List<SubastaViewModel>)CacheHomeSwitchHome.GetFromCache("Subastas");
+
+            return subastasActuales;
         }
     }
 }

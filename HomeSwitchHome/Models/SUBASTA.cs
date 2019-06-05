@@ -26,5 +26,7 @@ namespace HomeSwitchHome
         public virtual CLIENTE CLIENTE { get; set; }
 
         public virtual PROPIEDAD PROPIEDAD { get; set; }
+
+        public bool Confirmada { get; set; }
     }
 }

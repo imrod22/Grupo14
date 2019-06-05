@@ -19,7 +19,9 @@ namespace HomeSwitchHome.Services
 
         void RegistrarComoPremium(int IdCliente);
 
-        List<ClienteViewModel> ObtenerListaDeClientes();
+        List<ClienteViewModel> ObtenerNuevosClientes();
+
+        List<ClienteViewModel> ObtenerSolicitudesPremium();
 
     }
 }

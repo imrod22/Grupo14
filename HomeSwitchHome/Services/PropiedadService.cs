@@ -78,7 +78,7 @@ namespace HomeSwitchHome.Services
 
             var propiedadAsViewModel = new PropiedadViewModel().ToViewModel(propiedadABorrar);
 
-            if (propiedadABorrar != null && !propiedadAsViewModel.Reservas.Any() && !subastaService.ObtenerSubastas().Any(t => t.Propiedad.IdPropiedad == idPropiedad))
+            if (propiedadABorrar != null && !propiedadAsViewModel.Reservas.Any() && !subastaService.ObtenerSubastasFuturas().Any(t => t.Propiedad.IdPropiedad == idPropiedad))
             {
                 this.HomeSwitchDB.PROPIEDAD.Remove(propiedadABorrar);
                 this.HomeSwitchDB.SaveChanges();
