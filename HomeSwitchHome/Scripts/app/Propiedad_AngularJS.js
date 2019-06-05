@@ -11,7 +11,19 @@ switchHomeApp.controller('propiedadesController', function ($scope, $http) {
     $http.get("/Propiedad/Propiedad/Propiedades").then(function (result) {
 
         $scope.propiedadesList = result.data;
+        $scope.propiedadesListFiltradas = result.data;
     });
+
+    // filtra las propiedades
+    $scope.filtroNombre = '';
+    $scope.filtroPais = '';
+
+    $scope.filtrar = function () {
+        $scope.propiedadesListFiltradas = $scope.propiedadesList.filter(filtroPropiedades);
+    }
+    function filtroPropiedades(prop) {
+        return prop.Nombre.toUpperCase().includes($scope.filtroNombre.toUpperCase()) && prop.Pais.includes($scope.filtroPais.toUpperCase());
+    }
 
     $scope.aceptar = function () {
 
@@ -128,4 +140,39 @@ switchHomeApp.controller('propiedadesController', function ($scope, $http) {
             alert("No se ha podido eliminar la residencia, tiene subastas asociadas o reservas futuras!");
         });
     }
+
+    $scope.reservar = function (element) {
+
+        var idPropiedad = element;
+        //var idUsuario 0 ?;
+
+        $http.post("/Propiedad/Propiedad/ReservarPropiedad",
+            {
+                'idPropiedad': idPropiedad
+            }
+
+        ).then(function successCallback(response) {
+
+        }, function errorCallback() {
+
+        });
+    }
+
+    $scope.solicitarNovedad = function (element) {
+
+        var idPropiedad = element;
+        //var idUsuario 0 ?;
+
+        $http.post("/Propiedad/Propiedad/SolicitarNovedadPropiedad",
+            {
+                'idPropiedad': idPropiedad
+            }
+
+        ).then(function successCallback(response) {
+
+        }, function errorCallback() {
+
+        });
+    }
+
 });
