@@ -17,7 +17,10 @@
                 <div class="row">
                     <div class="btn-toolbar py-2" role="toolbar" aria-label="Toolbar with button groups">
                         <div class="btn-group btn-group-sm mr-2" role="group" aria-label="Secound group">
-                            <button type="button" class="btn btn-secondary" disabled><i class="fa fa-fw fas fa-search"></i></button> <input  type="text" ng-model="filtroPais" />
+                            <button type="button" class="btn btn-secondary" disabled><i class="fa fa-fw fas fa-search"></i></button>
+
+                            <input type="text" ng-model="filtroNombre" ng-change="filtrar()" placeholder="Filtre por nombre" />
+                            <input style="margin-left:5px" type="text" ng-model="filtroPais" ng-change="filtrar()" placeholder="Filtre por país"/>
                         </div>
 
                     </div>
@@ -28,15 +31,32 @@
                                 <th style="width: 30%;" scope="col">NOMBRE</th>
                                 <th style="width: 50px;" scope="col">PAIS</th>
                                 <th style="width: 20px;" scope="col"></th>
+                                <th style="width: 20px;" scope="col"></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="propiedad in propiedadesList | filter: {Pais : filtroPais}">
+                            <tr ng-repeat="propiedad in propiedadesListFiltradas">
 
                                 <td>{{propiedad.Nombre}}</td>
                                 <td>{{propiedad.Pais}}</td>
 
-                                <td> <button id="{{propiedad.IdPropiedad}}" ng-click="detallar($event.currentTarget.id)" class="btn btn-group-sm btn-primary propiedad-detalle" data-toggle="modal" data-target="#detallePropiedadModal"><i class="fa fa-fw fa fa-info-circle"></i></button>
+                                <td>
+                                    <button id="{{propiedad.IdPropiedad}}" ng-click="detallar($event.currentTarget.id)" class="btn btn-group-sm btn-primary propiedad-detalle" data-toggle="modal" data-target="#detallePropiedadModal">
+                                        <i class="fa fa-fw fa fa-info-circle"></i>
+                                        <span class="tooltiptext">Detalle</span>
+                                    </button>
+                                </td>
+                                <td>
+                                    <button id="{{propiedad.IdPropiedad}}" ng-click="solicitarNovedad($event.currentTarget.id)" class="btn btn-group-sm btn-primary propiedad-detalle">
+                                        <i class="fa fa-area-chart" aria-hidden="true"></i>
+                                        <span class="tooltiptext">Solicitar novedad</span>
+                                    </button>
+                                </td>
+                                <td>
+                                    <button id="{{propiedad.IdPropiedad}}" ng-click="reservar($event.currentTarget.id)" class="btn btn-group-sm btn-primary propiedad-detalle">
+                                        <i class="fa fa-plane" aria-hidden="true"></i>
+                                        <span class="tooltiptext">Reservar</span>
+                                    </button>
                                 </td>
                             </tr>
                         </tbody>
