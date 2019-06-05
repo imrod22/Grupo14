@@ -5,6 +5,8 @@ switchHomeApp.controller('subastasController', function ($scope, $http) {
     $scope.subastasList;
     $scope.propiedadesList;
 
+    $scope.date = new Date();
+
     $http.get("/Subasta/Subasta/Subastas").then(function (result) {
         $scope.subastasList = result.data;
     });

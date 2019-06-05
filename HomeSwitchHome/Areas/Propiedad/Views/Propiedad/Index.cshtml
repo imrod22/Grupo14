@@ -16,10 +16,6 @@
             <div class="container">
                 <div class="row">
                     <div class="btn-toolbar py-2" role="toolbar" aria-label="Toolbar with button groups">
-                        <div class="btn-group btn-group-sm mr-2" role="group" aria-label="First group">
-                            <button type="button" class="btn btn-success add-nueva-propiedad" data-toggle="modal" data-target="#addEditPropiedadModal"><i class="fa fa-fw fas fa-plus"></i></button>
-                        </div>
-
                         <div class="btn-group btn-group-sm mr-2" role="group" aria-label="Secound group">
                             <button type="button" class="btn btn-secondary" disabled><i class="fa fa-fw fas fa-search"></i></button> <input  type="text" ng-model="filtroPais" />
                         </div>
@@ -41,8 +37,6 @@
                                 <td>{{propiedad.Pais}}</td>
 
                                 <td> <button id="{{propiedad.IdPropiedad}}" ng-click="detallar($event.currentTarget.id)" class="btn btn-group-sm btn-primary propiedad-detalle" data-toggle="modal" data-target="#detallePropiedadModal"><i class="fa fa-fw fa fa-info-circle"></i></button>
-                                     <button id="{{propiedad.IdPropiedad}}" class="btn btn-group-sm btn-primary propiedad-seleccionada" data-toggle="modal" data-target="#addEditPropiedadModal"><i class="fa fa-fw fas fa-pencil-square-o"></i></button>
-                                     <button id="{{propiedad.IdPropiedad}}" ng-click="borrar($event.currentTarget.id)" class="btn btn-group-sm btn-danger propiedad-a-borrar"> <i class="fa fa-fw fas fa-remove"></i></button>
                                 </td>
                             </tr>
                         </tbody>
@@ -54,11 +48,6 @@
         <div class="modal fade" id="detallePropiedadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             @Html.Partial("_DetallePropiedad")
         </div>
-
-        <div class="modal fade" id="addEditPropiedadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            @Html.Partial("_AgregarEditarPropiedad")
-        </div>
-
     </div>        
 
 <script src="~/Scripts/app/propiedadSection.js"></script>

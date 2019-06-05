@@ -16,7 +16,7 @@ namespace HomeSwitchHome.ViewModels
 
         public bool Login { get; set; }
 
-        public bool Premium { get; set; }
+        public string Premium { get; set; }
 
         public string Nombre { get; set; }
 
@@ -54,6 +54,7 @@ namespace HomeSwitchHome.ViewModels
             this.Banco = cliente.Banco;
             this.MedioDePago = cliente.MedioDePago;
             this.Email = cliente.Email;
+            this.Login = cliente.USUARIO.Login;
 
             return this;
         }

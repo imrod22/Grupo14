@@ -44,8 +44,7 @@ namespace HomeSwitchHome.Controllers
                     var rol = "CLIENTE";
 
                     if (this.usuarioService.EsUsuarioPremium(usuarioActual.IdUsuario))
-                    {
-                        clienteActual.Premium = this.usuarioService.ObtenerInformacionPremium(clienteActual.IdCliente);
+                    {   
                         rol = "PREMIUM";
                     }
 

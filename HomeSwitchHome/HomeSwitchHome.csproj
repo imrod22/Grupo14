@@ -352,7 +352,7 @@
     <Content Include="Areas\Subasta\Views\web.config" />
     <Content Include="Areas\Propiedad\Views\Propiedad\Index.cshtml" />
     <Content Include="Areas\Propiedad\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Propiedad\Views\Propiedad\_AgregarEditarPropiedad.cshtml" />
+    <Content Include="Areas\Administrador\Views\Administrador\_AgregarEditarPropiedad.cshtml" />
     <Content Include="Content\fonts\TitilliumWeb-Black.ttf" />
     <Content Include="Content\fonts\TitilliumWeb-Bold.ttf" />
     <Content Include="Content\fonts\TitilliumWeb-BoldItalic.ttf" />
@@ -368,7 +368,7 @@
     <Content Include="Areas\Subasta\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Subasta\Views\Subasta\Index.cshtml" />
     <Content Include="Areas\Subasta\Views\Subasta\_PujaSubasta.cshtml" />
-    <Content Include="Areas\Subasta\Views\Subasta\_AgregarEditarSubasta.cshtml" />
+    <Content Include="Areas\Administrador\Views\Administrador\_AgregarEditarSubasta.cshtml" />
     <Content Include="Areas\Administrador\Views\web.config" />
     <Content Include="Areas\Administrador\Views\Administrador\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />

@@ -27,6 +27,6 @@ namespace HomeSwitchHome
 
         public virtual PROPIEDAD PROPIEDAD { get; set; }
 
-        public bool Confirmada { get; set; }
+        public string Estado { get; set; }
     }
 }

@@ -30,7 +30,7 @@ namespace HomeSwitchHome.Services
 
         public bool EsUsuarioPremium(int IdCliente)
         {
-            return this.HomeSwitchDB.PREMIUM.Any(t => t.IdCliente == IdCliente);
+            return this.HomeSwitchDB.PREMIUM.Any(t => t.IdCliente == IdCliente && t.Aceptado == "SI");
         }
 
         public bool EsAdmin(int IdUsuario)
@@ -73,8 +73,18 @@ namespace HomeSwitchHome.Services
         {
             var nuevoPremium = new PREMIUM();
             nuevoPremium.IdCliente = IdCliente;
+            nuevoPremium.Aceptado = "NO";
 
             this.HomeSwitchDB.PREMIUM.Add(nuevoPremium);
+            this.HomeSwitchDB.SaveChanges();
+        }
+
+        public void AceptarPremium(int IdCliente)
+        {
+            var premiumAceptado = this.HomeSwitchDB.PREMIUM.Where(t => t.IdCliente == IdCliente).FirstOrDefault();
+            premiumAceptado.Aceptado = "SI";
+
+            this.HomeSwitchDB.PREMIUM.Add(premiumAceptado);
             this.HomeSwitchDB.SaveChanges();
         }
 
@@ -122,10 +132,10 @@ namespace HomeSwitchHome.Services
             {
                 var premium = this.ObtenerInformacionPremium(cliente.IdCliente);
 
-                cliente.Premium = premium != null ? false : premium.Aceptado;
+                cliente.Premium = premium == null ? string.Empty : premium.Aceptado;
             }
 
-            return clientes.Where(t => !t.Premium).ToList();
+            return clientes.Where(t => t.Premium == "NO").ToList();
         }
 
         private bool ExisteCliente(ClienteViewModel clienteACrear)

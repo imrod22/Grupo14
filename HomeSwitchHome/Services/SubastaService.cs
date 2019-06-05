@@ -12,9 +12,7 @@ namespace HomeSwitchHome.Services
         public SubastaService()
         {
             this.HomeSwitchDB = new HomeSwitchHomeDB();
-        }
-
-       
+        }       
 
         public bool CrearSubasta(SUBASTA nuevaSubasta)
         {
@@ -70,6 +68,17 @@ namespace HomeSwitchHome.Services
                 return false;
         }
 
+        public bool ConfirmarSubasta(int idSubasta)
+        {
+            var subastaModelo = this.HomeSwitchDB.SUBASTA.SingleOrDefault(t => t.IdSubasta == idSubasta);
+
+            subastaModelo.Estado = string.Format("CONFIRMADO");
+            this.HomeSwitchDB.SaveChanges();
+            CacheHomeSwitchHome.RemoveOnCache("Subastas");
+
+            return true;
+        }
+
         public bool RemoverSubasta(int idSubasta)
         {
             var subastaABorrar = this.HomeSwitchDB.SUBASTA.SingleOrDefault(t => t.IdPropiedad == idSubasta);
@@ -97,7 +106,7 @@ namespace HomeSwitchHome.Services
         {
             var subastas = this.ObtenerSubastas();
 
-            return subastas.Where(t => Convert.ToDateTime(t.FechaComienzo).AddDays(3) < DateTime.Now).ToList();
+            return subastas.Where(t => Convert.ToDateTime(t.FechaComienzo).AddDays(3) < DateTime.Now && t.Estado == "NUEVO").ToList();
         }
 
         public List<SubastaViewModel> ObtenerSubastasFuturas()

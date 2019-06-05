@@ -22,8 +22,13 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="oi oi-menu"></span>
             </button>
+            <div class="collapse navbar-collapse" id="ftco-nav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">@Html.ActionLink("SALIR", "CerrarSesion", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                </ul>            
+            </div>
         </div>
-    </nav>
+</nav>
 
     <div ng-controller="admincontroller">
 
@@ -67,7 +72,7 @@
             </div>
         </section>
 
-        <section class="ftco-section testimony-section">
+        <section class="ftco-section testimony-section" id="subastas">
             <div class="container mt-8">
 
                 <div class="row ftco-animate justify-content-center">
@@ -92,8 +97,6 @@
                                         <div class="card-body">
                                             <h6 class="card-title"><b>SUBASTAS FUTURAS</b></h6>
 
-
-
                                             <table class="table table-sm table-borderless scrolled" style="text-align: left;">
                                                 <thead>
                                                     <tr>
@@ -108,7 +111,7 @@
 
                                                         <td>{{subasta.Propiedad.Nombre}}</td>
                                                         <td>{{subasta.ValorMinimo}} USD</td>
-                                                        <td>{{subasta.FechaDeComienzo}}</td>
+                                                        <td>{{subasta.FechaComienzo}}</td>
 
                                                         <td>
                                                             <button id="{{subasta.IdSubasta}}" class="btn btn-group-sm btn-primary propiedad-seleccionada" data-toggle="modal" data-target="#addEditPropiedadModal"><i class="fa fa-fw fas fa-pencil-square-o"></i></button>
@@ -136,12 +139,12 @@
                                                     <tr ng-repeat="subasta in subastasfin">
 
                                                         <td>{{subasta.Propiedad.Nombre}}</td>
-                                                        <td>{{subasta.ValorMaximo}}</td>
-                                                        <td>{{subasta.Cliente.Usuario}}</td>
+                                                        <td>{{subasta.ValorActual}}</td>
+                                                        <td>{{subasta.Cliente.Apellido}}, {{subasta.Cliente.Nombre}}</td>
 
                                                         <td>
-                                                            <button id="{{subasta.IdSubasta}}" ng-click="confirmarsubasta($event.currentTarget.id)" class="btn btn-group-sm btn-success subasta-seleccionada" data-toggle="modal"><i class="fa fa-fw fas fa-check"></i></button>
-                                                            <button id="{{subasta.IdSubasta}}" ng-click="rechazarsubasta($event.currentTarget.id)" class="btn btn-group-sm btn-danger propiedad-a-borrar"> <i class="fa fa-fw fas fa-ban"></i></button>
+                                                            <button id="{{subasta.IdSubasta}}" ng-click="confirmarsubasta($event.currentTarget.id)" class="btn btn-group-sm btn-success"><i class="fa fa-fw fas fa-check"></i></button>
+                                                            <button id="{{subasta.IdSubasta}}" ng-click="rechazarsubasta($event.currentTarget.id)" class="btn btn-group-sm btn-danger subasta-a-borrar"> <i class="fa fa-fw fas fa-ban"></i></button>
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -156,7 +159,7 @@
             </div>
         </section>
 
-        <section class="ftco-section testimony-section">
+        <section class="ftco-section testimony-section" id="clientes">
             <div class="container mt-8">
 
                 <div class="row ftco-animate justify-content-center">
@@ -182,11 +185,11 @@
                                                     </tr>
                                                 </thead>
 
-                                                <tbody>
+                                                <tbody ng-repeat="nuevo in nuevosclientes">
                                                     <tr>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
+                                                        <td>{{nuevo.Nombre}}</td>
+                                                        <td>{{nuevo.Apellido}}</td>
+                                                        <td><button id="{{nuevo.IdUsuario}}" ng-click="aceptarcliente($event.currentTarget.id)" class="btn btn-group-sm btn-success"><i class="fa fa-fw fas fa-check"></i></button></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -205,11 +208,11 @@
                                                     </tr>
                                                 </thead>
 
-                                                <tbody>
+                                                <tbody ng-repeat="premium in parapremiums">
                                                     <tr>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
+                                                        <td>{{premium.Nombre}}</td>
+                                                        <td>{{premium.Apellido}}</td>
+                                                        <td> <button id="{{premium.IdPremium}}" ng-click="confirmarpremium($event.currentTarget.id)" class="btn btn-group-sm btn-success"><i class="fa fa-fw fas fa-check"></i></button></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -222,6 +225,10 @@
                 </div>
             </div>
         </section>
+        
+        <div class="modal fade" id="addEditPropiedadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            @Html.Partial("_AgregarEditarPropiedad")
+        </div>
 
     </div>
 

@@ -14,6 +14,6 @@ namespace HomeSwitchHome
 
         public int IdCliente { get; set; }
 
-        public bool Aceptado { get; set; }
+        public string Aceptado { get; set; }
     }
 }
