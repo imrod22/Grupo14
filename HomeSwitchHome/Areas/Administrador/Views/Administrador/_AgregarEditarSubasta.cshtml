@@ -28,8 +28,8 @@
                 <div class="form-row">
                     <div class="form-group col-md-8">
                         <label for="pais">Residencia:</label>
-                        <select ng-model="propiedad" type="text" class="form-control" id="propiedadSelect" placeholder="Seleccione una propiedad">
-                            <option id="{{ prop.IdPropiedad }}" ng-repeat="prop in propiedadesList"> {{ prop.Nombre}} ({{prop.Pais}})</option>
+                        <select ng-model="propiedad" type="text" class="form-control" id="subastaSelect" placeholder="Seleccione una propiedad">
+                            <option id="{{ prop.IdPropiedad }}" ng-repeat="prop in propiedades"> {{ prop.Nombre}} ({{prop.Pais}})</option>
                         </select>
 
                     </div>
@@ -39,8 +39,8 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-            <button type="button" id="boton-crear-propiedad" style="display:none" ng-click="aceptar()" class="btn btn-primary">Agregar</button>
-            <button type="button" id="boton-modificar-propiedad" style="display:none" ng-click="modificar()" class="btn btn-primary">Guardar Cambios</button>
+            <button type="button" id="boton-crear-subasta" style="display:none" ng-click="crearsubasta()" class="btn btn-primary">Agregar</button>
+            <button type="button" id="boton-modificar-subasta" style="display:none" ng-click="modificarsubasta()" class="btn btn-primary">Guardar Cambios</button>
         </div>
     </div>
 </div>

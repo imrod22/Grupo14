@@ -27,45 +27,12 @@ namespace HomeSwitchHome.Areas.Subasta.Controllers
             return Json(this.servicioSubasta.ObtenerSubastasActivas().ToArray(), JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult CrearSubasta(string propiedad, string fechaComienzo, string valorMinimo)
-        {
-            SUBASTA nuevaSubasta = new SUBASTA();
-            nuevaSubasta.IdPropiedad = Int32.Parse(propiedad);
-            nuevaSubasta.FechaComienzo = DateTime.Parse(fechaComienzo);
-            nuevaSubasta.ValorMinimo = Convert.ToDecimal(valorMinimo);
-
-            if (this.servicioSubasta.CrearSubasta(nuevaSubasta))
-                return Json(this.servicioSubasta.ObtenerSubastasFuturas().ToArray(), JsonRequestBehavior.AllowGet);
-
-            return null;
-        }
-
-        public JsonResult ModificarSubasta(string idSubasta, string fechaComienzo, string valorMinimo)
-        {
-            SUBASTA subastaActualizada = new SUBASTA();
-            subastaActualizada.FechaComienzo = DateTime.Parse(fechaComienzo);
-            subastaActualizada.ValorMinimo = Convert.ToDecimal(valorMinimo);
-
-            if (this.servicioSubasta.ActualizarSubasta(subastaActualizada, Int32.Parse(idSubasta)))
-                return Json(this.servicioSubasta.ObtenerSubastasFuturas().ToArray(), JsonRequestBehavior.AllowGet);
-
-            return null;
-        }
-
         public JsonResult PujarEnSubasta(string idSubasta, string valorPujado)
         {
             SUBASTA subastaPujada = new SUBASTA();
             subastaPujada.ValorActual = Convert.ToDecimal(valorPujado);
 
             if (this.servicioSubasta.PujarSubasta(subastaPujada, Int32.Parse(idSubasta)))
-                return Json(this.servicioSubasta.ObtenerSubastasFuturas().ToArray(), JsonRequestBehavior.AllowGet);
-
-            return null;
-        }
-
-        public JsonResult BorrarSubasta(string idSubasta)
-        {
-            if (this.servicioSubasta.RemoverSubasta(Int32.Parse(idSubasta)))
                 return Json(this.servicioSubasta.ObtenerSubastasFuturas().ToArray(), JsonRequestBehavior.AllowGet);
 
             return null;

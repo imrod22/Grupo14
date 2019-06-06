@@ -14,7 +14,6 @@ switchHomeApp.controller('propiedadesController', function ($scope, $http) {
         $scope.propiedadesListFiltradas = result.data;
     });
 
-    // filtra las propiedades
     $scope.filtroNombre = '';
     $scope.filtroPais = '';
 
@@ -23,68 +22,6 @@ switchHomeApp.controller('propiedadesController', function ($scope, $http) {
     }
     function filtroPropiedades(prop) {
         return prop.Nombre.toUpperCase().includes($scope.filtroNombre.toUpperCase()) && prop.Pais.includes($scope.filtroPais.toUpperCase());
-    }
-
-    $scope.aceptar = function () {
-
-        if (corroborarInputs()) {
-            $http.post("/Propiedad/Propiedad/CrearPropiedad", {
-                'nombre': $scope.nombre,
-                'descripcion': $scope.descripcion,
-                'pais': $scope.pais
-            }).then(function successCallback(response) {
-
-                if (response.data == "") {
-                    alert("No se ha podido crear la residencia con los campos ingresados.");
-                }
-                else {                    
-                    alert("Se ha creado la residencia con éxito.");
-                    $scope.propiedadesList = response.data;
-                }
-
-                $('#addEditPropiedadModal').modal('hide');
-
-            }, function errorCallback() {
-                $('#addEditPropiedadModal').modal('hide');
-                alert("No se ha podido crear la residencia con los campos ingresados.");
-            });
-        } else {
-
-            alert("No se han ingresado todos los datos correctamente!");
-        }
-    }
-
-    $scope.modificar = function () {
-        if (corroborarInputs()) {
-            $http.post("/Propiedad/Propiedad/ModificarPropiedad", {
-
-                'idpropiedad': $("#identificadorPropiedad").val(),
-                'descripcion': $("#descripcionPropiedad").val(),
-                'pais': $("#paisPropiedad").val()
-
-            }).then(function successCallback(response) {
-
-                if (response.data == "") {
-                    alert("No se ha podido actualizar la residencia con los campos ingresados.");
-                    
-                }
-                else {
-                    alert("Se ha actualizado la residencia con éxito.");
-                    $scope.propiedadesList = response.data;
-
-                }
-
-                $('#addEditPropiedadModal').modal('hide');
-
-            }, function errorCallback() {
-                $('#addEditPropiedadModal').modal('hide');
-                alert("No se ha podido actualizar la residencia con los campos ingresados.");
-            });
-        }
-        else {
-
-            alert("No se han ingresado todos los datos correctamente!");
-        }
     }
 
     $scope.detallar = function (element) {
@@ -116,31 +53,7 @@ switchHomeApp.controller('propiedadesController', function ($scope, $http) {
             alert("Se ha producido un error en el servidor.");
         });
     }
-
-    $scope.borrar = function (element) {
-        var idPropiedad = element;
-
-        $http.post("/Propiedad/Propiedad/BorrarPropiedad",
-        {
-                'idPropiedad': idPropiedad
-        }
-
-        ).then(function successCallback(response) {
-
-            if (response.data == "") {
-                alert("No se ha podido eliminar la residencia, tiene subastas asociadas o reservas futuras!");
-            }
-
-            else {
-                alert("La residencia seleccionada ha sido eliminada.");
-                $scope.propiedadesList = response.data;
-            }        
-
-        }, function errorCallback() {
-            alert("No se ha podido eliminar la residencia, tiene subastas asociadas o reservas futuras!");
-        });
-    }
-
+    
     $scope.reservar = function (element) {
 
         var idPropiedad = element;

@@ -8,6 +8,8 @@
     var subastas = (List<SubastaViewModel>)Model;
     var ultimasNovedades = subastas.OrderByDescending(t => t.FechaComienzo).Take(5);
 
+    var cliente = ViewBag.cliente;
+
 }
 
 <section class="ftco-section testimony-section bg-light">

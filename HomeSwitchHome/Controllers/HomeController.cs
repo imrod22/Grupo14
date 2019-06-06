@@ -1,4 +1,5 @@
-﻿using System.Web.Http;
+﻿using System.Web;
+using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Security;
 using HomeSwitchHome.Services;
@@ -29,14 +30,14 @@ namespace HomeSwitchHome.Controllers
         public ActionResult Login(string usuario, string password)
         {
             var usuarioActual = this.usuarioService.ObtenerUsuarioRegistrado(usuario, password);
-
+            
             if (usuarioActual != null)
             {
                 if (this.usuarioService.EsAdmin(usuarioActual.IdUsuario))
                 {
                     FormsAuthentication.SetAuthCookie("ADMIN", true);
                     return Json(Url.Action("Index", "Administrador", new { area = "Administrador"}));
-
+                                       
                 }
                 else {
 
@@ -51,8 +52,9 @@ namespace HomeSwitchHome.Controllers
                     Session.Add("ClienteActual", clienteActual);
 
                     FormsAuthentication.SetAuthCookie(rol, true);
+
                     return Json(Url.Action("Index", "Home"));
-                }
+                }                
             }
              
             return null;

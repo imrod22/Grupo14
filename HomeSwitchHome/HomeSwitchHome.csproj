@@ -301,6 +301,7 @@
     <Content Include="Scripts\angular-touch.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\app\AdminSeccion.js" />
     <Content Include="Scripts\app\Admin_AngularJS.js" />
     <Content Include="Scripts\app\HomePage.js" />
     <Content Include="Scripts\app\propiedadSection.js" />

@@ -25,10 +25,10 @@
             <div class="collapse navbar-collapse" id="ftco-nav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">@Html.ActionLink("SALIR", "CerrarSesion", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                </ul>            
+                </ul>
             </div>
         </div>
-</nav>
+    </nav>
 
     <div ng-controller="admincontroller">
 
@@ -61,8 +61,8 @@
                                     <td>{{propiedad.Pais}}</td>
 
                                     <td>
-                                        <button id="{{propiedad.IdPropiedad}}" class="btn btn-group-sm btn-primary propiedad-seleccionada" data-toggle="modal" data-target="#addEditPropiedadModal"><i class="fa fa-fw fas fa-pencil-square-o"></i></button>
-                                        <button id="{{propiedad.IdPropiedad}}" ng-click="borrar($event.currentTarget.id)" class="btn btn-group-sm btn-danger propiedad-a-borrar"> <i class="fa fa-fw fas fa-remove"></i></button>
+                                        <button id="{{propiedad.IdPropiedad}}" class="btn btn-group-sm btn-primary propiedad-modificar" data-toggle="modal" data-target="#addEditPropiedadModal"><i class="fa fa-fw fas fa-pencil-square-o"></i></button>
+                                        <button id="{{propiedad.IdPropiedad}}" ng-click="borrarpropiedad($event.currentTarget.id)" class="btn btn-group-sm btn-danger propiedad-a-borrar"> <i class="fa fa-fw fas fa-remove"></i></button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -84,7 +84,7 @@
 
                             <div class="btn-toolbar py-2" role="toolbar" aria-label="Toolbar with button groups">
                                 <div class="btn-group btn-group-sm mr-2" role="group" aria-label="First group">
-                                    <button type="button" class="btn btn-success add-nueva-propiedad" data-toggle="modal" data-target="#addEditPropiedadModal"><i class="fa fa-fw fas fa-plus"></i></button>
+                                    <button type="button" class="btn btn-success add-nueva-subasta" data-toggle="modal" data-target="#addEditSubastaModal"><i class="fa fa-fw fas fa-plus"></i></button>
                                 </div>
                             </div>
 
@@ -107,15 +107,15 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr ng-repeat="subasta in subastasoff" | filter: {Pais : filtroSubasta}">
+                                                    <tr ng-repeat="subasta in subastasoff">
 
                                                         <td>{{subasta.Propiedad.Nombre}}</td>
                                                         <td>{{subasta.ValorMinimo}} USD</td>
                                                         <td>{{subasta.FechaComienzo}}</td>
 
                                                         <td>
-                                                            <button id="{{subasta.IdSubasta}}" class="btn btn-group-sm btn-primary propiedad-seleccionada" data-toggle="modal" data-target="#addEditPropiedadModal"><i class="fa fa-fw fas fa-pencil-square-o"></i></button>
-                                                            <button id="{{subasta.IdSubasta}}" ng-click="borrar($event.currentTarget.id)" class="btn btn-group-sm btn-danger propiedad-a-borrar"> <i class="fa fa-fw fas fa-remove"></i></button>
+                                                            <button id="{{subasta.IdSubasta}}" class="btn btn-group-sm btn-primary subasta-modificar" data-toggle="modal" data-target="#addEditSubastaModal"><i class="fa fa-fw fas fa-pencil-square-o"></i></button>
+                                                            <button id="{{subasta.IdSubasta}}" ng-click="borrarsubasta($event.currentTarget.id)" class="btn btn-group-sm btn-danger propiedad-a-borrar"> <i class="fa fa-fw fas fa-remove"></i></button>
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -236,4 +236,5 @@
     </div>
 
     <script src="~/Scripts/app/Admin_AngularJS.js"></script>
+    <script src="~/Scripts/app/AdminSeccion.js"></script>
 </body>

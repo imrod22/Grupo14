@@ -81,9 +81,9 @@ namespace HomeSwitchHome.Services
 
         public bool RemoverSubasta(int idSubasta)
         {
-            var subastaABorrar = this.HomeSwitchDB.SUBASTA.SingleOrDefault(t => t.IdPropiedad == idSubasta);
+            var subastaABorrar = this.HomeSwitchDB.SUBASTA.SingleOrDefault(t => t.IdSubasta == idSubasta);
             
-            if (subastaABorrar != null && subastaABorrar.FechaComienzo.AddDays(3).CompareTo(DateTime.Now) == 0)
+            if (subastaABorrar != null && subastaABorrar.FechaComienzo > DateTime.Now)
             {
                 this.HomeSwitchDB.SUBASTA.Remove(subastaABorrar);
                 this.HomeSwitchDB.SaveChanges();
