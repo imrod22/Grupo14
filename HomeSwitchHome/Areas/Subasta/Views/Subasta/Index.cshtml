@@ -5,28 +5,29 @@
 
 <div class="container">
 
-    <div class="row justify-content-center pb-5">
+    <div class="row justify-content-center pb-5 jumbotron jumbotron-fluid shadow" style="margin: 20px">
         <div class="col-md-7 text-center heading-section ftco-animate fadeInUp ftco-animated">
-            <h4 class="subheading">SUBASTAS</h4>       
-            
+            <h4 class="display-4">Subastas activas,</h4>
+            <span class="h4">¡empiece a pujar!</span>    
         </div>
     </div>
 </div>
 
 <div ng-controller="subastasController">
     <section class="ftco-section services-section" id="destacados">
-        <div ng-hide="subastasIsEmpty()" class="container">
-            <div class="row">
-                <div class="btn-toolbar py-2" role="toolbar" aria-label="Toolbar with button groups">
-                    <div class="btn-group btn-group-sm mr-2" role="group" aria-label="Secound group">
-                        <h6 class="toast-header">Activas hoy: {{date | date:'yyyy-MM-dd'}} </h6>
-                    </div>
+        <div class="col-lg-4">
+            <h5>Filtrar</h5>
+            <input class="form-control" type="text" ng-model="filtroNombre" ng-change="filtrar()" placeholder="Filtre por nombre de la residencia" />
+            <input style="margin-top: 5px" class="form-control" type="text" ng-model="filtroPais" ng-change="filtrar()" placeholder="Filtre por el país de la residencia" />
+        </div>
+        <div class="row">
+            <div class="btn-toolbar py-2" role="toolbar" aria-label="Toolbar with button groups">
+                <div class="btn-group btn-group-sm mr-2" role="group" aria-label="Secound group">
+                    <h6 class="toast-header">Activas hoy: {{date | date:'yyyy-MM-dd'}} </h6>
                 </div>
             </div>
-            <div class="col-lg-4">
-                <input class="form-control" type="text" ng-model="filtroNombre" ng-change="filtrar()" placeholder="Filtre por nombre de la residencia" />
-                <input style="margin-top: 5px" class="form-control" type="text" ng-model="filtroPais" ng-change="filtrar()" placeholder="Filtre por el país de la residencia" />
-            </div>
+        </div>
+        <div ng-hide="subastasIsEmpty()" class="container">
             <div style="margin-top:15px" class="row">
                 <div class="col col-sm-4" ng-repeat="subasta in subastasListFiltradas">
                     <div class="card flexcss">
@@ -43,14 +44,16 @@
                             </p>
                             <div class="card-footer">
 
-                                <button id="{{subasta.IdSubasta}}" class="btn btn-group-sm btn-primary subasta-puja" data-toggle="modal" data-target="#pujaSubastaModal"><i class="fa fa-fw fas fa-hand-paper-o"></i></button>
+                                <button id="{{subasta.IdSubasta}}" class="btn btn-group-sm btn-primary subasta-puja" data-toggle="modal" title="Pujar" data-target="#pujaSubastaModal"><i class="fa fa-fw fas fa-hand-paper-o"></i></button>
                             </div>
                         </div>
                     </div>
 
                 </div>
             </div>
-
+        </div>
+        <div ng-show="subastasIsEmpty()" class="container">
+            <p>No se encuentran subastas con ese nombre/país.</p>
         </div>
     </section>
 
