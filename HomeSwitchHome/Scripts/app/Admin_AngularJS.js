@@ -4,7 +4,6 @@ adminsection.controller('admincontroller', function ($scope, $http) {
 
     $scope.subastasoff;
     $scope.subastasfin;
-
     $scope.parapremiums;
     $scope.nuevosclientes;
 

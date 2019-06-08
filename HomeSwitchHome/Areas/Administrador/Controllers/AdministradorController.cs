@@ -20,8 +20,6 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
             this.servicioUsuario = usuarioService;
         }
 
-        // GET: Administrador/Administrador
-
         public ActionResult Index()
         {
             return View();

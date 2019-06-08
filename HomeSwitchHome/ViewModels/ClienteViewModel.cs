@@ -30,7 +30,7 @@ namespace HomeSwitchHome.ViewModels
 
         public string Banco { get; set; }
 
-        public int? CBU { get; set; }
+        public string CBU { get; set; }
 
         public int? DNI { get; set; }
 
@@ -50,7 +50,7 @@ namespace HomeSwitchHome.ViewModels
             this.DNI = cliente.DNI;
             this.DomicioFiscal = cliente.DomicioFiscal;
             this.FechaDeNacimiento = cliente.FechaDeNacimiento;
-            this.CBU = cliente.CBU;
+            this.CBU = Convert.ToString(cliente.CBU);
             this.Banco = cliente.Banco;
             this.MedioDePago = cliente.MedioDePago;
             this.Email = cliente.Email;
