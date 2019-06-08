@@ -214,6 +214,8 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Administrador\AdministradorAreaRegistration.cs" />
     <Compile Include="Areas\Administrador\Controllers\AdministradorController.cs" />
+    <Compile Include="Areas\Perfil\Controllers\PerfilController.cs" />
+    <Compile Include="Areas\Perfil\PerfilAreaRegistration.cs" />
     <Compile Include="Areas\Propiedad\Controllers\PropiedadController.cs" />
     <Compile Include="Areas\Propiedad\PropiedadAreaRegistration.cs" />
     <Compile Include="Areas\Subasta\Controllers\SubastaController.cs" />
@@ -303,6 +305,7 @@
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\app\Admin_AngularJS.js" />
     <Content Include="Scripts\app\HomePage.js" />
+    <Content Include="Scripts\app\Perfil_AngularJS.js" />
     <Content Include="Scripts\app\propiedadSection.js" />
     <Content Include="Scripts\app\Propiedad_AngularJS.js" />
     <Content Include="Scripts\app\RegistroSection.js" />
@@ -371,6 +374,8 @@
     <Content Include="Areas\Administrador\Views\Administrador\_AgregarEditarSubasta.cshtml" />
     <Content Include="Areas\Administrador\Views\web.config" />
     <Content Include="Areas\Administrador\Views\Administrador\Index.cshtml" />
+    <Content Include="Areas\Perfil\Views\web.config" />
+    <Content Include="Areas\Perfil\Views\Perfil\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\i18n\angular-locale_af-na.js" />
     <Content Include="Scripts\i18n\angular-locale_af-za.js" />
@@ -1167,6 +1172,8 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Administrador\Models\" />
+    <Folder Include="Areas\Perfil\Models\" />
+    <Folder Include="Areas\Perfil\Views\Shared\" />
     <Folder Include="Areas\Propiedad\Models\" />
     <Folder Include="Areas\Subasta\Models\" />
     <Folder Include="Views\PartialViews\" />

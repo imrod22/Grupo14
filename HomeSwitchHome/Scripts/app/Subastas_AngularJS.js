@@ -135,7 +135,7 @@ switchHomeApp.controller('subastasController', function ($scope, $http) {
     }
 
     $scope.subastasIsEmpty = function () {
-        return $scope.subastasList.length == 0;
+        return $scope.subastasListFiltradas.length == 0;
     }
 
     $scope.finalizaEn = function (sub) {
