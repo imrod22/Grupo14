@@ -17,7 +17,7 @@ namespace HomeSwitchHome.Services
 
         bool CrearSubasta(SUBASTA nuevaSubasta);
 
-        bool PujarSubasta(SUBASTA subastaPujada, int idSubasta);
+        bool PujarSubasta(SUBASTA subastaPujada, int idSubasta, int idCliente);
 
         bool ActualizarSubasta(SUBASTA subastaActualizada, int idSubasta);
 

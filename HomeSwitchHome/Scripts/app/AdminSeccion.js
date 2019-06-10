@@ -1,4 +1,18 @@
-﻿$(document).ready(function () {
+﻿$(document).ready(function () {        
+
+    var datenow = new Date();
+    datenow.setDate(datenow.getDate() + 183);
+
+    $('input[name="daterange"]').daterangepicker({
+        opens: 'left',
+        singleDatePicker: true,
+        autoUpdateInput: false,
+        startDate: datenow,
+        minDate: datenow,
+        locale: {
+            cancelLabel: 'Clear'
+        }
+    });
 
     $(document).on("click", ".add-nueva-propiedad", function () {
 
@@ -9,7 +23,8 @@
         $('#nombrePropiedad').attr('readonly', false);
 
         $('#boton-crear-propiedad').css('display', 'block');
-        $('#boton-modificar-propiedad').css('display', 'none');
+        $('#boton-modificar-propiedad').css('display', 'none');        
+
     });
 
     $(document).on("click", ".propiedad-modificar", function () {
@@ -33,7 +48,7 @@
 
             },
             error: function () {
-                alert("Ha habido un problema en el servidor.");
+                swal("Home Switch Home", "Ha habido un problema en el servidor.", "error");
             }
         });
     });
@@ -45,19 +60,20 @@
 
         $('#boton-modificar-subasta').css('display', 'block');
         $('#boton-crear-subasta').css('display', 'none');
+        $("#fechaSubasta").attr('readonly', true);
 
         $.ajax({
             type: "GET",
             url: "/Administrador/Administrador/ObtenerInformacionSubasta",
             data: { idSubasta: subastaId },
             success: function (response) {
-
+                
                 $("#identificadorSubasta").val(response.IdSubasta)
-                $("#fechaComienzo").val(response.FechaComienzo);
+                $("#fechaSubasta").val(response.FechaComienzo);
                 $("#valorMinimo").val(response.ValorMinimo);
             },
             error: function () {
-                alert("Ha habido un problema en el servidor.");
+                swal("Home Switch Home", "Ha habido un problema en el servidor.", "error");
             }
         });
     });
@@ -66,13 +82,23 @@
 
         $("#identificadorSubasta").val("");
 
-        $("#fechaComienzo").val("");
+        $("#fechaSubasta").attr('readonly', false);
+
+        $("#fechaSubasta").val("");
         $("#valorMinimo").val("");
 
         $('#nombrePropiedad').attr('readonly', false);
 
         $('#boton-crear-subasta').css('display', 'block');
         $('#boton-modificar-subasta').css('display', 'none');
+    });
+
+    $('input[name="daterange"]').on('apply.daterangepicker', function (ev, picker) {
+        $(this).val(picker.startDate.format('MM/DD/YYYY'));
+    });
+
+    $('input[name="daterange"]').on('cancel.daterangepicker', function (ev, picker) {
+        $(this).val('');
     });
 
 })

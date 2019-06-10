@@ -14,7 +14,8 @@
                     <input style="display : none" id="identificadorSubasta">
                     <div class="form-group col-md-8">
                         <label for="nombre">Fecha de Comienzo:</label>
-                        <input ng-model="fechaComienzo" type="date" class="form-control" id="fechaSubasta">
+                        <input ng-model="fechaComienzo" type="text" name="daterange" class="form-control" id="fechaSubasta"/>
+                        
                     </div>
                 </div>
 
@@ -28,7 +29,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-8">
                         <label for="pais">Residencia:</label>
-                        <select ng-model="propiedad" type="text" class="form-control" id="subastaSelect" placeholder="Seleccione una propiedad">
+                        <select ng-model="propiedad" type="text" class="form-control" id="propiedad_select" placeholder="Seleccione una propiedad">
                             <option id="{{ prop.IdPropiedad }}" ng-repeat="prop in propiedades"> {{ prop.Nombre}} ({{prop.Pais}})</option>
                         </select>
 

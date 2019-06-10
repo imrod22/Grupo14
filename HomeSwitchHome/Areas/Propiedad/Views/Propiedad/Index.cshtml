@@ -43,21 +43,30 @@
                                 <td>
                                     <button id="{{propiedad.IdPropiedad}}" ng-click="detallar($event.currentTarget.id)" class="btn btn-group-sm btn-primary propiedad-detalle" data-toggle="modal" data-target="#detallePropiedadModal">
                                         <i class="fa fa-fw fa fa-info-circle"></i>
-                                        <span class="tooltiptext">Detalle</span>
+                                        <span class="tooltiptext">INFO</span>
                                     </button>
                                 </td>
-                                <td>
-                                    <button id="{{propiedad.IdPropiedad}}" ng-click="solicitarNovedad($event.currentTarget.id)" class="btn btn-group-sm btn-primary propiedad-detalle">
-                                        <i class="fa fa-area-chart" aria-hidden="true"></i>
-                                        <span class="tooltiptext">Solicitar novedad</span>
-                                    </button>
-                                </td>
-                                <td>
-                                    <button id="{{propiedad.IdPropiedad}}" ng-click="reservar($event.currentTarget.id)" class="btn btn-group-sm btn-primary propiedad-detalle">
-                                        <i class="fa fa-plane" aria-hidden="true"></i>
-                                        <span class="tooltiptext">Reservar</span>
-                                    </button>
-                                </td>
+
+                                @{if (User.Identity.Name == "CLIENTE")
+                                    {
+                                        <td>
+                                            <button id="{{propiedad.IdPropiedad}}" ng-click="solicitarNovedad($event.currentTarget.id)" class="btn btn-group-sm btn-primary propiedad-detalle">
+                                                <i class="fa fas fa-bell" aria-hidden="true"></i>
+                                                <span class="tooltiptext">NOTIFICAR NOVEDADES</span>
+                                            </button>
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td>
+                                            <button id="{{propiedad.IdPropiedad}}" ng-click="reservar($event.currentTarget.id)" class="btn btn-group-sm btn-primary propiedad-detalle">
+                                            <i class="fa fas fa-calendar-check-o" aria-hidden="true"></i>
+                                            <span class="tooltiptext">RESERVAR</span>
+                                            </button>
+                                        </td>
+                                    }
+
+                                    }
                             </tr>
                         </tbody>
                     </table>

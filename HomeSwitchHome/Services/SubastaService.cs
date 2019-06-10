@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Http;
 
 namespace HomeSwitchHome.Services
 {
@@ -31,7 +32,7 @@ namespace HomeSwitchHome.Services
                 return false;
         }
         
-        public bool PujarSubasta(SUBASTA subastaPujada, int idSubasta)
+        public bool PujarSubasta(SUBASTA subastaPujada, int idSubasta, int idCliente)
         {
                 var subastaActualizar = this.HomeSwitchDB.SUBASTA.SingleOrDefault(t => t.IdSubasta == idSubasta);
 
@@ -41,7 +42,7 @@ namespace HomeSwitchHome.Services
                         && subastaActualizar.ValorActual < subastaPujada.ValorActual && subastaActualizar.ValorMinimo < subastaPujada.ValorActual)
                 {
                     subastaActualizar.ValorActual = subastaPujada.ValorActual;
-                    subastaActualizar.IdCliente = 1;
+                    subastaActualizar.IdCliente = idCliente;
 
                     this.HomeSwitchDB.SaveChanges();
                     CacheHomeSwitchHome.RemoveOnCache("Subastas");

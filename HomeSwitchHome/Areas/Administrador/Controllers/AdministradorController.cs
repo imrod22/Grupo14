@@ -133,5 +133,21 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
 
             return Json(currentPropiedad, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult AceptarPremium(int idCliente)
+        {
+            if (this.servicioUsuario.ConfirmarPremium(idCliente))
+                return Json(this.servicioUsuario.ObtenerSolicitudesPremium().ToArray(), JsonRequestBehavior.AllowGet);
+
+            return null;
+        }
+
+        public JsonResult AceptarNuevoUsuario(int idCliente)
+        {
+            if (this.servicioUsuario.ConfirmarNuevoCliente(idCliente))
+                return Json(this.servicioUsuario.ObtenerNuevosClientes().ToArray(), JsonRequestBehavior.AllowGet);
+
+            return null;
+        }
     }
 }

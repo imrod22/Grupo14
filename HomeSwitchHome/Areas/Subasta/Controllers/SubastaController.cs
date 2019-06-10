@@ -1,4 +1,5 @@
 ﻿using HomeSwitchHome.Services;
+using HomeSwitchHome.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,7 +33,9 @@ namespace HomeSwitchHome.Areas.Subasta.Controllers
             SUBASTA subastaPujada = new SUBASTA();
             subastaPujada.ValorActual = Convert.ToDecimal(valorPujado);
 
-            if (this.servicioSubasta.PujarSubasta(subastaPujada, Int32.Parse(idSubasta)))
+            var sesionUser = (ClienteViewModel)Session["ClienteActual"];
+
+            if (this.servicioSubasta.PujarSubasta(subastaPujada, int.Parse(idSubasta), sesionUser.IdCliente))
                 return Json(this.servicioSubasta.ObtenerSubastasFuturas().ToArray(), JsonRequestBehavior.AllowGet);
 
             return null;

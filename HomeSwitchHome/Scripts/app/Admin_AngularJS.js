@@ -45,22 +45,24 @@ adminsection.controller('admincontroller', function ($scope, $http) {
             }).then(function successCallback(response) {
 
                 if (response.data == "") {
-                    alert("No se ha podido crear la residencia con los campos ingresados.");
+                    swal("Home Switch Home", "No se ha podido crear la residencia con los campos ingresados.", "error");
+
                 }
                 else {
-                    alert("Se ha creado la residencia con éxito.");
                     $scope.propiedades = response.data;
+                    swal("Home Switch Home", "Se ha creado la residencia con éxito.", "success");                   
                 }
 
                 $('#addEditPropiedadModal').modal('hide');
 
             }, function errorCallback() {
+                swal("Home Switch Home", "No se ha podido crear la residencia con los campos ingresados.", "error");
                 $('#addEditPropiedadModal').modal('hide');
-                alert("No se ha podido crear la residencia con los campos ingresados.");
             });
-        } else {
-
-            alert("No se han ingresado todos los datos correctamente!");
+        }
+        else {
+            swal("Home Switch Home", "No se han ingresado los datos correctamente!", "error");
+            
         }
     }
 
@@ -75,11 +77,12 @@ adminsection.controller('admincontroller', function ($scope, $http) {
             }).then(function successCallback(response) {
 
                 if (response.data == "") {
-                    alert("No se ha podido actualizar la residencia con los campos ingresados.");
+                    swal("Home Switch Home", "No se ha podido actualizar la residencia con los campos ingresados.", "success");
 
                 }
                 else {
-                    alert("Se ha actualizado la residencia con éxito.");
+                    swal("Home Switch Home", "Se ha actualizado la residencia con éxito.", "error");
+                    alert();
                     $scope.propiedades = response.data;
 
                 }
@@ -108,7 +111,7 @@ adminsection.controller('admincontroller', function ($scope, $http) {
         ).then(function successCallback(response) {
 
             if (response.data == "") {
-                alert("No se ha podido eliminar la residencia, tiene subastas asociadas o reservas futuras!");
+                alert("No se ha podido eliminar la residencia, tiene subastas asociadas o reservas futuras.");
             }
 
             else {
@@ -117,30 +120,43 @@ adminsection.controller('admincontroller', function ($scope, $http) {
             }
 
         }, function errorCallback() {
-            alert("No se ha podido eliminar la residencia, tiene subastas asociadas o reservas futuras!");
+            alert("No se ha podido eliminar la residencia, tiene subastas asociadas o reservas futuras.");
         });
     }
 
     $scope.crearsubasta = function () {
 
-        var idPropiedad = $('#propiedadSelect option:selected').attr('id');
+        if (valoresDeSubastaAceptados) {
 
-        $http.post("/Administrador/Administrador/CrearSubasta", {
-            'propiedad': idPropiedad,
-            'valorMinimo': $scope.valorMinimo,
-            'fechaComienzo': $scope.fechaComienzo
+            var idPropiedad = $('#propiedad_select option:selected').attr('id');
 
-        }).then(function successCallback(response) {
-            alert("Se ha creado la subasta con éxito.");
+            $http.post("/Administrador/Administrador/CrearSubasta", {
+                'propiedad': idPropiedad,
+                'valorMinimo': $scope.valorMinimo,
+                'fechaComienzo': $('input[name="daterange"]').val()
 
-            $('#addEditSubastaModal').modal('hide');
+            }).then(function successCallback(response) {
 
-            $scope.subastasoff = response.data;
+                if (response == null) {
+                    swal("Home Switch Home", "No se ha podido crear la subasta para la propiedad en la fecha seleccionada.", "error");
+                }
+                else {
+                    swal("Home Switch Home", "Se ha creado la subasta con éxito.", "success");
+                    $scope.subastasoff = response.data;
+                }
+                $('#addEditSubastaModal').modal('hide');
 
-        }, function errorCallback() {
-            $('#addEditSubastaModal').modal('hide');
-            alert("No se ha podido crear la subasta con los campos ingresados.");
-        });
+
+            }, function errorCallback() {
+                swal("Home Switch Home", "No se ha podido crear la subasta con los campos ingresados.", "error");
+                $('#addEditSubastaModal').modal('hide');
+            });
+
+        }
+
+        else {
+            swal("Home Switch Home", "Los valores ingresados no son correctos.", "error");            
+        }        
     }
 
     $scope.modificarsubasta = function () {
@@ -148,17 +164,17 @@ adminsection.controller('admincontroller', function ($scope, $http) {
             $http.post("/Administrador/Administrador/ModificarSubasta", {
 
                 'idSubasta': $("#identificadorSubasta").val(),
-                'fechaComienzo': $("#fechaSubasta").val(),
+                'fechaComienzo': $('input[name="daterange"]').val(),
                 'valorMinimo': $("#valorMinimo").val()
 
             }).then(function successCallback(response) {
 
                 if (result.data == "") {
-                    alert("No se ha podido actualizar la subasta con los campos ingresados.");
-
+                    swal("Home Switch Home", "No se ha podido actualizar la subasta con los campos ingresados.", "error");
+                    
                 }
                 else {
-                    alert("Se ha actualizado la subasta con éxito.");
+                    swal("Home Switch Home", "Se ha actualizado la subasta con éxito.", "success");
                     $scope.subastasoff = response.data;
 
                 }
@@ -166,13 +182,12 @@ adminsection.controller('admincontroller', function ($scope, $http) {
                 $('#addEditSubastaModal').modal('hide');
 
             }, function errorCallback() {
-                $('#addEditSubastaModal').modal('hide');
-                alert("No se ha podido actualizar la subasta con los campos ingresados.");
+                    $('#addEditSubastaModal').modal('hide');
+                    swal("Home Switch Home", "No se ha podido actualizar la subasta con los campos ingresados.", "error");
             });
         }
         else {
-
-            alert("No se han ingresado todos los datos correctamente!");
+            swal("Home Switch Home", "No se han ingresado todos los datos correctamente!", "error");
         }
     }
 
@@ -186,12 +201,71 @@ adminsection.controller('admincontroller', function ($scope, $http) {
 
         ).then(function successCallback(result) {
 
-            alert("La subasta seleccionada ha sido eliminada.");
+            if (result == null)
+            {
+                swal("Home Switch Home", "No se ha podido eliminar la subasta seleccionada.", "error");
+            }
+
+            swal("Home Switch Home", "La subasta seleccionada ha sido eliminada.", "success");
             $scope.subastasoff = result.data;
 
         }, function errorCallback() {
-
-            alert("No se ha podido eliminar la subasta");
+            swal("Home Switch Home", "No se ha podido eliminar la subasta. Ha ocurrido un error en el servidor.", "error");
+            
         });
     }
+
+    $scope.aceptarnuevousuario = function (element) {
+
+        var idCliente = element;
+
+        $http.post("/Administrador/Administrador/AceptarNuevoUsuario",
+            {
+                'idCliente': idCliente
+            }
+
+        ).then(function successCallback(result) {
+
+            if (result == null) {
+                swal("Home Switch Home", "El sistema no puede validar el usuario seleccionado.", "error");
+            }
+
+            swal("Home Switch Home", "Se ha procesado el registro para el nuevo usuario.", "success");
+            $scope.nuevosclientes = result.data;
+
+        }, function errorCallback() {
+            swal("Home Switch Home", "No se ha podido validar la solicitud. Ha ocurrido un error en el servidor.", "error");
+
+        });
+    }
+
+    $scope.confirmarpremium = function (element) {
+
+        var idCliente = element;
+
+        $http.post("/Administrador/Administrador/AceptarPremium",
+            {
+                'idCliente': idCliente
+            }
+
+        ).then(function successCallback(result) {
+
+            if (result == null) {
+                swal("Home Switch Home", "El sistema no puede validar el usuario seleccionado.", "error");
+            }
+
+            swal("Home Switch Home", "Se ha procesado la solicitud premium del usuario seleccionado.", "success");
+            $scope.parapremiums = result.data;
+
+        }, function errorCallback() {
+            swal("Home Switch Home", "No se ha podido validar la solicitud. Ha ocurrido un error en el servidor.", "error");
+
+        });
+    }
+
+    function valoresDeSubastaAceptados()
+    {
+        return $.isNumeric($scope.valorMinimo);
+    }
+
 });
