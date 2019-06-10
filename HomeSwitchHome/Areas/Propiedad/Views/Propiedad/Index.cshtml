@@ -20,7 +20,7 @@
                             <button type="button" class="btn btn-secondary" disabled><i class="fa fa-fw fas fa-search"></i></button>
 
                             <input type="text" ng-model="filtroNombre" ng-change="filtrar()" placeholder="Filtre por nombre" />
-                            <input style="margin-left:5px" type="text" ng-model="filtroPais" ng-change="filtrar()" placeholder="Filtre por país"/>
+                            <input style="margin-left:5px" type="text" ng-model="filtroPais" ng-change="filtrar()" placeholder="Filtre por país" />
                         </div>
 
                     </div>
@@ -50,7 +50,7 @@
                                 @{if (User.Identity.Name == "CLIENTE")
                                     {
                                         <td>
-                                            <button id="{{propiedad.IdPropiedad}}" ng-click="solicitarNovedad($event.currentTarget.id)" class="btn btn-group-sm btn-primary propiedad-detalle">
+                                            <button id="{{propiedad.IdPropiedad}}" ng-click="solicitarnovedad($event.currentTarget.id)" class="btn btn-group-sm btn-primary propiedad-detalle">
                                                 <i class="fa fas fa-bell" aria-hidden="true"></i>
                                                 <span class="tooltiptext">NOTIFICAR NOVEDADES</span>
                                             </button>
@@ -59,14 +59,14 @@
                                     else
                                     {
                                         <td>
-                                            <button id="{{propiedad.IdPropiedad}}" ng-click="reservar($event.currentTarget.id)" class="btn btn-group-sm btn-primary propiedad-detalle">
-                                            <i class="fa fas fa-calendar-check-o" aria-hidden="true"></i>
-                                            <span class="tooltiptext">RESERVAR</span>
+                                            <button id="{{propiedad.IdPropiedad}}" ng-click="elegirfecha($event.currentTarget.id)" class="btn btn-group-sm btn-primary propiedad-detalle" data-toggle="modal" data-target="#reservaPropiedadModal">
+                                                <i class="fa fas fa-calendar-check-o" aria-hidden="true"></i>
+                                                <span class="tooltiptext">RESERVAR</span>
                                             </button>
                                         </td>
                                     }
 
-                                    }
+                                }
                             </tr>
                         </tbody>
                     </table>
@@ -76,6 +76,10 @@
 
         <div class="modal fade" id="detallePropiedadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             @Html.Partial("_DetallePropiedad")
+        </div>
+
+        <div class="modal fade" id="reservaPropiedadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            @Html.Partial("_ReservaPropiedad")
         </div>
     </div>        
 

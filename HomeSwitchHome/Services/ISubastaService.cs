@@ -15,6 +15,8 @@ namespace HomeSwitchHome.Services
 
         List<SubastaViewModel> ObtenerSubastasFuturas();
 
+        List<SubastaViewModel> ObtenerSubastasDePropiedad(int idPropiedad);
+
         bool CrearSubasta(SUBASTA nuevaSubasta);
 
         bool PujarSubasta(SUBASTA subastaPujada, int idSubasta, int idCliente);

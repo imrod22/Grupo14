@@ -6,6 +6,8 @@ namespace HomeSwitchHome.ViewModels
     {
         public int IdSubasta { get; set; }
 
+        public int IdPropiedad { get; set; }
+
         public PropiedadViewModel Propiedad { get; set; }
 
         public string FechaComienzo { get; set; }
@@ -16,6 +18,8 @@ namespace HomeSwitchHome.ViewModels
 
         public string Estado { get; set; }
 
+        public int? IdCliente { get; set; }
+
         public ClienteViewModel Cliente { get; set; }
 
         public SubastaViewModel() { }
@@ -23,11 +27,15 @@ namespace HomeSwitchHome.ViewModels
         public SubastaViewModel ToViewModel(SUBASTA subasta)
         {
             this.IdSubasta = subasta.IdSubasta;
-            this.Propiedad = new PropiedadViewModel().ToViewModel(subasta.PROPIEDAD);
+            this.IdPropiedad = subasta.IdPropiedad;
+
+            if (subasta.PROPIEDAD != null)
+                this.Propiedad = new PropiedadViewModel().ToViewModel(subasta.PROPIEDAD);
             this.FechaComienzo = Convert.ToString(subasta.FechaComienzo.Date);
             this.ValorMinimo = subasta.ValorMinimo;
             this.ValorActual = subasta.ValorActual;
             this.Estado = subasta.Estado;
+            this.IdCliente = subasta.IdCliente;
             
             if(subasta.CLIENTE != null)
                 this.Cliente = new ClienteViewModel().ToViewModel(subasta.CLIENTE);

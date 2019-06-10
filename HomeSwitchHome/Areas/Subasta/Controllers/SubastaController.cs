@@ -32,7 +32,6 @@ namespace HomeSwitchHome.Areas.Subasta.Controllers
         {
             SUBASTA subastaPujada = new SUBASTA();
             subastaPujada.ValorActual = Convert.ToDecimal(valorPujado);
-
             var sesionUser = (ClienteViewModel)Session["ClienteActual"];
 
             if (this.servicioSubasta.PujarSubasta(subastaPujada, int.Parse(idSubasta), sesionUser.IdCliente))
@@ -44,7 +43,6 @@ namespace HomeSwitchHome.Areas.Subasta.Controllers
         public JsonResult ObtenerInformacionSubasta(int idSubasta)
         {
             var subastasActuales = this.servicioSubasta.ObtenerSubastasActivas();
-
             var currentPropiedad = subastasActuales.Where(t => t.IdSubasta == idSubasta).SingleOrDefault();
 
             return Json(currentPropiedad, JsonRequestBehavior.AllowGet);

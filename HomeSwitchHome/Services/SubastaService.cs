@@ -57,9 +57,10 @@ namespace HomeSwitchHome.Services
         {
             if (subastaActualizada.FechaComienzo.CompareTo(DateTime.Now) > 0 && subastaActualizada.ValorMinimo > 0)
             {
-                var propiedadModelo = this.HomeSwitchDB.SUBASTA.SingleOrDefault(t => t.IdSubasta == idSubasta);
-                propiedadModelo.FechaComienzo = subastaActualizada.FechaComienzo;
-                propiedadModelo.ValorMinimo = subastaActualizada.ValorMinimo;
+                var subastaModelo = this.HomeSwitchDB.SUBASTA.SingleOrDefault(t => t.IdSubasta == idSubasta);
+                subastaModelo.FechaComienzo = subastaActualizada.FechaComienzo;
+                subastaModelo.ValorMinimo = subastaActualizada.ValorMinimo;
+                
                 this.HomeSwitchDB.SaveChanges();
                 CacheHomeSwitchHome.RemoveOnCache("Subastas");
 
@@ -84,7 +85,7 @@ namespace HomeSwitchHome.Services
         {
             var subastaABorrar = this.HomeSwitchDB.SUBASTA.SingleOrDefault(t => t.IdSubasta == idSubasta);
             
-            if (subastaABorrar != null && subastaABorrar.FechaComienzo > DateTime.Now)
+            if (subastaABorrar != null)
             {
                 this.HomeSwitchDB.SUBASTA.Remove(subastaABorrar);
                 this.HomeSwitchDB.SaveChanges();
@@ -96,11 +97,18 @@ namespace HomeSwitchHome.Services
                 return false;
         }
 
+        public List<SubastaViewModel> ObtenerSubastasDePropiedad(int idPropiedad)
+        {
+            var subastas = this.ObtenerSubastas();
+
+            return subastas.Where(t => t.IdPropiedad == idPropiedad).ToList();
+        }
+
         public List<SubastaViewModel> ObtenerSubastasActivas()
         {
             var subastas = this.ObtenerSubastas();
 
-            return subastas.Where(t => Convert.ToDateTime(t.FechaComienzo) <= DateTime.Now && DateTime.Now <= Convert.ToDateTime(t.FechaComienzo).AddDays(3)).ToList();
+            return subastas.Where(t => Convert.ToDateTime(t.FechaComienzo) <= DateTime.Now && DateTime.Now <= Convert.ToDateTime(t.FechaComienzo).AddDays(3) && t.Estado == "NUEVO").ToList();
         }
 
         public List<SubastaViewModel> ObtenerSubastasFinalizadas()
@@ -114,7 +122,7 @@ namespace HomeSwitchHome.Services
         {
             var subastas = this.ObtenerSubastas();
 
-            return subastas.Where(t => DateTime.Now < Convert.ToDateTime(t.FechaComienzo)).ToList();
+            return subastas.Where(t => DateTime.Now < Convert.ToDateTime(t.FechaComienzo) && t.Estado == "NUEVO").ToList();
         }
 
         private List<SubastaViewModel> ObtenerSubastas()
@@ -125,10 +133,26 @@ namespace HomeSwitchHome.Services
             {
                 subastasActuales = new List<SubastaViewModel>();
                 var subastasBD = HomeSwitchDB.SUBASTA.ToList();
+                
 
                 foreach (var subasta in subastasBD)
                 {
-                    subastasActuales.Add(new SubastaViewModel().ToViewModel(subasta));
+                    var vistaSubasta = new SubastaViewModel().ToViewModel(subasta);
+
+                    if(vistaSubasta.Propiedad == null)
+                    {
+                        var propiedadModelo = HomeSwitchDB.PROPIEDAD.SingleOrDefault(t => t.IdPropiedad == vistaSubasta.IdPropiedad);
+                        vistaSubasta.Propiedad = new PropiedadViewModel().ToViewModel(propiedadModelo);
+                    }
+
+                    if(vistaSubasta.IdCliente != null && vistaSubasta.Cliente == null)
+                    {
+                        var clienteModelo = HomeSwitchDB.CLIENTE.SingleOrDefault(t => t.IdCliente == vistaSubasta.IdCliente);
+                        vistaSubasta.Cliente = new ClienteViewModel().ToViewModel(clienteModelo);
+                    }
+
+                    subastasActuales.Add(vistaSubasta);
+
                 }
 
                 CacheHomeSwitchHome.SaveToCache("Subastas", subastasActuales);

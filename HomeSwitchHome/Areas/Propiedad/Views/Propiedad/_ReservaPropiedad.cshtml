@@ -1,0 +1,32 @@
+﻿<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content px-4 py-2">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle">RESERVACION SEMANAL</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="modal-body">
+
+            <form>
+                <div class="form-row">
+                    <input ng-model="propiedadreserva" style="display : none" id="identificadorPropiedad">
+                    <div class="form-group col-md-6">
+                        <label for="pais">Fecha de comienzo para la reserva semanal:</label>
+                        <input ng-model="fechareserva" type="text" name="reservafecha" class="form-control" id="fechareserva" />
+                    </div>
+
+                </div>
+            </form>
+
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            <button ng-click="reservarpropiedad()" class="btn btn-group-sm btn-primary propiedad-detalle">
+                <i class="fa fas fa-calendar-check-o" aria-hidden="true"></i>
+                <span class="tooltiptext">RESERVAR</span>
+            </button>
+        </div>
+    </div>
+</div>

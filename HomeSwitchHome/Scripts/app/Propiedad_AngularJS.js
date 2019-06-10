@@ -2,12 +2,6 @@
 
 switchHomeApp.controller('propiedadesController', function ($scope, $http) {
     
-    function corroborarInputs() {
-        return (
-            ($("#nombrePropiedad").val().length >= 8)
-            && ($("#descripcionPropiedad").val().length >= 20))
-    }
-
     $http.get("/Propiedad/Propiedad/Propiedades").then(function (result) {
 
         $scope.propiedadesList = result.data;
@@ -49,22 +43,33 @@ switchHomeApp.controller('propiedadesController', function ($scope, $http) {
             $scope.detalleimagenes = response.data.Imagenes;
             
         }, function errorCallback() {
-
-            alert("Se ha producido un error en el servidor.");
+            swal("Home Switch Home", "Se ha producido un error en el servidor.", "error");  
         });
     }
+
+    $scope.elegirfecha = function (element) {
+
+        $scope.propiedadreserva = element;
+        $scope.fechareserva = '';
+
+    }
     
-    $scope.reservar = function (element) {
-
-        var idPropiedad = element;
-        //var idUsuario 0 ?;
-
+    $scope.reservarpropiedad = function () {
+        
         $http.post("/Propiedad/Propiedad/ReservarPropiedad",
             {
-                'idPropiedad': idPropiedad
+                'idPropiedad': $scope.propiedadreserva,
+                'fecha': $scope.fechareserva
             }
 
         ).then(function successCallback(response) {
+
+            if (response == "Ok") {
+                swal("Home Switch Home", "Se ha reservado la residencia en la fecha seleccionada.", "success");
+            }
+            else {
+                swal("Home Switch Home", "No es posible realizar la reserva.", "error");  
+            }
 
         }, function errorCallback() {
 
@@ -74,7 +79,6 @@ switchHomeApp.controller('propiedadesController', function ($scope, $http) {
     $scope.solicitarNovedad = function (element) {
 
         var idPropiedad = element;
-        //var idUsuario 0 ?;
 
         $http.post("/Propiedad/Propiedad/SolicitarNovedadPropiedad",
             {

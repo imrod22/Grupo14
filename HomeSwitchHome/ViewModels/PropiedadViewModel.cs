@@ -1,5 +1,6 @@
 ﻿using HomeSwitchHome.Services;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace HomeSwitchHome.ViewModels
 {
@@ -13,7 +14,7 @@ namespace HomeSwitchHome.ViewModels
 
         public string Pais { get; set; }
 
-        public List<RESERVA> Reservas { get; set; }
+        public List<ReservaViewModel> Reservas { get; set; }
 
         public List<ImagenViewModel> Imagenes { get; set; }
 
@@ -26,17 +27,26 @@ namespace HomeSwitchHome.ViewModels
             this.Descripcion = propiedad.Descripcion;
             this.Pais = propiedad.Pais;
             this.Imagenes = new List<ImagenViewModel>();
-            this.Reservas = new List<RESERVA>();
+            this.Reservas = new List<ReservaViewModel>();
 
             foreach (var reserva in propiedad.RESERVA)
             {
-                this.Reservas.Add(reserva);
+                this.Reservas.Add(new ReservaViewModel().ToViewModel(reserva));
             }
 
             foreach (var imagen in propiedad.IMAGEN)
             {                
                 this.Imagenes.Add(new ImagenViewModel().ToViewModel(imagen));
             }
+
+            if (!this.Imagenes.Any()) {
+
+                var imagenDefault = new ImagenViewModel();
+                imagenDefault.path = "/app-content/noimage_residencia.png";
+
+                this.Imagenes.Add(imagenDefault);
+            } 
+
 
             return this;
         }

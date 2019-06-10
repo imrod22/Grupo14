@@ -1,8 +1,6 @@
 ﻿using HomeSwitchHome.Services;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace HomeSwitchHome.Areas.Administrador.Controllers
@@ -98,6 +96,7 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
             nuevaSubasta.IdPropiedad = Int32.Parse(propiedad);
             nuevaSubasta.FechaComienzo = DateTime.Parse(fechaComienzo);
             nuevaSubasta.ValorMinimo = Convert.ToDecimal(valorMinimo);
+            nuevaSubasta.Estado = "NUEVO";
 
             if (this.servicioSubasta.CrearSubasta(nuevaSubasta))
                 return Json(this.servicioSubasta.ObtenerSubastasFuturas().ToArray(), JsonRequestBehavior.AllowGet);

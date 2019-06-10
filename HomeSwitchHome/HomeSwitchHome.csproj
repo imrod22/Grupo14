@@ -241,14 +241,17 @@
     <Compile Include="Models\USUARIO.cs" />
     <Compile Include="Services\CacheHomeSwitchHome.cs" />
     <Compile Include="Services\IPropiedadService.cs" />
+    <Compile Include="Services\IReservaService.cs" />
     <Compile Include="Services\ISubastaService.cs" />
     <Compile Include="Services\IUsuarioService.cs" />
+    <Compile Include="Services\ReservaService.cs" />
     <Compile Include="Services\SubastaService.cs" />
     <Compile Include="Services\UsuarioService.cs" />
     <Compile Include="ViewModels\ClienteViewModel.cs" />
     <Compile Include="ViewModels\ImagenViewModel.cs" />
     <Compile Include="Services\PropiedadService.cs" />
     <Compile Include="ViewModels\PropiedadViewModel.cs" />
+    <Compile Include="ViewModels\ReservaViewModel.cs" />
     <Compile Include="ViewModels\SubastaViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -281,7 +284,6 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
-    <Content Include="Content\hotel-datepicker.css" />
     <Content Include="Content\sweetalert.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
@@ -393,9 +395,8 @@
     <Content Include="Content\bootstrap-datepicker.css.map" />
     <Content Include="Areas\Perfil\Views\web.config" />
     <Content Include="Areas\Perfil\Views\Perfil\Index.cshtml" />
+    <Content Include="Areas\Propiedad\Views\Propiedad\_ReservaPropiedad.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
-    <Content Include="Scripts\fecha.js" />
-    <Content Include="Scripts\hotel-datepicker.js" />
     <Content Include="Scripts\i18n\angular-locale_af-na.js" />
     <Content Include="Scripts\i18n\angular-locale_af-za.js" />
     <Content Include="Scripts\i18n\angular-locale_af.js" />
