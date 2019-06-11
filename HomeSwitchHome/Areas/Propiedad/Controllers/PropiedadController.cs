@@ -50,7 +50,7 @@ namespace HomeSwitchHome.Areas.Propiedad.Controllers
 
                 this.reservaService.AgregarReserva(reservaNueva);
 
-                return Json("Ok", JsonRequestBehavior.AllowGet);
+                return Json(string.Format("Ok"), JsonRequestBehavior.AllowGet);
             }
 
             return Json(null, JsonRequestBehavior.AllowGet);

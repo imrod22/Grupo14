@@ -9,28 +9,30 @@
         <div class="modal-body">
 
             <form>
-                <div class="form-row">
+                <div class="form-row">                    
 
                     <input style="display : none" id="identificadorSubasta">
                     <div class="form-group col-md-8">
-                        <label for="nombre">Fecha de Comienzo:</label>
-                        <input ng-model="fechaComienzo" type="text" name="daterange" class="form-control" id="fechaSubasta"/>
-                        
+                        <label for="nombre">Fecha de Subasta:</label>
+                        <input ng-model="fechaComienzo" type="text" name="daterange"  />
+
+                        <input type="text" id="fechaSubasta" class="calendar form-control" />
+
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-12">
                         <label for="description">Valor minimo:</label>
-                        <input ng-model="valorMinimo" type="number" class="form-control" id="valorMinimo">
+                        <input ng-model="valorMinimo" type="text" class="form-control" id="valorMinimo">
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-8">
                         <label for="pais">Residencia:</label>
-                        <select ng-model="propiedad" type="text" class="form-control" id="propiedad_select" placeholder="Seleccione una propiedad">
-                            <option id="{{ prop.IdPropiedad }}" ng-repeat="prop in propiedades"> {{ prop.Nombre}} ({{prop.Pais}})</option>
+                        <select ng-model="propiedad" type="text" class="form-control propiedad-select" id="propiedad_select" placeholder="Seleccione una propiedad">
+                            <option id="{{ prop.IdPropiedad }}" value="{{ prop.IdPropiedad }}" ng-repeat="prop in propiedades"> {{ prop.Nombre}} ({{prop.Pais}})</option>
                         </select>
 
                     </div>

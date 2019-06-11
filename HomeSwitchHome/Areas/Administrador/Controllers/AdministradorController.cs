@@ -1,5 +1,6 @@
 ﻿using HomeSwitchHome.Services;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -10,12 +11,14 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
         readonly IUsuarioService servicioUsuario;
         readonly ISubastaService servicioSubasta;
         readonly IPropiedadService servicioPropiedad;
+        readonly IReservaService servicioReserva;
 
-        public AdministradorController(IPropiedadService propiedadService, ISubastaService subastaService, IUsuarioService usuarioService)
+        public AdministradorController(IPropiedadService propiedadService, ISubastaService subastaService, IUsuarioService usuarioService, IReservaService reservaService)
         {
             this.servicioPropiedad = propiedadService;
             this.servicioSubasta = subastaService;
             this.servicioUsuario = usuarioService;
+            this.servicioReserva = reservaService;
         }
 
         public ActionResult Index()
@@ -128,9 +131,9 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
         {
             var subastasActuales = this.servicioSubasta.ObtenerSubastasFuturas();
 
-            var currentPropiedad = subastasActuales.Where(t => t.IdSubasta == idSubasta).SingleOrDefault();
+            var currentSubasta = subastasActuales.Where(t => t.IdSubasta == idSubasta).SingleOrDefault();
 
-            return Json(currentPropiedad, JsonRequestBehavior.AllowGet);
+            return Json(currentSubasta, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult AceptarPremium(int idCliente)
@@ -147,6 +150,28 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
                 return Json(this.servicioUsuario.ObtenerNuevosClientes().ToArray(), JsonRequestBehavior.AllowGet);
 
             return null;
+        }
+
+        public JsonResult ObtenerFechasOcupadasDePropiedad(int idPropiedad)
+        {
+            var reservasDePropiedad = this.servicioReserva.ObtenerReservasPropiedad(idPropiedad);
+
+            var fechasReserva = reservasDePropiedad.Where(t => t.IdPropiedad == idPropiedad).Select(t => Convert.ToDateTime(t.FechaReserva).Date).ToArray();
+
+            List<string> resultadoRangos = new List<string>();
+
+
+            foreach (var comienzoReserva in fechasReserva)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    var fechaActual = comienzoReserva.AddDays(i);
+                    resultadoRangos.Add(string.Format("{0}-{1}-{2}", fechaActual.Year, fechaActual.Month, fechaActual.Day));
+                }              
+
+            }
+
+            return Json(resultadoRangos.ToArray(), JsonRequestBehavior.AllowGet);            
         }
     }
 }

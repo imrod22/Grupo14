@@ -1,18 +1,53 @@
 ﻿$(document).ready(function () {        
 
-    var datenow = new Date();
-    datenow.setDate(datenow.getDate() + 183);
+    var datenow = moment().add(6, 'months');
 
-    $('input[name="daterange"]').daterangepicker({
-        opens: 'left',
-        singleDatePicker: true,
-        autoUpdateInput: false,
-        startDate: datenow,
-        minDate: datenow,
-        locale: {
-            cancelLabel: 'Clear'
-        }
+    $(function () {
+        $('input.calendar').pignoseCalendar({
+            minDate: datenow,
+            date: datenow,
+            theme: 'blue'
+        });
     });
+
+
+
+
+    $(document).on("change", ".propiedad-select", function () {
+        $('input[name="daterange"]').data('daterangepicker').remove();
+
+        var propiedadId = $('#propiedad_select option:selected').attr('id');
+
+        $.ajax({
+            type: "GET",
+            url: "/Administrador/Administrador/ObtenerFechasOcupadasDePropiedad",
+            data: { idPropiedad: propiedadId },
+            success: function (response) {
+
+                var resultado = [];
+
+                $.each(response, function (key, value) {
+                        resultado.push(value);
+                });
+
+                alert(resultado);
+
+                $('input.calendar').pignoseCalendar({
+                    minDate: datenow,
+                    date: datenow,
+                    theme: 'blue',
+                    disabledDates:[resultado],
+
+                });
+
+            },
+            error: function () {
+                swal("Home Switch Home", "Ha habido un problema en el servidor.", "error");
+            }
+        });
+
+    })
+
 
     $(document).on("click", ".add-nueva-propiedad", function () {
 
@@ -23,8 +58,7 @@
         $('#nombrePropiedad').attr('readonly', false);
 
         $('#boton-crear-propiedad').css('display', 'block');
-        $('#boton-modificar-propiedad').css('display', 'none');        
-
+        $('#boton-modificar-propiedad').css('display', 'none');
     });
 
     $(document).on("click", ".propiedad-modificar", function () {
@@ -32,8 +66,10 @@
 
         $('#nombrePropiedad').attr('readonly', true);
 
+
+
         $('#boton-modificar-propiedad').css('display', 'block');
-        $('#boton-crear-propiedad').css('display', 'none');
+        $('#boton-crear-propiedad').css('display', 'none');        
 
         $.ajax({
             type: "GET",
@@ -56,7 +92,7 @@
     $(document).on("click", ".subasta-modificar", function () {
         var subastaId = $(this).attr('id');
 
-        $('#nombrePropiedad').attr('readonly', true);
+        $('#propiedad_select').attr('disabled', true);
 
         $('#boton-modificar-subasta').css('display', 'block');
         $('#boton-crear-subasta').css('display', 'none');
@@ -71,6 +107,8 @@
                 $("#identificadorSubasta").val(response.IdSubasta)
                 $("#fechaSubasta").val(response.FechaComienzo);
                 $("#valorMinimo").val(response.ValorMinimo);
+                $("#propiedad_select").val(response.IdPropiedad);
+                                
             },
             error: function () {
                 swal("Home Switch Home", "Ha habido un problema en el servidor.", "error");
@@ -87,10 +125,21 @@
         $("#fechaSubasta").val("");
         $("#valorMinimo").val("");
 
-        $('#nombrePropiedad').attr('readonly', false);
+        $('#propiedad_select').attr('disabled', false);
 
         $('#boton-crear-subasta').css('display', 'block');
         $('#boton-modificar-subasta').css('display', 'none');
+
+        $('input[name="daterange"]').daterangepicker({
+            opens: 'left',
+            singleDatePicker: true,
+            autoUpdateInput: false,
+            startDate: datenow,
+            minDate: datenow,
+            locale: {
+                cancelLabel: 'Clear'
+            }
+        });
     });
 
     $('input[name="daterange"]').on('apply.daterangepicker', function (ev, picker) {

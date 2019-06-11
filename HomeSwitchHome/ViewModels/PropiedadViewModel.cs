@@ -14,8 +14,6 @@ namespace HomeSwitchHome.ViewModels
 
         public string Pais { get; set; }
 
-        public List<ReservaViewModel> Reservas { get; set; }
-
         public List<ImagenViewModel> Imagenes { get; set; }
 
         public PropiedadViewModel() { }
@@ -27,12 +25,6 @@ namespace HomeSwitchHome.ViewModels
             this.Descripcion = propiedad.Descripcion;
             this.Pais = propiedad.Pais;
             this.Imagenes = new List<ImagenViewModel>();
-            this.Reservas = new List<ReservaViewModel>();
-
-            foreach (var reserva in propiedad.RESERVA)
-            {
-                this.Reservas.Add(new ReservaViewModel().ToViewModel(reserva));
-            }
 
             foreach (var imagen in propiedad.IMAGEN)
             {                

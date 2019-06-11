@@ -29,7 +29,7 @@ adminsection.controller('admincontroller', function ($scope, $http) {
         $scope.nuevosclientes = result.data;
     });
 
-    function corroborarInputs() {
+    function datosDePropiedadCorrectos() {
         return (
             ($("#nombrePropiedad").val().length >= 8)
             && ($("#descripcionPropiedad").val().length >= 20))
@@ -37,7 +37,7 @@ adminsection.controller('admincontroller', function ($scope, $http) {
 
     $scope.crearpropiedad = function () {
 
-        if (corroborarInputs()) {
+        if (datosDePropiedadCorrectos()) {
             $http.post("/Administrador/Administrador/CrearPropiedad", {
                 'nombre': $scope.nombre,
                 'descripcion': $scope.descripcion,
@@ -61,13 +61,13 @@ adminsection.controller('admincontroller', function ($scope, $http) {
             });
         }
         else {
-            swal("Home Switch Home", "No se han ingresado los datos correctamente!", "error");
+            swal("Home Switch Home", "No se han ingresado los datos correctamente.", "warning");
             
         }
     }
 
     $scope.modificarpropiedad = function () {
-        if (corroborarInputs()) {
+        if (datosDePropiedadCorrectos()) {
             $http.post("/Administrador/Administrador/ModificarPropiedad", {
 
                 'idpropiedad': $("#identificadorPropiedad").val(),
@@ -77,11 +77,11 @@ adminsection.controller('admincontroller', function ($scope, $http) {
             }).then(function successCallback(response) {
 
                 if (response.data == "") {
-                    swal("Home Switch Home", "No se ha podido actualizar la residencia con los campos ingresados.", "success");
+                    swal("Home Switch Home", "No se ha podido actualizar la residencia con los campos ingresados.", "error");
 
                 }
                 else {
-                    swal("Home Switch Home", "Se ha actualizado la residencia con éxito.", "error");
+                    swal("Home Switch Home", "Se ha actualizado la residencia con éxito.", "success");
                     alert();
                     $scope.propiedades = response.data;
 
@@ -90,13 +90,12 @@ adminsection.controller('admincontroller', function ($scope, $http) {
                 $('#addEditPropiedadModal').modal('hide');
 
             }, function errorCallback() {
+                swal("Home Switch Home", "Ha ocurrido un error en el servidor.", "error");
                 $('#addEditPropiedadModal').modal('hide');
-                alert("No se ha podido actualizar la residencia con los campos ingresados.");
             });
         }
         else {
-
-            alert("No se han ingresado todos los datos correctamente!");
+            swal("Home Switch Home", "No se han ingresado todos los datos correctamente.", "warning");
         }
     }
 
@@ -111,7 +110,7 @@ adminsection.controller('admincontroller', function ($scope, $http) {
         ).then(function successCallback(response) {
 
             if (response.data == "") {
-                alert("No se ha podido eliminar la residencia, tiene subastas asociadas o reservas futuras.");
+                swal("Home Switch Home", "No se ha podido eliminar la residencia, tiene subastas asociadas o reservas futuras.", "warning");
             }
 
             else {
@@ -120,13 +119,14 @@ adminsection.controller('admincontroller', function ($scope, $http) {
             }
 
         }, function errorCallback() {
-            alert("No se ha podido eliminar la residencia, tiene subastas asociadas o reservas futuras.");
+            swal("Home Switch Home", "No se puede eliminar la residencia. Ha ocurrido un error en el servidor", "error");
+           
         });
     }
 
     $scope.crearsubasta = function () {
 
-        if (valoresDeSubastaAceptados) {
+        if (valoresDeSubastaAceptados()) {
 
             var idPropiedad = $('#propiedad_select option:selected').attr('id');
 
@@ -155,12 +155,12 @@ adminsection.controller('admincontroller', function ($scope, $http) {
         }
 
         else {
-            swal("Home Switch Home", "Los valores ingresados no son correctos.", "error");            
+            swal("Home Switch Home", "Los valores ingresados no son correctos.", "warning");            
         }        
     }
 
     $scope.modificarsubasta = function () {
-        if (!sonDatosInvalidos()) {
+        if (valoresDeSubastaAceptados()) {
             $http.post("/Administrador/Administrador/ModificarSubasta", {
 
                 'idSubasta': $("#identificadorSubasta").val(),
@@ -187,7 +187,7 @@ adminsection.controller('admincontroller', function ($scope, $http) {
             });
         }
         else {
-            swal("Home Switch Home", "No se han ingresado todos los datos correctamente!", "error");
+            swal("Home Switch Home", "No se han ingresado todos los datos correctamente!", "warning");
         }
     }
 

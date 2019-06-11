@@ -55,11 +55,14 @@ switchHomeApp.controller('propiedadesController', function ($scope, $http) {
     }
     
     $scope.reservarpropiedad = function () {
-        
+
+        var fechaSeleccionada = $('#fechareserva').val();
+
+
         $http.post("/Propiedad/Propiedad/ReservarPropiedad",
             {
                 'idPropiedad': $scope.propiedadreserva,
-                'fecha': $scope.fechareserva
+                'fecha': fechaSeleccionada
             }
 
         ).then(function successCallback(response) {
@@ -68,11 +71,11 @@ switchHomeApp.controller('propiedadesController', function ($scope, $http) {
                 swal("Home Switch Home", "Se ha reservado la residencia en la fecha seleccionada.", "success");
             }
             else {
-                swal("Home Switch Home", "No es posible realizar la reserva.", "error");  
+                swal("Home Switch Home", "No es posible realizar la reserva en la fecha seleccionada.", "error");  
             }
 
         }, function errorCallback() {
-
+                swal("Home Switch Home", "Se ha producido un error en el servidor.", "error");  
         });
     }
 
