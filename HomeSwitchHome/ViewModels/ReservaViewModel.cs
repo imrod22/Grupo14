@@ -12,11 +12,11 @@ namespace HomeSwitchHome.ViewModels
 
         public int IdPropiedad; 
 
-        public PROPIEDAD Propiedad;
+        public PropiedadViewModel Propiedad;
 
         public int IdCliente;
 
-        public CLIENTE Cliente;
+        public ClienteViewModel Cliente;
 
         public string FechaReserva;
 
@@ -25,10 +25,13 @@ namespace HomeSwitchHome.ViewModels
         public ReservaViewModel ToViewModel(RESERVA reserva)
         {
             this.IdReserva = reserva.IdReserva;
-            this.Propiedad =  reserva.PROPIEDAD;
+
+            if (reserva.PROPIEDAD != null)
+                this.Propiedad = new PropiedadViewModel().ToViewModel(reserva.PROPIEDAD);
             this.IdPropiedad = this.Propiedad.IdPropiedad;
 
-            this.Cliente = reserva.CLIENTE;
+            if (reserva.CLIENTE != null)
+                this.Cliente = new ClienteViewModel().ToViewModel(reserva.CLIENTE);
             this.IdCliente = this.Cliente.IdCliente;
 
             this.FechaReserva = reserva.Fecha.ToString();

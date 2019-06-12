@@ -6,8 +6,8 @@ adminsection.controller('admincontroller', function ($scope, $http) {
     $scope.subastasfin;
     $scope.parapremiums;
     $scope.nuevosclientes;
-
     $scope.propiedades;
+    $scope.reservas;
 
     $http.get("/Administrador/Administrador/SubastasSinEmpezar").then(function (result) {
         $scope.subastasoff = result.data;
@@ -27,6 +27,11 @@ adminsection.controller('admincontroller', function ($scope, $http) {
 
     $http.get("/Administrador/Administrador/NuevosClientes").then(function (result) {
         $scope.nuevosclientes = result.data;
+    });
+
+    $http.get("/Administrador/Administrador/ObtenerListadoReservas").then(function (result) {
+        $scope.reservas = result.data;
+
     });
 
     function datosDePropiedadCorrectos() {
@@ -113,7 +118,7 @@ adminsection.controller('admincontroller', function ($scope, $http) {
             }
 
             else {
-                alert("La residencia seleccionada ha sido eliminada.");
+                swal("Home Switch Home", "La residencia seleccionada ha sido eliminada.", "warning");
                 $scope.propiedades = response.data;
             }
 
@@ -136,19 +141,13 @@ adminsection.controller('admincontroller', function ($scope, $http) {
 
             }).then(function successCallback(response) {
 
-                if (response.data == "") {
-                    swal("Home Switch Home", "No se ha podido crear la subasta para la propiedad en la fecha seleccionada.", "error");
-                }
-                else {
-                    swal("Home Switch Home", "Se ha creado la subasta con éxito.", "success");
-                    $scope.subastasoff = response.data;
-                }
+                swal("Home Switch Home", "Se ha creado la subasta con éxito.", "success");
+                $scope.subastasoff = response.data;
                 $('#addEditSubastaModal').modal('hide');
 
+            }, function errorCallback(jqXHR) {
+                swal("Home Switch Home", jqXHR.data, "error");
 
-            }, function errorCallback() {
-                swal("Home Switch Home", "No se ha podido crear la subasta con los campos ingresados.", "error");
-                $('#addEditSubastaModal').modal('hide');
             });
 
         }
@@ -167,12 +166,12 @@ adminsection.controller('admincontroller', function ($scope, $http) {
 
             }).then(function successCallback(response) {
 
-                if (result.data == "") {
-                    swal("Home Switch Home", "El monto de la subasta no puede ser negativo.", "error");
+                if (response.data == "") {
+                    swal("Home Switch Home", "El monto de la subasta ingresado no es valido.", "error");
                     
                 }
                 else {
-                    swal("Home Switch Home", "Se ha actualizado la subasta con éxito.", "success");
+                    swal("Home Switch Home", "Se ha actualizado el monto de la subasta con éxito.", "success");
                     $scope.subastasoff = response.data;
 
                 }
@@ -181,31 +180,30 @@ adminsection.controller('admincontroller', function ($scope, $http) {
 
             }, function errorCallback() {
                     $('#addEditSubastaModal').modal('hide');
-                    swal("Home Switch Home", "No se ha podido actualizar la subasta con los campos ingresados.", "error");
+                    swal("Home Switch Home", "No se ha podido actualizar la subasta. Ha ocurrido un error en el servidor.", "error");
             });
         }
         else {
-            swal("Home Switch Home", "No se han ingresado todos los datos correctamente!", "warning");
+            swal("Home Switch Home", "No se han ingresado todos los datos correctamente", "warning");
         }
     }
 
     $scope.borrarsubasta = function (element) {
         var idSubasta = element;
 
-        $http.post("/Administrador/Administrador/BorrarSubasta",
-            {
+        $http.post("/Administrador/Administrador/BorrarSubasta", {
                 'idSubasta': idSubasta
             }
 
         ).then(function successCallback(result) {
 
-            if (result.data == null)
-            {
+            if (result.data == null) {
                 swal("Home Switch Home", "No se ha podido eliminar la subasta seleccionada.", "error");
             }
-
-            swal("Home Switch Home", "La subasta seleccionada ha sido eliminada.", "success");
-            $scope.subastasoff = result.data;
+            else {
+                swal("Home Switch Home", "La subasta seleccionada ha sido eliminada.", "success");
+                $scope.subastasoff = result.data;
+            }            
 
         }, function errorCallback() {
             swal("Home Switch Home", "No se ha podido eliminar la subasta. Ha ocurrido un error en el servidor.", "error");
@@ -224,12 +222,13 @@ adminsection.controller('admincontroller', function ($scope, $http) {
 
         ).then(function successCallback(result) {
 
-            if (result.data == null) {
+            if (result.data == "") {
                 swal("Home Switch Home", "El sistema no puede validar el usuario seleccionado.", "error");
             }
-
-            swal("Home Switch Home", "Se ha procesado el registro para el nuevo usuario.", "success");
-            $scope.nuevosclientes = result.data;
+            else {
+                swal("Home Switch Home", "Se ha procesado el registro para el nuevo usuario.", "success");
+                $scope.nuevosclientes = result.data;
+            }           
 
         }, function errorCallback() {
             swal("Home Switch Home", "No se ha podido validar la solicitud. Ha ocurrido un error en el servidor.", "error");
@@ -248,15 +247,87 @@ adminsection.controller('admincontroller', function ($scope, $http) {
 
         ).then(function successCallback(result) {
 
-            if (result == null) {
+            if (result.data == "") {
                 swal("Home Switch Home", "El sistema no puede validar el usuario seleccionado.", "error");
             }
+            else {
+                swal("Home Switch Home", "Se ha procesado la solicitud premium del usuario seleccionado.", "success");
+                $scope.parapremiums = result.data;
 
-            swal("Home Switch Home", "Se ha procesado la solicitud premium del usuario seleccionado.", "success");
-            $scope.parapremiums = result.data;
+            }           
 
         }, function errorCallback() {
             swal("Home Switch Home", "No se ha podido validar la solicitud. Ha ocurrido un error en el servidor.", "error");
+
+        });
+    }
+
+    $scope.confirmarsubasta = function (element) {
+        var idSubasta = element;
+
+        $http.post("/Administrador/Administrador/ConfirmarReservaDeSubasta",
+            {
+                'idSubasta': idSubasta
+            }
+
+        ).then(function successCallback(result) {
+
+            if (result.data == "") {
+                swal("Home Switch Home", "El usuario ya no posee creditos para acceder a la reserva obtenida, se ha cancelado la subasta.", "error");
+            }
+            else {
+                swal("Home Switch Home", "Se ha confirmado la subasta y generado la reserva para usuario que obtuvo la subasta.", "success");
+                $scope.subastasfin = result.data;
+            }            
+
+        }, function errorCallback() {
+            swal("Home Switch Home", "No se ha podido confirmar la subasta. Ha ocurrido un error en el servidor.", "error");
+
+        });
+    }
+
+    $scope.rechazarsubasta = function (element) {
+        var idSubasta = element;
+
+        $http.post("/Administrador/Administrador/CancelarSubasta",
+            {
+                'idSubasta': idSubasta
+            }
+
+        ).then(function successCallback(result) {
+
+            if (result.data == "") {
+                swal("Home Switch Home", "No se ha podido cancelar la subasta seleccionada.", "error");
+            }
+            else {
+                swal("Home Switch Home", "Se ha cancelado la subasta.", "success");
+                $scope.subastasfin = result.data;
+            }
+            
+
+        }, function errorCallback() {
+            swal("Home Switch Home", "No se ha podido cancelar la subasta. Ha ocurrido un error en el servidor.", "error");
+
+        });
+    }
+
+    $scope.cancelarreserva = function (element) {
+        var idReserva = element;
+
+        $http.post("/Administrador/Administrador/CancelarReservaDeCliente",
+            {
+                'idReserva': idReserva
+            }
+
+        ).then(function successCallback(result) {
+
+            
+                swal("Home Switch Home", "Se ha cancelado la reserva.", "success");
+                $scope.reservas = result.data;
+            
+
+        }, function errorCallback() {
+            swal("Home Switch Home", "No se ha podido cancelar la reserva. Ha ocurrido un error en el servidor.", "error");
 
         });
     }

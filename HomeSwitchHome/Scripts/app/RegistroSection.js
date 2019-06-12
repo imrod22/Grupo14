@@ -9,17 +9,16 @@
             data: cliente,
             success: function (response) {
                 if (response == "") {
-                    alert("Ha ocurrido un error en el servidor.");
+                    swal("Home Switch Home", "Ha ocurrido un error en el servidor.", "error");
                 }
                 else {
-
-                    alert("Su solicitud de registro esta siendo procesada.");
-
+                    swal("Home Switch Home", "Su solicitud de registro esta siendo procesada.", "error");
                     window.location.href = response;
                 }                
             },
             error: function () {
-                alert("No se puede registrar el usuario con los campos ingresados, verifique y reintente nuevamente.");
+                swal("Home Switch Home", "No se puede registrar el usuario con los campos ingresados, verifique y reintente nuevamente.", "error");
+                
             }
         });
     });

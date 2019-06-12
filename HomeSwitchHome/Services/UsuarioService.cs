@@ -54,7 +54,7 @@ namespace HomeSwitchHome.Services
                 clienteACrear.Banco = nuevoCliente.Banco;
                 clienteACrear.CBU = esCBUNumerico ? cbuEntero : 0;
                 clienteACrear.DomicioFiscal = nuevoCliente.DomicioFiscal;
-                clienteACrear.FechaDeNacimiento = nuevoCliente.FechaDeNacimiento;
+                clienteACrear.FechaDeNacimiento = Convert.ToDateTime(nuevoCliente.FechaDeNacimiento);
                 clienteACrear.MedioDePago = nuevoCliente.MedioDePago;
                 clienteACrear.DNI = nuevoCliente.DNI;
                 clienteACrear.Email = nuevoCliente.Email;

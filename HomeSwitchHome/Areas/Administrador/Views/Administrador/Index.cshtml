@@ -16,8 +16,6 @@
         <script src="~/Scripts/sweetalert.min.js"></script>
 
         <script type="text/javascript" src="~/Scripts/moment.min.js"></script>
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
         <script type="text/javascript" src="~/Scripts/pignose.calendar.min.js"></script>
         <link rel="stylesheet" type="text/css" href="~/Content/pignose.calendar.min.css" />
@@ -41,6 +39,45 @@
     </nav>
 
     <div ng-controller="admincontroller">
+
+        <section class="ftco-section services-section" id="residencias">
+            <div class="container">
+                <div class="album py-5">
+                    <div class="row">
+                        <h4>RESERVAS</h4>
+                    </div>
+
+                    <div class="row">
+
+                        <table class="table table-sm table-borderless scrolled" style="text-align: left;">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20%;" scope="col">NOMBRE</th>
+                                    <th style="width: 20%;" scope="col">PAIS</th>
+                                    <th style="width: 10%;" scope="col">FECHA</th>
+                                    <th style="width: 30%;" scope="col">USUARIO</th>
+                                    <th style="width: 20%;" scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="reserva in reservas">
+
+                                    <td>{{reserva.Propiedad.Nombre}}</td>
+                                    <td>{{reserva.Propiedad.Pais}}</td>
+                                    <td>{{reserva.FechaReserva}}</td>
+                                    <td>{{reserva.Cliente.Apellido}}, {{reserva.Cliente.Nombre}}</td>
+
+                                    <td>
+                                        <button id="{{reserva.IdReserva}}" ng-click="cancelarreserva($event.currentTarget.id)" class="btn btn-group-sm btn-danger subasta-a-borrar"> <i class="fa fa-fw fas fa-ban"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
 
         <section class="ftco-section services-section" id="residencias">
             <div class="container">
@@ -140,7 +177,7 @@
                                                 <thead>
                                                     <tr>
                                                         <th style="width: 30%;" scope="col">NOMBRE</th>
-                                                        <th style="width: 20%;" scope="col">VALOR MAXIMO</th>
+                                                        <th style="width: 20%;" scope="col">VALOR</th>
                                                         <th style="width: 20%;" scope="col">CLIENTE</th>
                                                         <th style="width: 10%;"></th>
                                                     </tr>
@@ -149,11 +186,11 @@
                                                     <tr ng-repeat="subasta in subastasfin">
 
                                                         <td>{{subasta.Propiedad.Nombre}}</td>
-                                                        <td>{{subasta.ValorActual}}</td>
-                                                        <td>{{subasta.Cliente.Apellido}}, {{subasta.Cliente.Nombre}}</td>
+                                                        <td>{{subasta.ValorActual}} USD</td>
+                                                        <td>{{subasta.Cliente.Apellido}} {{subasta.Cliente.Nombre}}</td>
 
                                                         <td>
-                                                            <button id="{{subasta.IdSubasta}}" ng-click="confirmarsubasta($event.currentTarget.id)" class="btn btn-group-sm btn-success"><i class="fa fa-fw fas fa-check"></i></button>
+                                                            <button ng-show="subasta.Cliente.Nombre != null" id="{{subasta.IdSubasta}}" ng-click="confirmarsubasta($event.currentTarget.id)" class="btn btn-group-sm btn-success"><i class="fa fa-fw fas fa-check"></i></button>
                                                             <button id="{{subasta.IdSubasta}}" ng-click="rechazarsubasta($event.currentTarget.id)" class="btn btn-group-sm btn-danger subasta-a-borrar"> <i class="fa fa-fw fas fa-ban"></i></button>
                                                         </td>
                                                     </tr>

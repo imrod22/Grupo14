@@ -15,16 +15,30 @@ namespace HomeSwitchHome.Services
             this.HomeSwitchDB = new HomeSwitchHomeDB();
         }
 
-        public bool AgregarReserva(ReservaViewModel reservaModelo)
+        public string AgregarReserva(ReservaViewModel reservaModelo)
         {
-
             var clienteCreditos = this.ObtenerReservasCliente(reservaModelo.IdCliente);
             var propiedadReservas = this.ObtenerReservasPropiedad(reservaModelo.IdPropiedad);
+            var servicioSubasta = new SubastaService();
 
-            if (clienteCreditos.Count < 2
-                && propiedadReservas.Any(t => reservaModelo.FechaReserva.CompareTo(Convert.ToDateTime(t.FechaReserva)) >= 0
-                                     && reservaModelo.FechaReserva.CompareTo(Convert.ToDateTime(t.FechaReserva).AddDays(7)) <= 0))
-            {
+            var propiedadSubastas = servicioSubasta.ObtenerSubastasDePropiedad(reservaModelo.IdPropiedad).Where(t => Convert.ToDateTime(reservaModelo.FechaReserva).CompareTo(Convert.ToDateTime(t.FechaComienzo)) >= 0
+                                && Convert.ToDateTime(reservaModelo.FechaReserva).CompareTo(Convert.ToDateTime(t.FechaComienzo).AddDays(10)) <= 0);
+
+            if (clienteCreditos.Count == 2)
+                return string.Format("Ya dispone de dos reservaciones confirmadas, no puede acceder a una nueva.");            
+
+            if (propiedadReservas.Any(t => Convert.ToDateTime(reservaModelo.FechaReserva).CompareTo(Convert.ToDateTime(t.FechaReserva)) >= 0
+                                     && Convert.ToDateTime(reservaModelo.FechaReserva).CompareTo(Convert.ToDateTime(t.FechaReserva).AddDays(7)) <= 0))            
+                return string.Format("La semana elegida no esta disponible para la propiedad seleccionada.");
+
+            if (clienteCreditos.Any(t => Convert.ToDateTime(reservaModelo.FechaReserva).CompareTo(Convert.ToDateTime(t.FechaReserva)) >= 0
+                                && Convert.ToDateTime(reservaModelo.FechaReserva).CompareTo(Convert.ToDateTime(t.FechaReserva).AddDays(7)) <= 0))            
+                return string.Format("Ya posee una reserva en la misma semana en otra propiedad.");
+
+            if (propiedadSubastas.Any())
+                foreach (var subastaBorrar in propiedadSubastas)
+                    servicioSubasta.RemoverSubasta(subastaBorrar.IdSubasta);
+
                 RESERVA nuevaReserva = new RESERVA();
 
                 nuevaReserva.IdCliente = reservaModelo.IdCliente;
@@ -35,18 +49,29 @@ namespace HomeSwitchHome.Services
                 this.HomeSwitchDB.SaveChanges();
                 CacheHomeSwitchHome.RemoveOnCache("Reservas");
 
-                return true;
-            }
-
-            else return false;
-                
+                return "OK";
          }
 
-        public bool CancelarReserva(int idReserva)
+        public bool CancelarReservaCliente(int idReserva)
         {
             var reservaBorrar = this.HomeSwitchDB.RESERVA.SingleOrDefault(t => t.IdReserva == idReserva);
 
-            if (reservaBorrar != null && Convert.ToDateTime(reservaBorrar.Fecha) > DateTime.Now.AddMonths(6))
+            if (reservaBorrar != null && Convert.ToDateTime(reservaBorrar.Fecha.Date) >= DateTime.Now.Date.AddMonths(6))
+            {
+                this.HomeSwitchDB.RESERVA.Remove(reservaBorrar);
+                this.HomeSwitchDB.SaveChanges();
+                CacheHomeSwitchHome.RemoveOnCache("Reservas");
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool CancelarReservaAdministrador(int idReserva)
+        {
+            var reservaBorrar = this.HomeSwitchDB.RESERVA.SingleOrDefault(t => t.IdReserva == idReserva);
+
+            if (reservaBorrar != null)
             {
                 this.HomeSwitchDB.RESERVA.Remove(reservaBorrar);
                 this.HomeSwitchDB.SaveChanges();

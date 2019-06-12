@@ -1282,7 +1282,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Administrador\Models\" />
     <Folder Include="Areas\Perfil\Models\" />
-    <Folder Include="Areas\Perfil\Views\Shared\" />
     <Folder Include="Areas\Propiedad\Models\" />
     <Folder Include="Areas\Subasta\Models\" />
     <Folder Include="Views\PartialViews\" />

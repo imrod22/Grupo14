@@ -3,6 +3,7 @@ using HomeSwitchHome.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web.Mvc;
 
 namespace HomeSwitchHome.Areas.Administrador.Controllers
@@ -102,10 +103,16 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
             nuevaSubasta.ValorMinimo = Convert.ToDecimal(valorMinimo);
             nuevaSubasta.Estado = "NUEVO";
 
-            if (this.servicioSubasta.CrearSubasta(nuevaSubasta))
-                return Json(this.servicioSubasta.ObtenerSubastasFuturas().ToArray(), JsonRequestBehavior.AllowGet);
+            var mensaje = this.servicioSubasta.CrearSubasta(nuevaSubasta);
 
-            return null;
+            if (mensaje != "OK")
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(mensaje, JsonRequestBehavior.AllowGet);
+            }
+
+            return this.SubastasSinEmpezar();
+            
         }
 
         public JsonResult ModificarSubasta(string idSubasta, string valorMinimo)
@@ -152,6 +159,13 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
             return null;
         }
 
+        public JsonResult ObtenerListadoReservas()
+        {
+            var reservas = this.servicioReserva.ObtenerReservas();
+            return Json(reservas.OrderByDescending(t => Convert.ToDateTime(t.FechaReserva)), JsonRequestBehavior.AllowGet);
+
+        }
+
         public JsonResult ObtenerFechasOcupadasDePropiedad(int idPropiedad)
         {
             var reservasDePropiedad = this.servicioReserva.ObtenerReservasPropiedad(idPropiedad);
@@ -181,24 +195,33 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
             reservaSubasta.IdPropiedad = subastaAceptada.IdPropiedad;
             reservaSubasta.FechaReserva = subastaAceptada.FechaComienzo;
 
-            if (this.servicioReserva.AgregarReserva(reservaSubasta))
-            {
+            var mensaje = this.servicioReserva.AgregarReserva(reservaSubasta);
+
+            if (mensaje != "OK") {
+                return this.CancelarSubasta(idSubasta);
+            }                
+            else {
                 this.servicioSubasta.ConfirmarSubasta(idSubasta);
-                return Json(this.servicioSubasta.ObtenerSubastasFinalizadas().ToArray(), JsonRequestBehavior.AllowGet);
-            }
-            else
-            {
-                this.servicioSubasta.RemoverSubasta(idSubasta);
-                return null;
+                return this.ObtenerListadoReservas();
             }
         }
 
         public JsonResult CancelarSubasta(int idSubasta)
         {
             if (this.servicioSubasta.RemoverSubasta(idSubasta))
-                return Json(this.servicioSubasta.ObtenerSubastasFinalizadas().ToArray(), JsonRequestBehavior.AllowGet);
+                return this.ObtenerListadoReservas();
 
             return null;
         }
+
+        public JsonResult CancelarReservaDeCliente(int idReserva)
+        {
+            if (this.servicioReserva.CancelarReservaAdministrador(idReserva))
+                return this.ObtenerListadoReservas();
+
+            Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            return null;
+        }
+
     }
 }

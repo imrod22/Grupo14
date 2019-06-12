@@ -27,7 +27,7 @@ namespace HomeSwitchHome
         public string Apellido { get; set; }
 
         [Column(TypeName = "date")]
-        public DateTime? FechaDeNacimiento { get; set; }
+        public DateTime FechaDeNacimiento { get; set; }
 
         public string DomicioFiscal { get; set; }
 

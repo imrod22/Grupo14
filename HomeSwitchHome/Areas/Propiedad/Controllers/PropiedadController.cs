@@ -2,6 +2,7 @@
 using HomeSwitchHome.ViewModels;
 using System;
 using System.Linq;
+using System.Net;
 using System.Web.Mvc;
 
 namespace HomeSwitchHome.Areas.Propiedad.Controllers
@@ -37,23 +38,20 @@ namespace HomeSwitchHome.Areas.Propiedad.Controllers
         public JsonResult ReservarPropiedad(int idPropiedad, string fecha)
         {
             var sesionUser = (ClienteViewModel)Session["ClienteActual"];
-            var reservasCliente = this.reservaService.ObtenerReservasCliente(sesionUser.IdCliente); 
-            
-            var fechaOcupada = this.reservaService.ObtenerReservasPropiedad(idPropiedad).Any(t => Convert.ToDateTime(t.FechaReserva) <= Convert.ToDateTime(fecha) && Convert.ToDateTime(fecha) <= Convert.ToDateTime(t.FechaReserva));
 
-            if (reservasCliente.Count < 2 && !fechaOcupada)
-            {
                 ReservaViewModel reservaNueva = new ReservaViewModel();
                 reservaNueva.IdPropiedad = idPropiedad;
                 reservaNueva.IdCliente = sesionUser.IdCliente;
-                reservaNueva.FechaReserva = fecha;                
+                reservaNueva.FechaReserva = fecha;
 
-                this.reservaService.AgregarReserva(reservaNueva);
+            var mensaje = this.reservaService.AgregarReserva(reservaNueva);
 
-                return Json(string.Format("Ok"), JsonRequestBehavior.AllowGet);
+            if (mensaje != "OK")
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
             }
 
-            return Json(null, JsonRequestBehavior.AllowGet);
+            return Json(mensaje, JsonRequestBehavior.AllowGet);
         }
     }
 }

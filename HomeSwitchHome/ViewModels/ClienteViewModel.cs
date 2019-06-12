@@ -22,7 +22,7 @@ namespace HomeSwitchHome.ViewModels
 
         public string Apellido { get; set; }
 
-        public DateTime? FechaDeNacimiento { get; set; }
+        public string FechaDeNacimiento { get; set; }
 
         public string DomicioFiscal { get; set; }
 
@@ -36,8 +36,6 @@ namespace HomeSwitchHome.ViewModels
 
         public string Email { get; set; }
 
-        public List<RESERVA> Reservas { get; set; }
-
         public List<NOVEDAD_PROPIEDAD> Notificaciones { get; set; }
         
         public ClienteViewModel() { }
@@ -49,7 +47,7 @@ namespace HomeSwitchHome.ViewModels
             this.Apellido = cliente.Apellido;
             this.DNI = cliente.DNI;
             this.DomicioFiscal = cliente.DomicioFiscal;
-            this.FechaDeNacimiento = cliente.FechaDeNacimiento;
+            this.FechaDeNacimiento = Convert.ToString(cliente.FechaDeNacimiento.Date);
             this.CBU = cliente.CBU == 0? string.Empty : Convert.ToString(cliente.CBU);
             this.Banco = cliente.Banco;
             this.MedioDePago = cliente.MedioDePago;
@@ -57,16 +55,6 @@ namespace HomeSwitchHome.ViewModels
             this.Login = cliente.USUARIO.Login;
 
             return this;
-        }
-
-        public void CargarReservas(List<RESERVA> reservasUsuario)
-        {
-            this.Reservas = reservasUsuario;
-        }
-
-        public void CargarNovedades(List<NOVEDAD_PROPIEDAD> novedades)
-        {
-            this.Notificaciones = novedades;
         }
     }
 }

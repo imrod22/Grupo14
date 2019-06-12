@@ -1,4 +1,4 @@
-﻿$(document).ready(function () {        
+﻿$(document).ready(function () {
 
     var datenow = moment().add(6, 'months');
 
@@ -33,8 +33,7 @@
         });
 
     })
-
-
+    
     $(document).on("click", ".add-nueva-propiedad", function () {
 
         $("#nombrePropiedad").val("");

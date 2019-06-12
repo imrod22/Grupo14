@@ -1,4 +1,5 @@
 ﻿using HomeSwitchHome.Services;
+using HomeSwitchHome.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,14 +10,13 @@ namespace HomeSwitchHome.Areas.Perfil.Controllers
 {
     public class PerfilController : Controller
     {
-        //readonly IUsuarioService servicioUsuario;
-        readonly ISubastaService servicioSubasta;
-        readonly IPropiedadService servicioPropiedad;
+        readonly IUsuarioService servicioUsuario;
+        readonly IReservaService servicioReserva;
 
-        public PerfilController(IPropiedadService propiedadService, ISubastaService subastaService)
+        public PerfilController(IUsuarioService serviceUsuario, IReservaService serviceReserva)
         {
-            this.servicioSubasta = subastaService;
-            this.servicioPropiedad = propiedadService;
+            this.servicioUsuario = serviceUsuario;
+            this.servicioReserva = serviceReserva;
         }
 
         public ActionResult Index()
@@ -24,18 +24,18 @@ namespace HomeSwitchHome.Areas.Perfil.Controllers
             return View();
         }
 
-        public JsonResult SubastasFinalizadas(int IdCliente)
+        public JsonResult ObtenerMiInformacionPersonal()
         {
-            var subFin = this.servicioSubasta.ObtenerSubastasFinalizadas().ToArray();
-            var subastas = subFin.Where(prop => prop.Cliente.IdCliente == IdCliente);
-
-            if (!subastas.Any())
-            {
-                return null;
-            }
-
-            return Json(subastas, JsonRequestBehavior.AllowGet);
-
+            var sesionUser = (ClienteViewModel)Session["ClienteActual"];
+            return Json(sesionUser, JsonRequestBehavior.AllowGet); 
         }
+
+        public JsonResult ObtenerMisReservas()
+        {
+            var sesionUser = (ClienteViewModel)Session["ClienteActual"];
+
+            return Json(this.servicioReserva.ObtenerReservasCliente(sesionUser.IdCliente).ToArray(), JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

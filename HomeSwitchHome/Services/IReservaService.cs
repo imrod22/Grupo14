@@ -15,8 +15,10 @@ namespace HomeSwitchHome.Services
 
         List<ReservaViewModel> ObtenerReservasPropiedad(int idPropiedad);
 
-        bool AgregarReserva(ReservaViewModel reserva);
+        string AgregarReserva(ReservaViewModel reserva);
 
-        bool CancelarReserva(int idReserva);
+        bool CancelarReservaCliente(int idReserva);
+
+        bool CancelarReservaAdministrador(int idReserva);
     }
 }

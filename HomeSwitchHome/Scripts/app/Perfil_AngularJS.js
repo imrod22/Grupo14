@@ -1,14 +1,16 @@
 ﻿var switchHomeApp = angular.module('homeswitchhome', []);
 
-switchHomeApp.controller('perfilController', function ($scope, $http) {
+switchHomeApp.controller('perfilcontroller', function ($scope, $http) {
 
-    $scope.reservasGeneralesList;
-    $scope.subastasFinalizadasList;
+    $scope.usuario;
+    $scope.misreservas;
 
-    $http.get("/Perfil/Perfil/SubastasFinalizadas", { 'IdCliente: ' } ).then(function (result) {
+    $http.get("/Perfil/Perfil/ObtenerMisReservas").then(function (result) {
+        $scope.misreservas = result.data;
+    });
 
-        $scope.subastasFinalizadasList = result.data;
-
+    $http.get("/Perfil/Perfil/ObtenerMiInformacionPersonal").then(function (result) {
+        $scope.usuario = result.data;
     });
 
 })

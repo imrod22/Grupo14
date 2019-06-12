@@ -13,25 +13,34 @@ namespace HomeSwitchHome.Services
         public SubastaService()
         {
             this.HomeSwitchDB = new HomeSwitchHomeDB();
-        }       
+        }
 
-        public bool CrearSubasta(SUBASTA nuevaSubasta)
+        public string CrearSubasta(SUBASTA nuevaSubasta)
         {
             List<SubastaViewModel> subastasPropiedad = this.ObtenerSubastasDePropiedad(nuevaSubasta.IdPropiedad);
+            ReservaService servicioReserva = new ReservaService();
 
-            if (nuevaSubasta.ValorMinimo > 0 
-                && !subastasPropiedad.Any(t => nuevaSubasta.FechaComienzo.CompareTo(Convert.ToDateTime(t.FechaComienzo)) >= 0  
-                                     && nuevaSubasta.FechaComienzo.CompareTo(Convert.ToDateTime(t.FechaComienzo).AddDays(10)) <= 0) )
-            {
-                this.HomeSwitchDB.SUBASTA.Add(nuevaSubasta);
-                this.HomeSwitchDB.SaveChanges();
+            var reservasPropiedad = servicioReserva.ObtenerReservasPropiedad(nuevaSubasta.IdPropiedad);
 
-                CacheHomeSwitchHome.RemoveOnCache("Subastas");
+            if (nuevaSubasta.ValorMinimo <= 0)
+                return string.Format("No se pudo crear la subasta, el valor de inicial para pujar debe ser mayor que 0.");
+            
 
-                return true;
-            }
-            else
-                return false;
+            if (subastasPropiedad.Any(t => nuevaSubasta.FechaComienzo.CompareTo(Convert.ToDateTime(t.FechaComienzo)) >= 0
+                                     && nuevaSubasta.FechaComienzo.CompareTo(Convert.ToDateTime(t.FechaComienzo).AddDays(10)) <= 0))
+                return string.Format("No se pudo crear la subasta para la propiedad seleccionada, ya posee una subasta definida durante los dias elegidos.");
+            
+
+            if(reservasPropiedad.Any(t => nuevaSubasta.FechaComienzo.CompareTo(Convert.ToDateTime(t.FechaReserva)) >= 0
+                                     && nuevaSubasta.FechaComienzo.CompareTo(Convert.ToDateTime(t.FechaReserva).AddDays(7)) <= 0))
+                return string.Format("No se pudo crear la subasta para la propiedad seleccionada, posee reservas confirmadas durante los dias elegidos para la subasta.");
+
+
+            this.HomeSwitchDB.SUBASTA.Add(nuevaSubasta);
+            this.HomeSwitchDB.SaveChanges();
+
+            CacheHomeSwitchHome.RemoveOnCache("Subastas");
+            return "OK";
         }
         
         public bool PujarSubasta(SUBASTA subastaPujada, int idSubasta, int idCliente)
