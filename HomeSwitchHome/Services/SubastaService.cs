@@ -17,9 +17,11 @@ namespace HomeSwitchHome.Services
 
         public bool CrearSubasta(SUBASTA nuevaSubasta)
         {
-            List<SubastaViewModel> subastas = this.ObtenerSubastas();
+            List<SubastaViewModel> subastasPropiedad = this.ObtenerSubastasDePropiedad(nuevaSubasta.IdPropiedad);
 
-            if (!subastas.Any(t => Convert.ToDateTime(t.FechaComienzo) >= nuevaSubasta.FechaComienzo && Convert.ToDateTime(t.FechaComienzo).AddDays(7) < nuevaSubasta.FechaComienzo))
+            if (nuevaSubasta.ValorMinimo > 0 
+                && !subastasPropiedad.Any(t => nuevaSubasta.FechaComienzo.CompareTo(Convert.ToDateTime(t.FechaComienzo)) >= 0  
+                                     && nuevaSubasta.FechaComienzo.CompareTo(Convert.ToDateTime(t.FechaComienzo).AddDays(10)) <= 0) )
             {
                 this.HomeSwitchDB.SUBASTA.Add(nuevaSubasta);
                 this.HomeSwitchDB.SaveChanges();
@@ -55,10 +57,9 @@ namespace HomeSwitchHome.Services
 
         public bool ActualizarSubasta(SUBASTA subastaActualizada, int idSubasta)
         {
-            if (subastaActualizada.FechaComienzo.CompareTo(DateTime.Now) > 0 && subastaActualizada.ValorMinimo > 0)
+            if (subastaActualizada.ValorMinimo > 0)
             {
                 var subastaModelo = this.HomeSwitchDB.SUBASTA.SingleOrDefault(t => t.IdSubasta == idSubasta);
-                subastaModelo.FechaComienzo = subastaActualizada.FechaComienzo;
                 subastaModelo.ValorMinimo = subastaActualizada.ValorMinimo;
                 
                 this.HomeSwitchDB.SaveChanges();

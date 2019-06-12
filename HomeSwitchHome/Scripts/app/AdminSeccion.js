@@ -2,19 +2,7 @@
 
     var datenow = moment().add(6, 'months');
 
-    $(function () {
-        $('input.calendar').pignoseCalendar({
-            minDate: datenow,
-            date: datenow,
-            theme: 'blue'
-        });
-    });
-
-
-
-
     $(document).on("change", ".propiedad-select", function () {
-        $('input[name="daterange"]').data('daterangepicker').remove();
 
         var propiedadId = $('#propiedad_select option:selected').attr('id');
 
@@ -29,8 +17,6 @@
                 $.each(response, function (key, value) {
                         resultado.push(value);
                 });
-
-                alert(resultado);
 
                 $('input.calendar').pignoseCalendar({
                     minDate: datenow,
@@ -130,24 +116,11 @@
         $('#boton-crear-subasta').css('display', 'block');
         $('#boton-modificar-subasta').css('display', 'none');
 
-        $('input[name="daterange"]').daterangepicker({
-            opens: 'left',
-            singleDatePicker: true,
-            autoUpdateInput: false,
-            startDate: datenow,
+        $('input.calendar').pignoseCalendar({
             minDate: datenow,
-            locale: {
-                cancelLabel: 'Clear'
-            }
+            date: datenow,
+            theme: 'blue',
+
         });
     });
-
-    $('input[name="daterange"]').on('apply.daterangepicker', function (ev, picker) {
-        $(this).val(picker.startDate.format('MM/DD/YYYY'));
-    });
-
-    $('input[name="daterange"]').on('cancel.daterangepicker', function (ev, picker) {
-        $(this).val('');
-    });
-
 })

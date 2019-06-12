@@ -82,7 +82,6 @@ adminsection.controller('admincontroller', function ($scope, $http) {
                 }
                 else {
                     swal("Home Switch Home", "Se ha actualizado la residencia con éxito.", "success");
-                    alert();
                     $scope.propiedades = response.data;
 
                 }
@@ -133,11 +132,11 @@ adminsection.controller('admincontroller', function ($scope, $http) {
             $http.post("/Administrador/Administrador/CrearSubasta", {
                 'propiedad': idPropiedad,
                 'valorMinimo': $scope.valorMinimo,
-                'fechaComienzo': $('input[name="daterange"]').val()
+                'fechaComienzo': $('input[name="fechasubasta"]').val()
 
             }).then(function successCallback(response) {
 
-                if (response == null) {
+                if (response.data == "") {
                     swal("Home Switch Home", "No se ha podido crear la subasta para la propiedad en la fecha seleccionada.", "error");
                 }
                 else {
@@ -164,13 +163,12 @@ adminsection.controller('admincontroller', function ($scope, $http) {
             $http.post("/Administrador/Administrador/ModificarSubasta", {
 
                 'idSubasta': $("#identificadorSubasta").val(),
-                'fechaComienzo': $('input[name="daterange"]').val(),
                 'valorMinimo': $("#valorMinimo").val()
 
             }).then(function successCallback(response) {
 
                 if (result.data == "") {
-                    swal("Home Switch Home", "No se ha podido actualizar la subasta con los campos ingresados.", "error");
+                    swal("Home Switch Home", "El monto de la subasta no puede ser negativo.", "error");
                     
                 }
                 else {
@@ -201,7 +199,7 @@ adminsection.controller('admincontroller', function ($scope, $http) {
 
         ).then(function successCallback(result) {
 
-            if (result == null)
+            if (result.data == null)
             {
                 swal("Home Switch Home", "No se ha podido eliminar la subasta seleccionada.", "error");
             }
@@ -226,7 +224,7 @@ adminsection.controller('admincontroller', function ($scope, $http) {
 
         ).then(function successCallback(result) {
 
-            if (result == null) {
+            if (result.data == null) {
                 swal("Home Switch Home", "El sistema no puede validar el usuario seleccionado.", "error");
             }
 

@@ -1,4 +1,5 @@
 ﻿using HomeSwitchHome.Services;
+using HomeSwitchHome.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -107,10 +108,9 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
             return null;
         }
 
-        public JsonResult ModificarSubasta(string idSubasta, string fechaComienzo, string valorMinimo)
+        public JsonResult ModificarSubasta(string idSubasta, string valorMinimo)
         {
             SUBASTA subastaActualizada = new SUBASTA();
-            subastaActualizada.FechaComienzo = DateTime.Parse(fechaComienzo);
             subastaActualizada.ValorMinimo = Convert.ToDecimal(valorMinimo);
 
             if (this.servicioSubasta.ActualizarSubasta(subastaActualizada, Int32.Parse(idSubasta)))
@@ -167,11 +167,38 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
                 {
                     var fechaActual = comienzoReserva.AddDays(i);
                     resultadoRangos.Add(string.Format("{0}-{1}-{2}", fechaActual.Year, fechaActual.Month, fechaActual.Day));
-                }              
-
+                }
             }
 
-            return Json(resultadoRangos.ToArray(), JsonRequestBehavior.AllowGet);            
+            return Json(resultadoRangos.ToArray(), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult ConfirmarReservaDeSubasta(int idSubasta)
+        {
+            var subastaAceptada = this.servicioSubasta.ObtenerSubastasFinalizadas().Where(t => t.IdSubasta == idSubasta).SingleOrDefault();
+            var reservaSubasta = new ReservaViewModel();
+            reservaSubasta.IdCliente = Convert.ToInt32(subastaAceptada.IdCliente);
+            reservaSubasta.IdPropiedad = subastaAceptada.IdPropiedad;
+            reservaSubasta.FechaReserva = subastaAceptada.FechaComienzo;
+
+            if (this.servicioReserva.AgregarReserva(reservaSubasta))
+            {
+                this.servicioSubasta.ConfirmarSubasta(idSubasta);
+                return Json(this.servicioSubasta.ObtenerSubastasFinalizadas().ToArray(), JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                this.servicioSubasta.RemoverSubasta(idSubasta);
+                return null;
+            }
+        }
+
+        public JsonResult CancelarSubasta(int idSubasta)
+        {
+            if (this.servicioSubasta.RemoverSubasta(idSubasta))
+                return Json(this.servicioSubasta.ObtenerSubastasFinalizadas().ToArray(), JsonRequestBehavior.AllowGet);
+
+            return null;
         }
     }
 }

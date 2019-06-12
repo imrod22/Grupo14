@@ -23,6 +23,8 @@ namespace HomeSwitchHome.Services
 
         bool ActualizarSubasta(SUBASTA subastaActualizada, int idSubasta);
 
+        bool ConfirmarSubasta(int idSubasta);
+
         bool RemoverSubasta(int idSubasta);
     }
 }
