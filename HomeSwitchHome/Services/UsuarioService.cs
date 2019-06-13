@@ -73,15 +73,23 @@ namespace HomeSwitchHome.Services
 
         public bool RegistrarComoPremium(int IdCliente)
         {
-            var nuevoPremium = new PREMIUM();
-            nuevoPremium.IdCliente = IdCliente;
-            nuevoPremium.Aceptado = "NO";
+            var existePremium =  this.HomeSwitchDB.PREMIUM.Where(t => t.IdCliente == IdCliente).Any();
 
-            this.HomeSwitchDB.PREMIUM.Add(nuevoPremium);
-            this.HomeSwitchDB.SaveChanges();
+            if (!existePremium) {
+                var nuevoPremium = new PREMIUM();
+                nuevoPremium.IdCliente = IdCliente;
+                nuevoPremium.Aceptado = "NO";
 
-            CacheHomeSwitchHome.RemoveOnCache("Clientes");
-            return true;
+                this.HomeSwitchDB.PREMIUM.Add(nuevoPremium);
+                this.HomeSwitchDB.SaveChanges();
+
+                CacheHomeSwitchHome.RemoveOnCache("Clientes");
+
+                return true;
+            }
+            
+            return false;
+
         }
 
         public bool ConfirmarNuevoCliente(int idCliente)

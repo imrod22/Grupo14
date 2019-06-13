@@ -27,7 +27,7 @@
                             @{if (User.Identity.Name == "CLIENTE")
                                 {
                                     <h6 style="color:#605c5c">SUBSCRIPCION BASICA.</h6>
-                                    <button id="{{usuario.IdCliente}}" ng-click="solicitarsubscripcion($event.currentTarget.id)" class="btn btn-sm btn-primary"> <i class="fa fa-fw fas fa-superpowers"></i>CONVERTIRME EN PREMIUM</button>
+                                    <button ng-click="solicitarsubscripcion()" class="btn btn-sm btn-primary"> <i class="fa fa-fw fas fa-superpowers"></i>CONVERTIRME EN PREMIUM</button>
                                 }
                                 else
                                 {
