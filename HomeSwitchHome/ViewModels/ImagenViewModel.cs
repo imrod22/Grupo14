@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace HomeSwitchHome.Services
+﻿namespace HomeSwitchHome.Services
 {
     public class ImagenViewModel
     {
@@ -17,7 +12,6 @@ namespace HomeSwitchHome.Services
 
         public ImagenViewModel ToViewModel(IMAGEN imagen)
         {
-
             this.idImagen = imagen.IdImagen;
             this.idPropiedad = imagen.IdPropiedad;
             this.path = imagen.Path;

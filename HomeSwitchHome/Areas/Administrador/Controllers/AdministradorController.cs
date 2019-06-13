@@ -161,8 +161,8 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
 
         public JsonResult ObtenerListadoReservas()
         {
-            var reservas = this.servicioReserva.ObtenerReservas();
-            return Json(reservas.OrderByDescending(t => Convert.ToDateTime(t.FechaReserva)), JsonRequestBehavior.AllowGet);
+            List<ReservaViewModel> reservas = this.servicioReserva.ObtenerReservas().OrderByDescending(t => Convert.ToDateTime(t.FechaReserva)).Select(t => { t.FechaReserva = string.Format("{0}-{1}-{2}", Convert.ToDateTime(t.FechaReserva).Day, Convert.ToDateTime(t.FechaReserva).Month, Convert.ToDateTime(t.FechaReserva).Year); return t; }).ToList();
+            return Json(reservas, JsonRequestBehavior.AllowGet);
 
         }
 

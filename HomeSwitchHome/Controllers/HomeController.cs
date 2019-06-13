@@ -1,4 +1,4 @@
-﻿using System.Web;
+﻿using System.Net;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -9,11 +9,9 @@ namespace HomeSwitchHome.Controllers
 {
     public class HomeController : Controller
     {
-
         readonly ISubastaService subastaService;
         readonly IUsuarioService usuarioService;
-
-
+        
         public HomeController(ISubastaService subastaServicio, IUsuarioService usuarioServicio)
         {
             this.subastaService = subastaServicio;
@@ -33,6 +31,12 @@ namespace HomeSwitchHome.Controllers
             
             if (usuarioActual != null)
             {
+                if (!usuarioActual.Login)
+                {
+                    Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    return Json(string.Format("Su solicitud de registro esta siendo procesada, se le notificara cuando pueda acceder con su cuenta."), JsonRequestBehavior.AllowGet);
+                }
+
                 if (this.usuarioService.EsAdmin(usuarioActual.IdUsuario))
                 {
                     FormsAuthentication.SetAuthCookie("ADMIN", true);
@@ -56,8 +60,11 @@ namespace HomeSwitchHome.Controllers
                     return Json(Url.Action("Index", "Home"));
                 }                
             }
-             
-            return null;
+
+            var mensaje = string.Format("Se ha ingresado un nombre de usuario o password invalido.");
+            Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            return Json(mensaje, JsonRequestBehavior.AllowGet);
+
         }
 
         [System.Web.Mvc.Authorize]
@@ -74,13 +81,15 @@ namespace HomeSwitchHome.Controllers
 
         public ActionResult RegistrarUsuario([FromBody] ClienteViewModel nuevoUsuario)
         {
-            var seRegistro = this.usuarioService.RegistrarNuevoCliente(nuevoUsuario);
+            var mensajeRegistro = this.usuarioService.RegistrarNuevoCliente(nuevoUsuario);
 
-            if (seRegistro)
+            if (mensajeRegistro.Equals("OK"))
                 return Json(Url.Action("Index", "Home"));
 
-            else return Json(null);
+            else {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(string.Format(mensajeRegistro), JsonRequestBehavior.AllowGet);
+            }
         }
-
     }
 }

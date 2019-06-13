@@ -1,10 +1,7 @@
 ﻿using HomeSwitchHome.Services;
 using HomeSwitchHome.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 
 namespace HomeSwitchHome.Areas.Perfil.Controllers
@@ -37,19 +34,17 @@ namespace HomeSwitchHome.Areas.Perfil.Controllers
         public JsonResult ObtenerMisReservas()
         {
             var sesionUser = (ClienteViewModel)Session["ClienteActual"];
-
             return Json(this.servicioReserva.ObtenerReservasCliente(sesionUser.IdCliente).ToArray(), JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult SolicitarSubscripcionPremium()
         {
             var sesionUser = (ClienteViewModel)Session["ClienteActual"];
-            var seRegistro= this.servicioUsuario.RegistrarComoPremium(sesionUser.IdCliente);
+            var seRegistro= this.servicioUsuario.EsUsuarioPremium(sesionUser.IdCliente);
 
             if (!seRegistro) {
 
                 this.servicioUsuario.RegistrarComoPremium(sesionUser.IdCliente);
-
                 return Json("Ok", JsonRequestBehavior.AllowGet);
             }
 

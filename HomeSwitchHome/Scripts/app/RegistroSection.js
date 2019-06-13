@@ -8,16 +8,12 @@
             url: "/Home/RegistrarUsuario",
             data: cliente,
             success: function (response) {
-                if (response == "") {
-                    swal("Home Switch Home", "Ha ocurrido un error en el servidor.", "error");
-                }
-                else {
-                    swal("Home Switch Home", "Su solicitud de registro esta siendo procesada.", "error");
+                    swal("Home Switch Home", "Su solicitud de registro ha sido registrada. Se le notificará cuando pueda acceder.", "success");
                     window.location.href = response;
-                }                
+                            
             },
-            error: function () {
-                swal("Home Switch Home", "No se puede registrar el usuario con los campos ingresados, verifique y reintente nuevamente.", "error");
+            error: function (jqXHR) {
+                swal("Home Switch Home", jqXHR.responseJSON, "error");
                 
             }
         });

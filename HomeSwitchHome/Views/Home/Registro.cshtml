@@ -2,17 +2,24 @@
     Layout = null;
 }
 
-<head>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    <head>
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
 
-    <script type="text/javascript" src="~/Scripts/angular.min.js"></script>
-    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+        <script type="text/javascript" src="~/Scripts/angular.min.js"></script>
+        <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
 
-</head>
+        <link rel="stylesheet" href="~/Content/sweetalert.css" />
+        <script src="~/Scripts/sweetalert.min.js"></script>
+
+        <script type="text/javascript" src="~/Scripts/moment.min.js"></script>
+
+        <script type="text/javascript" src="~/Scripts/pignose.calendar.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="~/Content/pignose.calendar.min.css" />
+    </head>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar" id="ftco-navbar" style="background-color: #2c5fa1; z-index: 4; color: #fff;">
@@ -68,19 +75,21 @@
                     </div>
 
                     <div class="form-row">
+
                         <div class="form-group col-md-4">
                             <label for="DNI">Numero de Identidad:</label>
                             <input maxlength="8" type="text" class="form-control" id="DNI" name="DNI">
                         </div>
+
                         <div class="form-group col-md-5">
                             <label for="DomicioFiscal">Domicilio:</label>
                             <input type="text" class="form-control" id="DomicioFiscal" name="DomicioFiscal">
                         </div>
+
                         <div class="form-group col-md-3">
                             <label for="Email">Correo Electronico:</label>
                             <input type="email" class="form-control" id="Email" name="Email">
                         </div>
-
                     </div>
 
                     <div class="form-row">
@@ -103,6 +112,7 @@
                                 <option>OTRO</option>
                             </select>
                         </div>
+                        
                         <div class="form-group col-md-3">
                             <label for="MedioDePago">Medio de Pago:</label>
                             <select type="text" class="form-control" id="MedioDePago" name="MedioDePago">

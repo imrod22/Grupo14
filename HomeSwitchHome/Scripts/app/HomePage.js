@@ -13,36 +13,10 @@
                 password: $('#contrasenia').val()
             },
             success: function (response) {
-
-                if (response == "") {
-
-                    swal({
-                        title: "HOME SWITCH HOME",
-                        text: "Su solicitud de registro se esta procesando. Se le notificara cuando pueda acceder con la cuenta ingresada.",
-                        icon: "danger",
-                        closeOnClickOutside: false,
-                        closeOnEsc: false,
-                        allowOutsideClick: false,
-                        buttons: [
-                            'OK'
-                        ],
-                        dangerMode: true,
-                    },
-                        function (isConfirm) {
-                            if (isConfirm) {
-                                window.location.href = response;
-                            } else {
-                                window.location.href = response;
-                            }
-
-                        })
-                }
-                else {
-                    window.location.href = response;
-                }
+                window.location.href = response;
             },
-            error: function () {
-                alert("No hay usuario registrado con la información ingresada.");
+            error: function (jqXHR) {
+                swal("Home Switch Home", jqXHR.responseJSON, "error");
             }
         });
 

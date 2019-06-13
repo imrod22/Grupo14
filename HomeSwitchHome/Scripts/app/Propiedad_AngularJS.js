@@ -14,6 +14,7 @@ switchHomeApp.controller('propiedadesController', function ($scope, $http) {
     $scope.filtrar = function () {
         $scope.propiedadesListFiltradas = $scope.propiedadesList.filter(filtroPropiedades);
     }
+
     function filtroPropiedades(prop) {
         return prop.Nombre.toUpperCase().includes($scope.filtroNombre.toUpperCase()) && prop.Pais.includes($scope.filtroPais.toUpperCase());
     }

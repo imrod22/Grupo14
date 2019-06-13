@@ -18,7 +18,7 @@ namespace HomeSwitchHome.Services
 
         public USUARIO ObtenerUsuarioRegistrado(string usuario, string password)
         {
-            var usuarioActual = this.HomeSwitchDB.USUARIO.Where(t => t.Usuario == usuario && t.Password == password && t.Login).FirstOrDefault();
+            var usuarioActual = this.HomeSwitchDB.USUARIO.Where(t => t.Usuario == usuario && t.Password == password).FirstOrDefault();
             return usuarioActual; 
         }
 
@@ -38,9 +38,13 @@ namespace HomeSwitchHome.Services
             return this.HomeSwitchDB.ADMINISTRADOR.Any(t => t.IdUsuario == IdUsuario);
         }
 
-        public bool RegistrarNuevoCliente(ClienteViewModel nuevoCliente)
+        public string RegistrarNuevoCliente(ClienteViewModel nuevoCliente)
         {
-            if (!this.ExisteCliente(nuevoCliente) && this.CrearUsuario(nuevoCliente.Usuario, nuevoCliente.Password))
+            if (this.ExisteCliente(nuevoCliente))
+                return string.Format("Ya existe un usuario registrado con la cuenta de correo '{0}'.", nuevoCliente.Email);
+
+
+            if (this.CrearUsuario(nuevoCliente.Usuario, nuevoCliente.Password))
             {
                 var clienteACrear = new CLIENTE();
 
@@ -64,18 +68,19 @@ namespace HomeSwitchHome.Services
 
                 CacheHomeSwitchHome.RemoveOnCache("Clientes");
 
-                return true;
+                return string.Format("OK");
             }
 
-            return false;
+            return string.Format("El nombre de usuario ingresado: '{0}' no esta disponible.", nuevoCliente.Usuario);
 
         }
 
         public bool RegistrarComoPremium(int IdCliente)
         {
-            var existePremium =  this.HomeSwitchDB.PREMIUM.Where(t => t.IdCliente == IdCliente).Any();
+            var esNuevaSolicitudPremium =  this.HomeSwitchDB.PREMIUM.Where(t => t.IdCliente == IdCliente).Any();
 
-            if (!existePremium) {
+            if (esNuevaSolicitudPremium)
+            {
                 var nuevoPremium = new PREMIUM();
                 nuevoPremium.IdCliente = IdCliente;
                 nuevoPremium.Aceptado = "NO";
@@ -163,7 +168,6 @@ namespace HomeSwitchHome.Services
             foreach (var cliente in clientes)
             {
                 var premium = this.ObtenerInformacionPremium(cliente.IdCliente);
-
                 cliente.Premium = premium == null ? string.Empty : premium.Aceptado;
             }
 

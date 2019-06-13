@@ -38,11 +38,10 @@ namespace HomeSwitchHome.Areas.Propiedad.Controllers
         public JsonResult ReservarPropiedad(int idPropiedad, string fecha)
         {
             var sesionUser = (ClienteViewModel)Session["ClienteActual"];
-
-                ReservaViewModel reservaNueva = new ReservaViewModel();
-                reservaNueva.IdPropiedad = idPropiedad;
-                reservaNueva.IdCliente = sesionUser.IdCliente;
-                reservaNueva.FechaReserva = fecha;
+            ReservaViewModel reservaNueva = new ReservaViewModel();
+            reservaNueva.IdPropiedad = idPropiedad;
+            reservaNueva.IdCliente = sesionUser.IdCliente;
+            reservaNueva.FechaReserva = fecha;
 
             var mensaje = this.reservaService.AgregarReserva(reservaNueva);
 
