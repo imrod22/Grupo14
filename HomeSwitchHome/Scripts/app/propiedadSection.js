@@ -1,25 +1,10 @@
 ﻿$(document).ready(function () {
 
-    var datenow = new Date();
-    datenow.setDate(datenow.getDate() + 183);
+    var datenow = moment().add(6, 'months');
 
-    $('input[name="reservafecha"]').daterangepicker({
-        opens: 'left',
-        singleDatePicker: true,
-        autoUpdateInput: false,
-        startDate: datenow,
+    $('input.calendar').pignoseCalendar({
         minDate: datenow,
-        locale: {
-            cancelLabel: 'Clear'
-        }
-    });
-
-    $('input[name="reservafecha"]').on('apply.daterangepicker', function (ev, picker) {
-        $(this).val(picker.startDate.format('MM/DD/YYYY'));
-    });
-
-    $('input[name="reservafecha"]').on('cancel.daterangepicker', function (ev, picker) {
-        $(this).val('');
-    });
-    
+        date: datenow,
+        theme: 'blue',
+    });    
 });
