@@ -12,5 +12,4 @@ switchHomeApp.controller('perfilcontroller', function ($scope, $http) {
     $http.get("/Perfil/Perfil/ObtenerMiInformacionPersonal").then(function (result) {
         $scope.usuario = result.data;
     });
-
 })

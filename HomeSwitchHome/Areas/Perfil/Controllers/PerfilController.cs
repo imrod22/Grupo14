@@ -27,6 +27,9 @@ namespace HomeSwitchHome.Areas.Perfil.Controllers
         public JsonResult ObtenerMiInformacionPersonal()
         {
             var sesionUser = (ClienteViewModel)Session["ClienteActual"];
+            var nacimiento = Convert.ToDateTime(sesionUser.FechaDeNacimiento);
+            sesionUser.FechaDeNacimiento = string.Format("{0}-{1}-{2}", nacimiento.Day, nacimiento.Month, nacimiento.Year);
+
             return Json(sesionUser, JsonRequestBehavior.AllowGet); 
         }
 

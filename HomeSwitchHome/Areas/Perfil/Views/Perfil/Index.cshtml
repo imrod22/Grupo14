@@ -19,49 +19,63 @@
         <section class="ftco-section" id="misdatos-reservas">
             <div class="container mt-5">
                 <div class="row ftco-animate">
-                        <div class="item">
-                            <h5 class="ml-5"><b>{{usuario.Apellido}}, {{usuario.Nombre}}</b></h5>
+                    <div class="item">
+                        <h4 class="ml-5"><b>{{usuario.Apellido}}, {{usuario.Nombre}}</b></h4>
 
-                            <div class="card-group">                                
 
-                                <div class="card-body pl-5">
+                        <div class="btn-toolbar py-2" role="toolbar" aria-label="Toolbar with button groups">
+                            @{if (User.Identity.Name == "CLIENTE")
+                                {
+                                    <h6 style="color:#605c5c">SUBSCRIPCION BASICA.</h6>
+                                    <button id="{{usuario.IdCliente}}" ng-click="solicitarsubscripcion($event.currentTarget.id)" class="btn btn-sm btn-primary"> <i class="fa fa-fw fas fa-superpowers"></i>CONVERTIRME EN PREMIUM</button>
+                                }
+                                else
+                                {
+                                    <h6 style="color:#eaca0c;">USUARIO PREMIUM.</h6>
+                                }
 
-                                    <h6 class="card-title"><b>DATOS PERSONALES</b></h6>
-                                    <p class="card-text">
-                                        Numero de Identidad: {{usuario.DNI}}<br>
-                                        Fecha de nacimiento: {{usuario.FechaDeNacimiento}}<br>
-                                        Domicilio: {{usuario.DomicilioLegal}}<br>
-                                        Correo Electronico: {{usuario.Email}}<br>
-                                        Banco: {{usuario.Banco}}<br>
-                                        CBU: {{usuario.CBU}}<br>
-                                        Medio de Pago: {{usuario.MedioDePago}}<br>
-                                    </p>
-                                    <button id="{{reserva.IdReserva}}" ng-click="cancelarreserva($event.currentTarget.id)" class="btn btn-group-sm btn-primary info-usuario"> <i class="fa fa-fw fas fa-user-o"></i>ACTUALIZAR</button>
-                                </div>
+                            }
+                        </div>
 
-                                <div class="card-body">
-                                    <h6 class="card-title"><b>MIS RESERVAS</b></h6>
-                                    <table class="table table-sm table-borderless scrolled" style="text-align: left;">
-                                        <thead>
-                                            <tr>
-                                                <td style="width: 30%;" scope="col">NOMBRE</td>
-                                                <td style="width: 20%;" scope="col">PAIS</td>
-                                                <td style="width: 20%;" scope="col">FECHA</td>
-                                                <td style="width: 30%;" scope="col"></td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr ng-repeat="reserva in misreservas">
-                                                <td>{{reserva.Propiedad.Nombre}}</td>
-                                                <td>{{reserva.Propiedad.Pais}}</td>
-                                                <td>{{reserva.FechaReserva}}</td>
-                                                <td> <button id="{{reserva.IdReserva}}" ng-click="cancelarreserva($event.currentTarget.id)" class="btn btn-group-sm btn-danger propiedad-a-borrar"> <i class="fa fa-fw fas fa-remove"></i></button></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>                               
+                        <div class="card-group">                           
+
+                            <div class="card-body pl-5">
+                                <h6 class="card-title"><b>DATOS PERSONALES</b></h6>
+                                <p class="card-text">
+                                    Numero de Identidad: {{usuario.DNI}}<br>
+                                    Fecha de nacimiento: {{usuario.FechaDeNacimiento}}<br>
+                                    Domicilio: {{usuario.DomicilioLegal}}<br>
+                                    Correo Electronico: {{usuario.Email}}<br>
+                                    Banco: {{usuario.Banco}}<br>
+                                    CBU: {{usuario.CBU}}<br>
+                                    Medio de Pago: {{usuario.MedioDePago}}<br>
+                                </p>
+                                <button id="{{reserva.IdReserva}}" ng-click="cancelarreserva($event.currentTarget.id)" class="btn btn-group-sm btn-primary info-usuario"> <i class="fa fa-fw fas fa-user-o"></i>ACTUALIZAR</button>
                             </div>
+
+                            <div class="card-body">
+                                <h6 class="card-title"><b>MIS RESERVAS</b></h6>
+                                <table class="table table-sm table-borderless scrolled" style="text-align: left;">
+                                    <thead>
+                                        <tr>
+                                            <td style="width: 30%;" scope="col">NOMBRE</td>
+                                            <td style="width: 20%;" scope="col">PAIS</td>
+                                            <td style="width: 20%;" scope="col">FECHA</td>
+                                            <td style="width: 30%;" scope="col"></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="reserva in misreservas">
+                                            <td>{{reserva.Propiedad.Nombre}}</td>
+                                            <td>{{reserva.Propiedad.Pais}}</td>
+                                            <td>{{reserva.FechaReserva}}</td>
+                                            <td> <button id="{{reserva.IdReserva}}" ng-click="cancelarreserva($event.currentTarget.id)" class="btn btn-group-sm btn-danger" style="float:right;"> <i class="fa fa-fw fas fa-remove"></i></button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
