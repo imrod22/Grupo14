@@ -3,13 +3,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-    <div class="container">
-        <div class="row justify-content-center pb-5">
-            <div class="col-md-7 text-center heading-section ftco-animate fadeInUp ftco-animated">
-                <h4 class="toast-header">Residencias</h4>
-            </div>
-        </div>
-    </div>    
+<header style="position: relative; height: 300px; clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - 5vw)); background-image: linear-gradient(#2c5fa1, white);">
+    <h1 style="margin: 0; padding: 100px 0; font: 44px; color: white; text-align: center;">RESIDENCIAS</h1>    
+</header>
+
+<section>
 
     <div ng-controller="propiedadesController">
         <section class="ftco-section services-section" id="destacados">
@@ -39,7 +37,6 @@
 
                                 <td>{{propiedad.Nombre}}</td>
                                 <td>{{propiedad.Pais}}</td>
-
                                 <td>
                                     <button id="{{propiedad.IdPropiedad}}" ng-click="detallar($event.currentTarget.id)" class="btn btn-group-sm btn-primary propiedad-detalle" data-toggle="modal" data-target="#detallePropiedadModal">
                                         <i class="fa fa-fw fa fa-info-circle"></i>
@@ -50,7 +47,7 @@
                                 @{if (User.Identity.Name == "CLIENTE")
                                     {
                                         <td>
-                                            <button id="{{propiedad.IdPropiedad}}" ng-click="solicitarnovedad($event.currentTarget.id)" class="btn btn-group-sm btn-primary propiedad-detalle">
+                                            <button id="{{propiedad.IdPropiedad}}" ng-click="solicitarnovedad($event.currentTarget.id)" class="btn btn-group-sm btn-outline-warning propiedad-detalle">
                                                 <i class="fa fas fa-bell" aria-hidden="true"></i>
                                                 <span class="tooltiptext">NOTIFICAR NOVEDADES</span>
                                             </button>
@@ -59,13 +56,12 @@
                                     else
                                     {
                                         <td>
-                                            <button id="{{propiedad.IdPropiedad}}" ng-click="elegirfecha($event.currentTarget.id)" class="btn btn-group-sm btn-primary propiedad-detalle" data-toggle="modal" data-target="#reservaPropiedadModal">
+                                            <button style="background-color:#90c322" id="{{propiedad.IdPropiedad}}" ng-click="elegirfecha($event.currentTarget.id)" class="btn btn-group-sm propiedad-detalle" data-toggle="modal" data-target="#reservaPropiedadModal">
                                                 <i class="fa fas fa-calendar-check-o" aria-hidden="true"></i>
                                                 <span class="tooltiptext">RESERVAR</span>
                                             </button>
                                         </td>
                                     }
-
                                 }
                             </tr>
                         </tbody>
@@ -81,7 +77,11 @@
         <div class="modal fade" id="reservaPropiedadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             @Html.Partial("_ReservaPropiedad")
         </div>
-    </div>        
+    </div>
+
+
+</section>
+
 
 <script src="~/Scripts/app/propiedadSection.js"></script>
 <script src="~/Scripts/app/Propiedad_AngularJS.js"></script>

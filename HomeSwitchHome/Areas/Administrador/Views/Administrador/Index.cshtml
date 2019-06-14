@@ -46,12 +46,28 @@
                     <div class="card table-card">
                         <div class="card-header" style="background-color:#3e4e75 ; color:#ffffff">
 
-                            <div class="row d-flex">
+                            <div class="row d-flex justify-content-between">
                                 <h5>RESIDENCIAS</h5>
-                                <ul class="list-unstyled card-option">
-                                    <li><button type="button" class="btn btn-success add-nueva-propiedad" style="float:right;" data-toggle="modal" data-target="#addEditPropiedadModal"><i class="fa fa-fw fas fa-plus"></i></button></li>
+                                <ul class="list-unstyled card-option d-flex justify-content-around">
+
+
+                                    <li class="col"><button type="button" class="btn btn-success add-nueva-propiedad" style="float:right;" data-toggle="modal" data-target="#addEditPropiedadModal"><i class="fa fa-fw fas fa-plus"></i></button></li>
+
+                                    <li>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="Nombre/Pais">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-info" type="button">
+                                                    <i class="fa fa-fw fas fa-search"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </li>
+
                                 </ul>
                             </div>
+
+                            <hr class="border border-whitestyle" />
 
                             <div class="row d-flex flex-row-reverse">
                                 <h5>RESERVAS</h5>
@@ -82,22 +98,18 @@
                                 </tbody>
                             </table>
 
-                            <table class="table table-sm table-responsive table-borderless table-borderless col-md-6 mt-2" style="text-align: left;">
+                            <table class="table table-sm table-responsive table-borderless table-borderless col-md-6 mt-2" style="text-align: left;float:right">
                                 <thead>
                                     <tr>
-                                        <th style="width: 20%;" scope="col">NOMBRE</th>
-                                        <th style="width: 25%;" scope="col">PAIS</th>
-                                        <th style="width: 20%;" scope="col">FECHA</th>
-                                        <th style="width: 30%;" scope="col">USUARIO</th>
-                                        <th style="width: 5%;" scope="col"></th>
+                                        <th style="width: 40%;" scope="col">FECHA</th>
+                                        <th style="width: 40%;" scope="col">USUARIO</th>
+                                        <th style="width: 20%;" scope="col"></th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
                                     <tr ng-repeat="reserva in reservas">
 
-                                        <td>{{reserva.Propiedad.Nombre}}</td>
-                                        <td>{{reserva.Propiedad.Pais}}</td>
                                         <td>{{reserva.FechaReserva}}</td>
                                         <td>{{reserva.Cliente.Apellido}}, {{reserva.Cliente.Nombre}}</td>
 
@@ -107,189 +119,166 @@
                                     </tr>
                                 </tbody>
                             </table>
-                        
+
                         </div>
-                                
+
 
                     </div>
                 </div>
 
             </section>
 
-            <section class="ftco-section testimony-section" id="subastas">
-                <div class="container mt-8">
 
-                    <div class="row ftco-animate justify-content-center">
-                        <div class="col-md-12">
-                            <div class="item">
-                                <div class="row">
-                                    <h4>SUBASTAS</h4>
-                                </div>
+            <section class="section-card services-section mt-5 d-flex justify-content-around" id="subastas">
+                <div class="col-xl-11 col-md-10">
+                    <div class="card table-card">
+                        <div class="card-header" style="background-color:#3e4e75 ; color:#ffffff">
 
-                                <div class="btn-toolbar py-2" role="toolbar" aria-label="Toolbar with button groups">
-                                    <div class="btn-group btn-group-sm mr-2" role="group" aria-label="First group">
-                                        <button type="button" class="btn btn-success add-nueva-subasta" data-toggle="modal" data-target="#addEditSubastaModal"><i class="fa fa-fw fas fa-plus"></i></button>
-                                    </div>
-                                </div>
+                            <div class="row d-flex justify-content-between">
+                                <h5>NUEVAS SUBASTAS</h5>
+                                <ul class="list-unstyled card-option d-flex justify-content-around">
 
 
-                                <div class="testimony-wrap p-4 pb-5 pl-5">
+                                    <li class="col"><button type="button" class="btn btn-success add-nueva-propiedad" style="float:right;" data-toggle="modal" data-target="#addEditPropiedadModal"><i class="fa fa-fw fas fa-plus"></i></button></li>
 
-                                    <div class="card-group">
-
-                                        <div class="card bg-transparent" style="border: none !important;">
-                                            <div class="card-body">
-                                                <h6 class="card-title"><b>SUBASTAS FUTURAS</b></h6>
-
-                                                <table class="table table-sm table-borderless scrolled" style="text-align: left;">
-                                                    <thead>
-                                                        <tr>
-                                                            <th style="width: 30%;" scope="col">NOMBRE</th>
-                                                            <th style="width: 20%;" scope="col">VALOR MINIMO</th>
-                                                            <th style="width: 20%;" scope="col">FECHA DE COMIENZO</th>
-                                                            <th style="width: 10%;"></th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr ng-repeat="subasta in subastasoff">
-
-                                                            <td>{{subasta.Propiedad.Nombre}}</td>
-                                                            <td>{{subasta.ValorMinimo}} USD</td>
-                                                            <td>{{subasta.FechaComienzo}}</td>
-
-                                                            <td>
-                                                                <button id="{{subasta.IdSubasta}}" class="btn btn-group-sm btn-primary subasta-modificar" data-toggle="modal" data-target="#addEditSubastaModal"><i class="fa fa-fw fas fa-pencil-square-o"></i></button>
-                                                                <button id="{{subasta.IdSubasta}}" ng-click="borrarsubasta($event.currentTarget.id)" class="btn btn-group-sm btn-danger propiedad-a-borrar"> <i class="fa fa-fw fas fa-remove"></i></button>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
+                                    <li>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="Nombre de Residencia">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-info" type="button">
+                                                    <i class="fa fa-fw fas fa-search"></i>
+                                                </button>
                                             </div>
                                         </div>
+                                    </li>
+                                </ul>
+                            </div>
 
-                                        <div class="card bg-transparent" style="border: none !important;">
-                                            <div class="card-body">
-                                                <h6 class="card-title"><b>SUBASTAS FINALIZADAS</b></h6>
-                                                <table class="table table-sm table-borderless scrolled" style="text-align: left;">
-                                                    <thead>
-                                                        <tr>
-                                                            <th style="width: 30%;" scope="col">NOMBRE</th>
-                                                            <th style="width: 20%;" scope="col">VALOR</th>
-                                                            <th style="width: 20%;" scope="col">CLIENTE</th>
-                                                            <th style="width: 10%;"></th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr ng-repeat="subasta in subastasfin">
+                            <hr class="border border-whitestyle" />
 
-                                                            <td>{{subasta.Propiedad.Nombre}}</td>
-                                                            <td>{{subasta.ValorActual}} USD</td>
-                                                            <td>{{subasta.Cliente.Apellido}} {{subasta.Cliente.Nombre}}</td>
-
-                                                            <td>
-                                                                <button ng-show="subasta.Cliente.Nombre != null" id="{{subasta.IdSubasta}}" ng-click="confirmarsubasta($event.currentTarget.id)" class="btn btn-group-sm btn-success"><i class="fa fa-fw fas fa-check"></i></button>
-                                                                <button id="{{subasta.IdSubasta}}" ng-click="rechazarsubasta($event.currentTarget.id)" class="btn btn-group-sm btn-danger subasta-a-borrar"> <i class="fa fa-fw fas fa-ban"></i></button>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="row d-flex flex-row-reverse">
+                                <h5>SUBASTAS CERRADAS</h5>
                             </div>
                         </div>
+
+                        <div class="d-flex justify-content-around">
+
+                            <table class="table table-sm table-responsive table-borderless col-md-6 mt-2 " style="text-align: left;">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 30%;" scope="col">NOMBRE</th>
+                                        <th style="width: 20%;" scope="col">VALOR MINIMO</th>
+                                        <th style="width: 30%;" scope="col">FECHA DE COMIENZO</th>
+                                        <th style="width: 20%;" scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="subasta in subastasoff">
+
+                                        <td>{{subasta.Propiedad.Nombre}}</td>
+                                        <td>{{subasta.ValorMinimo}} USD</td>
+                                        <td>{{subasta.FechaComienzo}}</td>
+
+                                        <td>
+                                            <button id="{{subasta.IdSubasta}}" class="btn btn-group-sm btn-primary subasta-modificar" data-toggle="modal" data-target="#addEditSubastaModal"><i class="fa fa-fw fas fa-pencil-square-o"></i></button>
+                                            <button id="{{subasta.IdSubasta}}" ng-click="borrarsubasta($event.currentTarget.id)" class="btn btn-group-sm btn-danger propiedad-a-borrar"> <i class="fa fa-fw fas fa-remove"></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <table class="table table-sm table-responsive table-borderless table-borderless col-md-6 mt-2" style="text-align: left;float:right">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 20%;" scope="col">NOMBRE</th>
+                                        <th style="width: 15%;" scope="col">MAXIMO SUBASTADO</th>
+                                        <th style="width: 55%;" scope="col">CLIENTE</th>
+                                        <th style="width: 10%;" scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="subasta in subastasfin">
+
+                                        <td>{{subasta.Propiedad.Nombre}}</td>
+                                        <td>{{subasta.ValorActual}} USD</td>
+                                        <td>{{subasta.Cliente.Apellido}} {{subasta.Cliente.Nombre}}</td>
+
+                                        <td>
+                                            <button ng-show="subasta.Cliente.Nombre != null" id="{{subasta.IdSubasta}}" ng-click="confirmarsubasta($event.currentTarget.id)" class="btn btn-group-sm btn-success"><i class="fa fa-fw fas fa-check"></i></button>
+                                            <button id="{{subasta.IdSubasta}}" ng-click="rechazarsubasta($event.currentTarget.id)" class="btn btn-group-sm btn-danger subasta-a-borrar"> <i class="fa fa-fw fas fa-ban"></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
+
             </section>
 
-            <section id="clientes">
+            <section class="section-card services-section mt-5 mb-5 d-flex justify-content-around" id="clientes">
+                <div class="col-xl-11 col-md-10">
+                    <div class="card table-card">
+                        <div class="card-header" style="background-color:#3e4e75 ; color:#ffffff">
 
-                <div class="md-accordion accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
+                            <div class="row d-flex justify-content-between">
+                                <h5>SUBSCRIPCIONES USUARIOS</h5>
+                            </div>
 
-                    <div class="card">
-                        <div class="card-header" role="tab" id="headingOne">
+                            <hr class="border border-whitestyle" />
 
-                            <a id="folder-1" data-toggle="collapse" data-parent="#accordionEx" href="#collapseOne" aria-expanded="true"
-                               aria-controls="collapseOne">
-                                <h5 class="mt-1 mb-0">
-                                    <span>CLIENTES</span>
-                                    <i class="fa fa-fw fas fa-angle-down rotate-icon"></i>
-                                </h5>
-                            </a>
-
-                        </div>
-                        <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
-                            <div class="card-body">
-
-                                <div class="row ftco-animate justify-content-center">
-                                    <div class="col-md-12">
-                                        <div class="item">
-
-                                            <div class="testimony-wrap p-4 pb-5 pl-5">
-
-                                                <div class="card-group">
-
-                                                    <div class="card bg-transparent" style="border: none !important;">
-                                                        <div class="card-body">
-                                                            <h6 class="card-title"><b>NUEVOS CLIENTES</b></h6>
-                                                            <table class="table table-sm table-borderless table-responsive-sm" style="text-align: left;">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th scope="col">Nombre</th>
-                                                                        <th scope="col">Apellido</th>
-                                                                        <th scope="col"></th>
-                                                                    </tr>
-                                                                </thead>
-
-                                                                <tbody ng-repeat="nuevo in nuevosclientes">
-                                                                    <tr>
-                                                                        <td>{{nuevo.Nombre}}</td>
-                                                                        <td>{{nuevo.Apellido}}</td>
-                                                                        <td><button id="{{nuevo.IdCliente}}" ng-click="aceptarnuevousuario($event.currentTarget.id)" class="btn btn-group-sm btn-success"><i class="fa fa-fw fas fa-check"></i></button></td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="card bg-transparent" style="border: none !important;">
-                                                        <div class="card-body">
-                                                            <h6 class="card-title"><b>NUEVOS PREMIUM</b></h6>
-                                                            <table class="table table-sm table-borderless" style="text-align: left;">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th scope="col">Nombre</th>
-                                                                        <th scope="col">Apellido</th>
-                                                                        <th scope="col"></th>
-                                                                    </tr>
-                                                                </thead>
-
-                                                                <tbody ng-repeat="premium in parapremiums">
-                                                                    <tr>
-                                                                        <td>{{premium.Nombre}}</td>
-                                                                        <td>{{premium.Apellido}}</td>
-                                                                        <td> <button id="{{premium.IdCliente}}" ng-click="confirmarpremium($event.currentTarget.id)" class="btn btn-group-sm btn-success"><i class="fa fa-fw fas fa-check"></i></button></td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
+                            <div class="row d-flex flex-row-reverse">
+                                <h5>SUBSCRIPCIONES PREMIUMS</h5>
                             </div>
                         </div>
+
+                        <div class="d-flex justify-content-around">
+
+                            <table class="table table-sm table-responsive table-borderless col-md-6 mt-2 " style="text-align: left;">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 40%;" scope="col">NOMBRE</th>
+                                        <th style="width: 40%;" scope="col">APELLIDO</th>
+                                        <th style="width: 20%;" scope="col"></th>
+                                    </tr>
+                                </thead>
+
+                                <tbody ng-repeat="nuevo in nuevosclientes">
+                                    <tr>
+                                        <td>{{nuevo.Nombre}}</td>
+                                        <td>{{nuevo.Apellido}}</td>
+                                        <td><button id="{{nuevo.IdCliente}}" ng-click="aceptarnuevousuario($event.currentTarget.id)" class="btn btn-group-sm btn-success"><i class="fa fa-fw fas fa-check"></i></button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <table class="table table-sm table-responsive table-borderless table-borderless col-md-6 mt-2" style="text-align: left;float:right">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 40%;" scope="col">NOMBRE</th>
+                                        <th style="width: 40%;" scope="col">APELLIDO</th>
+                                        <th style="width: 20%;" scope="col"></th>
+                                    </tr>
+                                </thead>
+
+                                <tbody ng-repeat="premium in parapremiums">
+                                    <tr>
+                                        <td>{{premium.Nombre}}</td>
+                                        <td>{{premium.Apellido}}</td>
+                                        <td> <button id="{{premium.IdCliente}}" ng-click="confirmarpremium($event.currentTarget.id)" class="btn btn-group-sm btn-success"><i class="fa fa-fw fas fa-check"></i></button></td>
+                                    </tr>
+                                </tbody>                               
+                            </table>
+                        </div>
                     </div>
                 </div>
+
             </section>
-            
+
             <div class="modal fade" id="addEditPropiedadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 @Html.Partial("_AgregarEditarPropiedad")
             </div>
+
             <div class="modal fade" id="addEditSubastaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 @Html.Partial("_AgregarEditarSubasta")
             </div>
