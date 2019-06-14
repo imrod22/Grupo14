@@ -20,6 +20,9 @@
         <script type="text/javascript" src="~/Scripts/pignose.calendar.min.js"></script>
         <link rel="stylesheet" type="text/css" href="~/Content/pignose.calendar.min.css" />
 
+        <script type="text/javascript" src="~/Scripts/nanoScroller.min.js"></script>
+        <link rel="stylesheet" href="~/Content/nanoScroller.css" />
+
     </head>
 
     <body ng-app="adminsection">
@@ -196,8 +199,8 @@
                                         <th style="width: 10%;" scope="col"></th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr ng-repeat="subasta in subastasfin">
+                                <tbody class="nano">
+                                    <tr ng-repeat="subasta in subastasfin" class="nano-content">
 
                                         <td>{{subasta.Propiedad.Nombre}}</td>
                                         <td>{{subasta.ValorActual}} USD</td>

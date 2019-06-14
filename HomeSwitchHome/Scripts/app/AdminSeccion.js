@@ -1,5 +1,7 @@
 ﻿$(document).ready(function () {
 
+    $(".nano").nanoScroller();
+
     var datenow = moment().add(6, 'months');
 
     $(document).on("change", ".propiedad-select", function () {

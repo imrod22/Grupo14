@@ -284,6 +284,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\nanoScroller.css" />
     <Content Include="Content\pignose.calendar.min.css" />
     <Content Include="Content\sweetalert.css" />
     <Content Include="favicon.ico" />
@@ -1234,6 +1235,7 @@
     <Content Include="Scripts\moment-with-locales.min.js" />
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\nanoScroller.min.js" />
     <Content Include="Scripts\pignose.calendar.min.js" />
     <Content Include="Scripts\popper-utils.js" />
     <Content Include="Scripts\popper-utils.min.js" />

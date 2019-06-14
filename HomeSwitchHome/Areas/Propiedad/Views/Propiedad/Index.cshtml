@@ -13,23 +13,41 @@
         <section class="ftco-section services-section" id="destacados">
             <div class="container">
                 <div class="row">
-                    <div class="btn-toolbar py-2" role="toolbar" aria-label="Toolbar with button groups">
-                        <div class="btn-group btn-group-sm mr-2" role="group" aria-label="Secound group">
-                            <button type="button" class="btn btn-secondary" disabled><i class="fa fa-fw fas fa-search"></i></button>
 
-                            <input type="text" ng-model="filtroNombre" ng-change="filtrar()" placeholder="Filtre por nombre" />
-                            <input style="margin-left:5px" type="text" ng-model="filtroPais" ng-change="filtrar()" placeholder="Filtre por país" />
-                        </div>
+                    <ul class="list-unstyled card-option d-flex justify-content-around">
 
-                    </div>
 
+                        <li class="col">
+                            <div class="input-group">
+                                <input type="text" ng-model="filtroNombre" ng-change="filtrar()" placeholder="Filtre por nombre" />
+                                <div class="input-group-append">
+                                    <button class="btn btn-info" type="button">
+                                        <i class="fa fa-fw fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="input-group">
+                                <input style="margin-left:5px" type="text" ng-model="filtroPais" ng-change="filtrar()" placeholder="Filtre por país" />
+                                <div class="input-group-append">
+                                    <button  style="background-color: #2c5fa1; color:#ffffff" class="btn" type="button">
+                                        <i class="fa fa-fw fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </li>
+
+                    </ul>
+                    
                     <table class="table table-sm table-borderless scrolled" style="text-align: left;">
-                        <thead>
+                        <thead style="background-color:#142c4e; color:#ffffff">
                             <tr>
-                                <th style="width: 30%;" scope="col">NOMBRE</th>
-                                <th style="width: 50px;" scope="col">PAIS</th>
-                                <th style="width: 20px;" scope="col"></th>
-                                <th style="width: 20px;" scope="col"></th>
+                                <th style="width: 40%;" scope="col">NOMBRE</th>
+                                <th style="width: 40%;" scope="col">PAIS</th>
+                                <th style="width: 10%;" scope="col"></th>
+                                <th style="width: 10%;" scope="col"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -38,7 +56,7 @@
                                 <td>{{propiedad.Nombre}}</td>
                                 <td>{{propiedad.Pais}}</td>
                                 <td>
-                                    <button id="{{propiedad.IdPropiedad}}" ng-click="detallar($event.currentTarget.id)" class="btn btn-group-sm btn-primary propiedad-detalle" data-toggle="modal" data-target="#detallePropiedadModal">
+                                    <button id="{{propiedad.IdPropiedad}}" ng-click="detallar($event.currentTarget.id)" class="btn btn-sm propiedad-detalle" data-toggle="modal" data-target="#detallePropiedadModal">
                                         <i class="fa fa-fw fa fa-info-circle"></i>
                                         <span class="tooltiptext">INFO</span>
                                     </button>
@@ -47,7 +65,7 @@
                                 @{if (User.Identity.Name == "CLIENTE")
                                     {
                                         <td>
-                                            <button id="{{propiedad.IdPropiedad}}" ng-click="solicitarnovedad($event.currentTarget.id)" class="btn btn-group-sm btn-outline-warning propiedad-detalle">
+                                            <button id="{{propiedad.IdPropiedad}}" ng-click="solicitarnovedad($event.currentTarget.id)" class="btn btn-sm">
                                                 <i class="fa fas fa-bell" aria-hidden="true"></i>
                                                 <span class="tooltiptext">NOTIFICAR NOVEDADES</span>
                                             </button>
@@ -56,7 +74,7 @@
                                     else
                                     {
                                         <td>
-                                            <button style="background-color:#90c322" id="{{propiedad.IdPropiedad}}" ng-click="elegirfecha($event.currentTarget.id)" class="btn btn-group-sm propiedad-detalle" data-toggle="modal" data-target="#reservaPropiedadModal">
+                                            <button style="background-color:#90c322" id="{{propiedad.IdPropiedad}}" ng-click="elegirfecha($event.currentTarget.id)" class="btn btn-sm" data-toggle="modal" data-target="#reservaPropiedadModal">
                                                 <i class="fa fas fa-calendar-check-o" aria-hidden="true"></i>
                                                 <span class="tooltiptext">RESERVAR</span>
                                             </button>
@@ -79,9 +97,7 @@
         </div>
     </div>
 
-
 </section>
-
 
 <script src="~/Scripts/app/propiedadSection.js"></script>
 <script src="~/Scripts/app/Propiedad_AngularJS.js"></script>
