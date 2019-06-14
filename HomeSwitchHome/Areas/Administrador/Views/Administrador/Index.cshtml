@@ -40,25 +40,59 @@
 
         <div ng-controller="admincontroller">
 
-            <section class="ftco-section services-section" id="residencias">
-                <div class="container">
-                    <div class="album py-5">
-                        <div class="row">
-                            <h4>RESERVAS</h4>
+
+            <section class="section-card services-section mt-5 d-flex justify-content-around" id="residencias">
+                <div class="col-xl-11 col-md-10">
+                    <div class="card table-card">
+                        <div class="card-header" style="background-color:#3e4e75 ; color:#ffffff">
+
+                            <div class="row d-flex">
+                                <h5>RESIDENCIAS</h5>
+                                <ul class="list-unstyled card-option">
+                                    <li><button type="button" class="btn btn-success add-nueva-propiedad" style="float:right;" data-toggle="modal" data-target="#addEditPropiedadModal"><i class="fa fa-fw fas fa-plus"></i></button></li>
+                                </ul>
+                            </div>
+
+                            <div class="row d-flex flex-row-reverse">
+                                <h5>RESERVAS</h5>
+                            </div>
                         </div>
 
-                        <div class="row">
+                        <div class="d-flex justify-content-around">
 
-                            <table class="table table-sm table-borderless table-responsive-sm" style="text-align: left;">
-                                <thead style="background-color:#3e4e75 ; color:#ffffff">
+                            <table class="table table-sm table-responsive table-borderless col-md-6 mt-2 " style="text-align: left;">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 40%;" scope="col">NOMBRE</th>
+                                        <th style="width: 40%;" scope="col">PAIS</th>
+                                        <th style="width: 20%;" scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="propiedad in propiedades">
+
+                                        <td>{{propiedad.Nombre}}</td>
+                                        <td>{{propiedad.Pais}}</td>
+
+                                        <td class="d-flex justify-content-between">
+                                            <button id="{{propiedad.IdPropiedad}}" class="btn btn-group-sm btn-primary propiedad-modificar m-1" data-toggle="modal" data-target="#addEditPropiedadModal"><i class="fa fa-fw fas fa-pencil-square-o"></i></button>
+                                            <button id="{{propiedad.IdPropiedad}}" ng-click="borrarpropiedad($event.currentTarget.id)" class="btn btn-group-sm btn-danger propiedad-a-borrar m-1"> <i class="fa fa-fw fas fa-remove"></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <table class="table table-sm table-responsive table-borderless table-borderless col-md-6 mt-2" style="text-align: left;">
+                                <thead>
                                     <tr>
                                         <th style="width: 20%;" scope="col">NOMBRE</th>
-                                        <th style="width: 20%;" scope="col">PAIS</th>
-                                        <th style="width: 25%;" scope="col">FECHA</th>
+                                        <th style="width: 25%;" scope="col">PAIS</th>
+                                        <th style="width: 20%;" scope="col">FECHA</th>
                                         <th style="width: 30%;" scope="col">USUARIO</th>
                                         <th style="width: 5%;" scope="col"></th>
                                     </tr>
                                 </thead>
+
                                 <tbody>
                                     <tr ng-repeat="reserva in reservas">
 
@@ -73,50 +107,13 @@
                                     </tr>
                                 </tbody>
                             </table>
+                        
                         </div>
+                                
+
                     </div>
                 </div>
-            </section>
 
-
-            <section class="ftco-section services-section" id="residencias">
-                <div class="container">
-                    <div class="album py-5">
-                        <div class="row">
-                            <h4>RESIDENCIAS</h4>
-                        </div>
-
-                        <div class="row">
-                            <div class="btn-toolbar py-2" role="toolbar" aria-label="Toolbar with button groups">
-                                <div class="btn-group btn-group-sm mr-2" role="group" aria-label="First group">
-                                    <button type="button" class="btn btn-success add-nueva-propiedad" data-toggle="modal" data-target="#addEditPropiedadModal"><i class="fa fa-fw fas fa-plus"></i></button>
-                                </div>
-                            </div>
-
-                            <table class="table table-sm table-borderless table-responsive-sm" style="text-align: left;">
-                                <thead style="background-color:#3e4e75 ; color:#ffffff">
-                                    <tr>
-                                        <th style="width: 45%;" scope="col">NOMBRE</th>
-                                        <th style="width: 45%;" scope="col">PAIS</th>
-                                        <th style="width: 10%;" scope="col"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="propiedad in propiedades">
-
-                                        <td>{{propiedad.Nombre}}</td>
-                                        <td>{{propiedad.Pais}}</td>
-
-                                        <td class="d-flex justify-content-around">
-                                            <button id="{{propiedad.IdPropiedad}}" class="btn btn-group-sm btn-primary propiedad-modificar" data-toggle="modal" data-target="#addEditPropiedadModal"><i class="fa fa-fw fas fa-pencil-square-o"></i></button>
-                                            <button id="{{propiedad.IdPropiedad}}" ng-click="borrarpropiedad($event.currentTarget.id)" class="btn btn-group-sm btn-danger propiedad-a-borrar"> <i class="fa fa-fw fas fa-remove"></i></button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
             </section>
 
             <section class="ftco-section testimony-section" id="subastas">
@@ -206,73 +203,90 @@
                 </div>
             </section>
 
-            <section class="ftco-section testimony-section" id="clientes">
-                <div class="container mt-8">
+            <section id="clientes">
 
-                    <div class="row ftco-animate justify-content-center">
-                        <div class="col-md-12">
-                            <div class="item">
-                                <div class="row">
-                                    <h4>CLIENTES</h4>
-                                </div>
+                <div class="md-accordion accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
 
-                                <div class="testimony-wrap p-4 pb-5 pl-5">
+                    <div class="card">
+                        <div class="card-header" role="tab" id="headingOne">
 
-                                    <div class="card-group">
+                            <a id="folder-1" data-toggle="collapse" data-parent="#accordionEx" href="#collapseOne" aria-expanded="true"
+                               aria-controls="collapseOne">
+                                <h5 class="mt-1 mb-0">
+                                    <span>CLIENTES</span>
+                                    <i class="fa fa-fw fas fa-angle-down rotate-icon"></i>
+                                </h5>
+                            </a>
 
-                                        <div class="card bg-transparent" style="border: none !important;">
-                                            <div class="card-body">
-                                                <h6 class="card-title"><b>NUEVOS CLIENTES</b></h6>
-                                                <table class="table table-sm table-borderless" style="text-align: left;">
-                                                    <thead>
-                                                        <tr>
-                                                            <th scope="col">Nombre</th>
-                                                            <th scope="col">Apellido</th>
-                                                            <th scope="col"></th>
-                                                        </tr>
-                                                    </thead>
+                        </div>
+                        <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="card-body">
 
-                                                    <tbody ng-repeat="nuevo in nuevosclientes">
-                                                        <tr>
-                                                            <td>{{nuevo.Nombre}}</td>
-                                                            <td>{{nuevo.Apellido}}</td>
-                                                            <td><button id="{{nuevo.IdCliente}}" ng-click="aceptarnuevousuario($event.currentTarget.id)" class="btn btn-group-sm btn-success"><i class="fa fa-fw fas fa-check"></i></button></td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
+                                <div class="row ftco-animate justify-content-center">
+                                    <div class="col-md-12">
+                                        <div class="item">
 
-                                        <div class="card bg-transparent" style="border: none !important;">
-                                            <div class="card-body">
-                                                <h6 class="card-title"><b>NUEVOS PREMIUM</b></h6>
-                                                <table class="table table-sm table-borderless" style="text-align: left;">
-                                                    <thead>
-                                                        <tr>
-                                                            <th scope="col">Nombre</th>
-                                                            <th scope="col">Apellido</th>
-                                                            <th scope="col"></th>
-                                                        </tr>
-                                                    </thead>
+                                            <div class="testimony-wrap p-4 pb-5 pl-5">
 
-                                                    <tbody ng-repeat="premium in parapremiums">
-                                                        <tr>
-                                                            <td>{{premium.Nombre}}</td>
-                                                            <td>{{premium.Apellido}}</td>
-                                                            <td> <button id="{{premium.IdCliente}}" ng-click="confirmarpremium($event.currentTarget.id)" class="btn btn-group-sm btn-success"><i class="fa fa-fw fas fa-check"></i></button></td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
+                                                <div class="card-group">
+
+                                                    <div class="card bg-transparent" style="border: none !important;">
+                                                        <div class="card-body">
+                                                            <h6 class="card-title"><b>NUEVOS CLIENTES</b></h6>
+                                                            <table class="table table-sm table-borderless table-responsive-sm" style="text-align: left;">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th scope="col">Nombre</th>
+                                                                        <th scope="col">Apellido</th>
+                                                                        <th scope="col"></th>
+                                                                    </tr>
+                                                                </thead>
+
+                                                                <tbody ng-repeat="nuevo in nuevosclientes">
+                                                                    <tr>
+                                                                        <td>{{nuevo.Nombre}}</td>
+                                                                        <td>{{nuevo.Apellido}}</td>
+                                                                        <td><button id="{{nuevo.IdCliente}}" ng-click="aceptarnuevousuario($event.currentTarget.id)" class="btn btn-group-sm btn-success"><i class="fa fa-fw fas fa-check"></i></button></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="card bg-transparent" style="border: none !important;">
+                                                        <div class="card-body">
+                                                            <h6 class="card-title"><b>NUEVOS PREMIUM</b></h6>
+                                                            <table class="table table-sm table-borderless" style="text-align: left;">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th scope="col">Nombre</th>
+                                                                        <th scope="col">Apellido</th>
+                                                                        <th scope="col"></th>
+                                                                    </tr>
+                                                                </thead>
+
+                                                                <tbody ng-repeat="premium in parapremiums">
+                                                                    <tr>
+                                                                        <td>{{premium.Nombre}}</td>
+                                                                        <td>{{premium.Apellido}}</td>
+                                                                        <td> <button id="{{premium.IdCliente}}" ng-click="confirmarpremium($event.currentTarget.id)" class="btn btn-group-sm btn-success"><i class="fa fa-fw fas fa-check"></i></button></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
-
+            
             <div class="modal fade" id="addEditPropiedadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 @Html.Partial("_AgregarEditarPropiedad")
             </div>
@@ -281,148 +295,6 @@
             </div>
 
         </div>
-
-        <section class="mb-5">
-
-            <div class="md-accordion accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
-
-                <div class="card">
-                    <div class="card-header" role="tab" id="headingOne">
-
-                        <div class="dropdown float-left">
-                            <button class="btn btn-info btn-sm m-0 mr-3 p-2 dropdown-toggle" type="button" data-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-pencil-alt"></i>
-                            </button>
-                            <div class="dropdown-menu dropdown-info">
-                                <a class="dropdown-item" href="#">Add new</a>
-                                <a class="dropdown-item" href="#">Rename folder</a>
-                                <a class="dropdown-item" href="#">Delete folder</a>
-                            </div>
-                        </div>
-                        <a id="folder-1" data-toggle="collapse" data-parent="#accordionEx" href="#collapseOne" aria-expanded="true"
-                           aria-controls="collapseOne">
-                            <h5 class="mt-1 mb-0">
-                                <span>Folder 1</span>
-                                <i class="fas fa-angle-down rotate-icon"></i>
-                            </h5>
-                        </a>
-
-                    </div>
-                    <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
-                        <div class="card-body">
-                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson
-                            ad squid. 3 wolf moon officia aute,
-                            non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
-                            Brunch
-                            3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
-                            assumenda
-                            shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
-                            nesciunt
-                            sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft
-                            beer
-                            farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them
-                            accusamus
-                            labore sustainable VHS.
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-
-                    <div class="card-header" role="tab" id="headingTwo">
-
-                        <div class="dropdown float-left">
-                            <button class="btn btn-info btn-sm m-0 mr-3 p-2 dropdown-toggle" type="button" data-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false">
-                                <i class=""></i>
-                            </button>
-                            <div class="dropdown-menu dropdown-info">
-                                <a class="dropdown-item" href="#">Add new</a>
-                                <a class="dropdown-item" href="#">Rename folder</a>
-                                <a class="dropdown-item" href="#">Delete folder</a>
-                            </div>
-                        </div>
-
-                        <a id="folder-2" data-toggle="collapse" data-parent="#accordionEx" href="#collapseTwo" aria-expanded="true"
-                           aria-controls="collapseTwo">
-                            <h5 class="mt-1 mb-0">
-                                <span>Folder 2</span>
-                                <i class="fas fa-angle-down rotate-icon"></i>
-                            </h5>
-                        </a>
-
-                    </div>
-                    <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
-                        <div class="card-body">
-                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson
-                            ad squid. 3 wolf moon officia aute,
-                            non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
-                            Brunch
-                            3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
-                            assumenda
-                            shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
-                            nesciunt
-                            sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft
-                            beer
-                            farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them
-                            accusamus
-                            labore sustainable VHS.
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-
-                    <div class="card-header" role="tab" id="headingThree">
-
-                        <div class="dropdown float-left">
-                            <button class="btn btn-info btn-sm m-0 mr-3 p-2 dropdown-toggle" type="button" data-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-pencil-alt"></i>
-                            </button>
-                            <div class="dropdown-menu dropdown-info">
-                                <a class="dropdown-item" href="#">Add new</a>
-                                <a class="dropdown-item" href="#">Rename folder</a>
-                                <a class="dropdown-item" href="#">Delete folder</a>
-                            </div>
-                        </div>
-
-                        <!-- Heading -->
-                        <a id="folder-3" data-toggle="collapse" data-parent="#accordionEx" href="#collapseThree" aria-expanded="true"
-                           aria-controls="collapseThree">
-                            <h5 class="mt-1 mb-0">
-                                <span>Folder 3</span>
-                                <i class="fas fa-angle-down rotate-icon"></i>
-                            </h5>
-                        </a>
-                    </div>
-
-                    <!-- Card body -->
-                    <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree">
-                        <div class="card-body">
-                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson
-                            ad squid. 3 wolf moon officia aute,
-                            non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
-                            Brunch
-                            3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla
-                            assumenda
-                            shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
-                            nesciunt
-                            sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft
-                            beer
-                            farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them
-                            accusamus
-                            labore sustainable VHS.
-                        </div>
-                    </div>
-                </div>
-                <!-- Accordion card -->
-            </div>
-            <!--/.Accordion wrapper-->
-
-        </section>
-
-
-
         <script src="~/Scripts/app/Admin_AngularJS.js"></script>
         <script src="~/Scripts/app/AdminSeccion.js"></script>
     </body>

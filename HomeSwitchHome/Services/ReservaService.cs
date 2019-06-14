@@ -115,5 +115,6 @@ namespace HomeSwitchHome.Services
             var reservasPropiedad = this.ObtenerReservas();
             return reservasPropiedad.Where(t => t.IdPropiedad == idPropiedad && DateTime.Now <= Convert.ToDateTime(t.FechaReserva)).ToList();
         }
+
     }
 }

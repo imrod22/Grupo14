@@ -29,7 +29,7 @@ adminsection.controller('admincontroller', function ($scope, $http) {
         $scope.nuevosclientes = result.data;
     });
 
-    $http.get("/Administrador/Administrador/ObtenerListadoReservas").then(function (result) {
+    $http.get("/Administrador/Administrador/ObtenerReservasOrdenadasPorFecha").then(function (result) {
         $scope.reservas = result.data;
 
     });

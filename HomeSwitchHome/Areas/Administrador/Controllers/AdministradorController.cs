@@ -161,9 +161,31 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
 
         public JsonResult ObtenerListadoReservas()
         {
-            List<ReservaViewModel> reservas = this.servicioReserva.ObtenerReservas().OrderByDescending(t => Convert.ToDateTime(t.FechaReserva)).Select(t => { t.FechaReserva = string.Format("{0}-{1}-{2}", Convert.ToDateTime(t.FechaReserva).Day, Convert.ToDateTime(t.FechaReserva).Month, Convert.ToDateTime(t.FechaReserva).Year); return t; }).ToList();
-            return Json(reservas, JsonRequestBehavior.AllowGet);
+            var reservas = this.servicioReserva.ObtenerReservas();
 
+            return Json(reservas, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult ObtenerReservasOrdenadasPorFecha() {
+
+            List<ReservaViewModel> reservasOrdenadas = new List<ReservaViewModel>();
+
+            var reservasCache = this.servicioReserva.ObtenerReservas();
+
+            foreach (var reservaEnCache in reservasCache)
+            {
+                ReservaViewModel reservaAjustada = new ReservaViewModel();
+                reservaAjustada.IdPropiedad = reservaEnCache.IdPropiedad;
+                reservaAjustada.Propiedad = reservaEnCache.Propiedad;
+                reservaAjustada.IdCliente = reservaEnCache.IdCliente;
+                reservaAjustada.Cliente = reservaEnCache.Cliente;
+
+                reservaAjustada.FechaReserva = string.Format("{0}-{1}-{2}", Convert.ToDateTime(reservaEnCache.FechaReserva).Day, Convert.ToDateTime(reservaEnCache.FechaReserva).Month, Convert.ToDateTime(reservaEnCache.FechaReserva).Year);
+
+                reservasOrdenadas.Add(reservaAjustada);
+            }
+
+            return Json(reservasOrdenadas, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult ObtenerFechasOcupadasDePropiedad(int idPropiedad)
