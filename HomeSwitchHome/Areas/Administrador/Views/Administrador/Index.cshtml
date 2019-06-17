@@ -43,7 +43,6 @@
 
         <div ng-controller="admincontroller">
 
-
             <section class="section-card services-section mt-5 d-flex justify-content-around" id="residencias">
                 <div class="col-xl-11 col-md-10">
                     <div class="card table-card">
@@ -77,14 +76,14 @@
                             </div>
                         </div>
 
-                        <div class="d-flex justify-content-around">
+                        <div class="d-flex justify-content-around" style="overflow-y: auto; height: 250px;">
 
                             <table class="table table-sm table-responsive table-borderless col-md-6 mt-2 " style="text-align: left;">
                                 <thead>
                                     <tr>
-                                        <th style="width: 40%;" scope="col">NOMBRE</th>
-                                        <th style="width: 40%;" scope="col">PAIS</th>
-                                        <th style="width: 20%;" scope="col"></th>
+                                        <th style="width: 40%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col">NOMBRE</th>
+                                        <th style="width: 40%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col">PAIS</th>
+                                        <th style="width: 20%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -104,9 +103,9 @@
                             <table class="table table-sm table-responsive table-borderless table-borderless col-md-6 mt-2" style="text-align: left;float:right">
                                 <thead>
                                     <tr>
-                                        <th style="width: 40%;" scope="col">FECHA</th>
-                                        <th style="width: 40%;" scope="col">USUARIO</th>
-                                        <th style="width: 20%;" scope="col"></th>
+                                        <th style="width: 50%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col">FECHA</th>
+                                        <th style="width: 40%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col">USUARIO</th>
+                                        <th style="width: 20%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col"></th>
                                     </tr>
                                 </thead>
 
@@ -122,16 +121,12 @@
                                     </tr>
                                 </tbody>
                             </table>
-
                         </div>
-
-
                     </div>
                 </div>
 
             </section>
-
-
+            
             <section class="section-card services-section mt-5 d-flex justify-content-around" id="subastas">
                 <div class="col-xl-11 col-md-10">
                     <div class="card table-card">
@@ -164,15 +159,15 @@
                             </div>
                         </div>
 
-                        <div class="d-flex justify-content-around">
+                        <div class="d-flex justify-content-around" style="overflow-y: auto; height: 250px;">
 
                             <table class="table table-sm table-responsive table-borderless col-md-6 mt-2 " style="text-align: left;">
                                 <thead>
                                     <tr>
-                                        <th style="width: 30%;" scope="col">NOMBRE</th>
-                                        <th style="width: 20%;" scope="col">VALOR MINIMO</th>
-                                        <th style="width: 30%;" scope="col">FECHA DE COMIENZO</th>
-                                        <th style="width: 20%;" scope="col"></th>
+                                        <th style="width: 25%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col">NOMBRE</th>
+                                        <th style="width: 25%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col">VALOR MINIMO</th>
+                                        <th style="width: 25%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col">FECHA DE COMIENZO</th>
+                                        <th style="width: 25%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -193,14 +188,14 @@
                             <table class="table table-sm table-responsive table-borderless table-borderless col-md-6 mt-2" style="text-align: left;float:right">
                                 <thead>
                                     <tr>
-                                        <th style="width: 20%;" scope="col">NOMBRE</th>
-                                        <th style="width: 15%;" scope="col">MAXIMO SUBASTADO</th>
-                                        <th style="width: 55%;" scope="col">CLIENTE</th>
-                                        <th style="width: 10%;" scope="col"></th>
+                                        <th style="width: 25%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col">NOMBRE</th>
+                                        <th style="width: 25%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col">MAXIMO SUBASTADO</th>
+                                        <th style="width: 25%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col">CLIENTE</th>
+                                        <th style="width: 25%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col"></th>
                                     </tr>
                                 </thead>
-                                <tbody class="nano">
-                                    <tr ng-repeat="subasta in subastasfin" class="nano-content">
+                                <tbody>
+                                    <tr ng-repeat="subasta in subastasfin">
 
                                         <td>{{subasta.Propiedad.Nombre}}</td>
                                         <td>{{subasta.ValorActual}} USD</td>
@@ -235,14 +230,14 @@
                             </div>
                         </div>
 
-                        <div class="d-flex justify-content-around">
+                        <div class="d-flex justify-content-around" style="overflow-y: auto; height: 250px;">
 
                             <table class="table table-sm table-responsive table-borderless col-md-6 mt-2 " style="text-align: left;">
                                 <thead>
                                     <tr>
-                                        <th style="width: 40%;" scope="col">NOMBRE</th>
-                                        <th style="width: 40%;" scope="col">APELLIDO</th>
-                                        <th style="width: 20%;" scope="col"></th>
+                                        <th style="width: 60%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col">NOMBRE</th>
+                                        <th style="width: 40%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col">APELLIDO</th>
+                                        <th style="width: 20%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col"></th>
                                     </tr>
                                 </thead>
 
@@ -258,9 +253,9 @@
                             <table class="table table-sm table-responsive table-borderless table-borderless col-md-6 mt-2" style="text-align: left;float:right">
                                 <thead>
                                     <tr>
-                                        <th style="width: 40%;" scope="col">NOMBRE</th>
-                                        <th style="width: 40%;" scope="col">APELLIDO</th>
-                                        <th style="width: 20%;" scope="col"></th>
+                                        <th style="width: 50%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col">NOMBRE</th>
+                                        <th style="width: 40%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col">APELLIDO</th>
+                                        <th style="width: 20%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col"></th>
                                     </tr>
                                 </thead>
 
