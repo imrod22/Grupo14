@@ -14,7 +14,7 @@
             <div class="container">
                 <div class="row">
 
-                    <ul class="list-unstyled card-option d-flex justify-content-around">
+                    <ul class="list-unstyled card-option d-flex justify-content-around" >
 
 
                         <li class="col">
@@ -40,8 +40,8 @@
                         </li>
 
                     </ul>
-                    
-                    <table class="table table-sm table-borderless scrolled" style="text-align: left;">
+
+                    <table class="table table-sm table-borderless scrolled" style="text-align: left; overflow-y: auto; height: 250px;">
                         <thead style="background-color:#142c4e; color:#ffffff">
                             <tr>
                                 <th style="width: 40%;" scope="col">NOMBRE</th>
@@ -56,7 +56,7 @@
                                 <td>{{propiedad.Nombre}}</td>
                                 <td>{{propiedad.Pais}}</td>
                                 <td>
-                                    <button id="{{propiedad.IdPropiedad}}" ng-click="detallar($event.currentTarget.id)" class="btn btn-sm propiedad-detalle" data-toggle="modal" data-target="#detallePropiedadModal">
+                                    <button style="background-color:#808080" id="{{propiedad.IdPropiedad}}" ng-click="detallar($event.currentTarget.id)" class="btn btn-sm propiedad-detalle" data-toggle="modal" data-target="#detallePropiedadModal">
                                         <i class="fa fa-fw fa fa-info-circle"></i>
                                         <span class="tooltiptext">INFO</span>
                                     </button>
@@ -65,7 +65,7 @@
                                 @{if (User.Identity.Name == "CLIENTE")
                                     {
                                         <td>
-                                            <button id="{{propiedad.IdPropiedad}}" ng-click="solicitarnovedad($event.currentTarget.id)" class="btn btn-sm">
+                                            <button style="background-color:#90c322" id="{{propiedad.IdPropiedad}}" ng-click="solicitarnovedad($event.currentTarget.id)" class="btn btn-sm">
                                                 <i class="fa fas fa-bell" aria-hidden="true"></i>
                                                 <span class="tooltiptext">NOTIFICAR NOVEDADES</span>
                                             </button>

@@ -22,7 +22,7 @@ switchHomeApp.controller('subastasController', function ($scope, $http) {
     }
 
     $scope.pujar = function (element) {
-        
+
         $http.post("/Subasta/Subasta/PujarEnSubasta",
             {
                 'idSubasta': $("#identificadorSubasta").val(),
@@ -40,17 +40,17 @@ switchHomeApp.controller('subastasController', function ($scope, $http) {
                 $scope.subastasList = result.data;
                 $scope.subastasListFiltradas = result.data;
             }
-            
-            $('#pujaSubastaModal').modal('hide');            
-            
+
+            $('#pujaSubastaModal').modal('hide');
+
 
         }, function errorCallback() {
 
-                $('#pujaSubastaModal').modal('hide');
+            $('#pujaSubastaModal').modal('hide');
             alert("Se ha producido un error en el servidor.");
         });
     }
-    
+
     $scope.subastasIsEmpty = function () {
         return $scope.subastasListFiltradas.length == 0;
     }
@@ -85,4 +85,22 @@ switchHomeApp.controller('subastasController', function ($scope, $http) {
         return result;
     }
 
-})
+});
+
+switchHomeApp.filter('dateRange', function () {
+    return function (items, fromDate, toDate) {
+        var filtered = [];
+        console.log(fromDate, toDate);
+        var from_date = Date.parse(fromDate);
+        var to_date = Date.parse(toDate);
+        if (!to_date || !from_date) {
+            return items;
+        }
+        angular.forEach(items, function (item) {
+            if (Date.parse(item.FechaComienzo) > from_date && Date.parse(item.FechaComienzo) < to_date) {
+                filtered.push(item);
+            }
+        });
+        return filtered;
+    };
+});

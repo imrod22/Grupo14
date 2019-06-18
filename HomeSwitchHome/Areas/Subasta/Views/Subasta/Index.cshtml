@@ -3,32 +3,36 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container">
 
-    <div class="row justify-content-center pb-5 jumbotron jumbotron-fluid shadow" style="margin: 20px">
-        <div class="col-md-7 text-center heading-section ftco-animate fadeInUp ftco-animated">
-            <h4 class="display-4">SUBASTAS ACTIVAS</h4>    
-        </div>
-    </div>
-</div>
+    <header style="position: relative; height: 300px; clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - 5vw)); background-image: linear-gradient(#2c5fa1, white);">
+        <h1 style="margin: 0; padding: 100px 0; font: 44px; color: white; text-align: center;">SUBASTAS</h1>
+    </header>
 
 <div ng-controller="subastasController">
     <section class="ftco-section services-section" id="destacados">
-        <div class="col-lg-4">
-            <h5>Filtrar</h5>
-            <input class="form-control" type="text" ng-model="filtroNombre" ng-change="filtrar()" placeholder="Filtre por nombre de la residencia" />
-            <input style="margin-top: 5px" class="form-control" type="text" ng-model="filtroPais" ng-change="filtrar()" placeholder="Filtre por el país de la residencia" />
-        </div>
-        <div class="row">
-            <div class="btn-toolbar py-2" role="toolbar" aria-label="Toolbar with button groups">
+
+        <ul class="list-unstyled card-option d-flex justify-content-around" style="float:right; margin-right:10px">
+            <li>
+                <div class="input-group">
+                    <input type="text" ng-model="filtroPais" ng-change="filtrar()" placeholder="Filtre por ubicación" style="width:300px;" />
+                    <div class="input-group-append">
+                        <button style="background-color: #2c5fa1; color:#ffffff" class="btn" type="button">
+                            <i class="fa fa-fw fas fa-search"></i>
+                        </button>
+                    </div>                    
+                </div>
+            </li>
+        </ul>
+
+        <div class="btn-toolbar py-2" role="toolbar" aria-label="Toolbar with button groups">
                 <div class="btn-group btn-group-sm mr-2" role="group" aria-label="Secound group">
                     <h6 class="toast-header">Activas hoy: {{date | date:'yyyy-MM-dd'}} </h6>
                 </div>
             </div>
-        </div>
+        
         <div ng-hide="subastasIsEmpty()" class="container">
             <div style="margin-top:15px" class="row">
-                <div class="col col-sm-4" ng-repeat="subasta in subastasListFiltradas">
+                <div class="col col-sm-4" ng-repeat="subasta in subastasListFiltradas | dateRange:from_date:to_date">
                     <div class="card flexcss">
                         <div class="card-header">
                             <h4 class="card-title">{{subasta.Propiedad.Nombre}}</h4>
@@ -51,8 +55,9 @@
                 </div>
             </div>
         </div>
+
         <div ng-show="subastasIsEmpty()" class="container">
-            <p>No se encuentran subastas con ese nombre/país.</p>
+            <p>No se encuentran subastas activas.</p>
         </div>
     </section>
 

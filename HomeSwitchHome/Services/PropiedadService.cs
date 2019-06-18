@@ -75,10 +75,12 @@ namespace HomeSwitchHome.Services
             var propiedadABorrar = this.HomeSwitchDB.PROPIEDAD.SingleOrDefault(t => t.IdPropiedad == idPropiedad);
             var subastaService = new SubastaService();
             var propiedadAsViewModel = new PropiedadViewModel().ToViewModel(propiedadABorrar);
+            var reservaService = new ReservaService();
 
             var subastasPropiedad = subastaService.ObtenerSubastasDePropiedad(idPropiedad);
+            var reservaPropiedad = reservaService.ObtenerReservasPropiedad(idPropiedad);
 
-            if (propiedadABorrar != null && !subastasPropiedad.Any())
+            if (propiedadABorrar != null && !subastasPropiedad.Any() && !reservaPropiedad.Any())
             {
                 this.HomeSwitchDB.PROPIEDAD.Remove(propiedadABorrar);
                 this.HomeSwitchDB.SaveChanges();

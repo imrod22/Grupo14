@@ -2,6 +2,7 @@
 using HomeSwitchHome.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -243,6 +244,16 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
 
             Response.StatusCode = (int)HttpStatusCode.BadRequest;
             return null;
+        }
+
+        public JsonResult FiltrarSubastasPorFecha(string comienzo, string fin)
+        {
+            var subastas = this.servicioSubasta.ObtenerSubastasFuturas();
+
+            var fechaComienzo = DateTime.ParseExact(comienzo, "M/d/yyyy", System.Globalization.CultureInfo.InvariantCulture);
+            var fechaFin = DateTime.ParseExact(fin, "M/d/yyyy", System.Globalization.CultureInfo.InvariantCulture);            
+
+            return Json(subastas.Where(t => Convert.ToDateTime(t.FechaComienzo).CompareTo(fechaComienzo) > 0 && Convert.ToDateTime(t.FechaComienzo).CompareTo(fechaFin) < 0).ToArray(), JsonRequestBehavior.AllowGet);
         }
 
     }

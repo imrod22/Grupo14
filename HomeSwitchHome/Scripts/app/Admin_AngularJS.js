@@ -9,6 +9,9 @@ adminsection.controller('admincontroller', function ($scope, $http) {
     $scope.propiedades;
     $scope.reservas;
 
+    var datenow = moment().add(6, 'months');
+    var datelimit = moment().add(8, 'months');
+    
     $http.get("/Administrador/Administrador/SubastasSinEmpezar").then(function (result) {
         $scope.subastasoff = result.data;
     });
@@ -33,6 +36,30 @@ adminsection.controller('admincontroller', function ($scope, $http) {
         $scope.reservas = result.data;
 
     });
+
+    $('#fromsubasta').pignoseCalendar({
+        minDate: datenow,
+        date: datenow,
+        maxDate: datelimit,
+        multiple: true,
+        buttons: true,
+        theme: 'blue',
+        apply: function (dates, context) {
+
+            console.log(dates[0].format('l'));
+            console.log(dates[1].format('l'));
+
+            $http.post("/Administrador/Administrador/FiltrarSubastasPorFecha", {
+                'comienzo': dates[0].format('l'),
+                'fin': dates[1].format('l')
+
+            }).then(function (result) {
+                $scope.subastasoff = result.data;
+
+            });            
+        }
+    });
+
 
     function datosDePropiedadCorrectos() {
         return (
@@ -337,4 +364,21 @@ adminsection.controller('admincontroller', function ($scope, $http) {
         return $.isNumeric($scope.valorMinimo);
     }
 
+});
+
+adminsection.filter('dateRange', function () {
+    return function (items, fromDate) {
+        var filtered = [];
+        console.log(fromDate);
+        var from_date = Date.parse(fromDate);
+        if (!fromDate) {
+            return items;
+        }
+        angular.forEach(items, function (item) {
+            if (Date.parse(item.startDate) > from_date) {
+                filtered.push(item);
+            }
+        });
+        return filtered;
+    };
 });

@@ -20,9 +20,6 @@
         <script type="text/javascript" src="~/Scripts/pignose.calendar.min.js"></script>
         <link rel="stylesheet" type="text/css" href="~/Content/pignose.calendar.min.css" />
 
-        <script type="text/javascript" src="~/Scripts/nanoScroller.min.js"></script>
-        <link rel="stylesheet" href="~/Content/nanoScroller.css" />
-
     </head>
 
     <body ng-app="adminsection">
@@ -50,6 +47,7 @@
 
                             <div class="row d-flex justify-content-between">
                                 <h5>RESIDENCIAS</h5>
+
                                 <ul class="list-unstyled card-option d-flex justify-content-around">
 
 
@@ -67,6 +65,7 @@
                                     </li>
 
                                 </ul>
+                            
                             </div>
 
                             <hr class="border border-whitestyle" />
@@ -137,7 +136,7 @@
                                 <ul class="list-unstyled card-option d-flex justify-content-around">
 
 
-                                    <li class="col"><button type="button" class="btn btn-success add-nueva-propiedad" style="float:right;" data-toggle="modal" data-target="#addEditPropiedadModal"><i class="fa fa-fw fas fa-plus"></i></button></li>
+                                    <li class="col"><button type="button" class="btn btn-success add-nueva-subasta" style="float:right;" data-toggle="modal" data-target="#addEditSubastaModal"><i class="fa fa-fw fas fa-plus"></i></button></li>
 
                                     <li>
                                         <div class="input-group">
@@ -156,6 +155,12 @@
 
                             <div class="row d-flex flex-row-reverse">
                                 <h5>SUBASTAS CERRADAS</h5>
+
+                                <ul class="list-unstyled card-option d-flex justify-content-around" style="float:left;">
+                                    <li class="col">
+                                        <input ng-model="from_date" style="width: 220px;" type="text" id="fromsubasta" class="calendar form-control" name="fromsubasta" />
+                                    </li>
+                                </ul>
                             </div>
                         </div>
 

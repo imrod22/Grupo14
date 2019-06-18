@@ -1,8 +1,7 @@
 ﻿$(document).ready(function () {
-
-
     var datenow = moment().add(6, 'months');
-
+    var datelimit = moment().add(8, 'months');
+       
     $(document).on("change", ".propiedad-select", function () {
 
         var propiedadId = $('#propiedad_select option:selected').attr('id');
