@@ -10,7 +10,7 @@ adminsection.controller('admincontroller', function ($scope, $http) {
     $scope.reservas;
 
     var datenow = moment().add(6, 'months');
-    var datelimit = moment().add(8, 'months');
+    var datelimit = moment().add(12, 'months');
     
     $http.get("/Administrador/Administrador/SubastasSinEmpezar").then(function (result) {
         $scope.subastasoff = result.data;
@@ -46,9 +46,6 @@ adminsection.controller('admincontroller', function ($scope, $http) {
         theme: 'blue',
         apply: function (dates, context) {
 
-            console.log(dates[0].format('l'));
-            console.log(dates[1].format('l'));
-
             $http.post("/Administrador/Administrador/FiltrarSubastasPorFecha", {
                 'comienzo': dates[0].format('l'),
                 'fin': dates[1].format('l')
@@ -56,10 +53,35 @@ adminsection.controller('admincontroller', function ($scope, $http) {
             }).then(function (result) {
                 $scope.subastasoff = result.data;
 
+            }, function errorCallback(jqXHR) {
+                swal("Home Switch Home", jqXHR.data, "error");
+
             });            
         }
     });
 
+    $('#fromreserva').pignoseCalendar({
+        minDate: datenow,
+        date: datenow,
+        maxDate: datelimit,
+        multiple: true,
+        buttons: true,
+        theme: 'blue',
+        apply: function (dates, context) {
+
+            $http.post("/Administrador/Administrador/FiltrarReservasPorFecha", {
+                'comienzo': dates[0].format('l'),
+                'fin': dates[1].format('l')
+
+            }).then(function (result) {
+                $scope.reservas = result.data;
+
+            }, function errorCallback(jqXHR) {
+                swal("Home Switch Home", jqXHR.data, "error");
+
+            });
+        }
+    });
 
     function datosDePropiedadCorrectos() {
         return (
@@ -77,7 +99,7 @@ adminsection.controller('admincontroller', function ($scope, $http) {
             }).then(function successCallback(response) {
 
                 if (response.data == "") {
-                    swal("Home Switch Home", "No se ha podido crear la residencia con los campos ingresados.", "error");
+                    swal("Home Switch Home", "No se ha podido crear la residencia con los campos ingresados. Ya existe una residencia con el titulo ingresado.", "error");
 
                 }
                 else {
@@ -88,12 +110,12 @@ adminsection.controller('admincontroller', function ($scope, $http) {
                 $('#addEditPropiedadModal').modal('hide');
 
             }, function errorCallback() {
-                swal("Home Switch Home", "No se ha podido crear la residencia con los campos ingresados.", "error");
+                swal("Home Switch Home", "No se ha podido crear la residencia. Se ha producido un error en el servidor.", "error");
                 $('#addEditPropiedadModal').modal('hide');
             });
         }
         else {
-            swal("Home Switch Home", "No se han ingresado los datos correctamente.", "warning");
+            swal("Home Switch Home", "No se han ingresado los datos correctamente.", "error");
             
         }
     }
@@ -164,7 +186,8 @@ adminsection.controller('admincontroller', function ($scope, $http) {
             $http.post("/Administrador/Administrador/CrearSubasta", {
                 'propiedad': idPropiedad,
                 'valorMinimo': $scope.valorMinimo,
-                'fechaComienzo': $('input[name="fechasubasta"]').val()
+                'fechaComienzo': $('input[name="fechasubasta"]').val(),
+                'fechaReserva': $('input[name="fechacomienzoreserva"]').val()
 
             }).then(function successCallback(response) {
 
@@ -364,21 +387,4 @@ adminsection.controller('admincontroller', function ($scope, $http) {
         return $.isNumeric($scope.valorMinimo);
     }
 
-});
-
-adminsection.filter('dateRange', function () {
-    return function (items, fromDate) {
-        var filtered = [];
-        console.log(fromDate);
-        var from_date = Date.parse(fromDate);
-        if (!fromDate) {
-            return items;
-        }
-        angular.forEach(items, function (item) {
-            if (Date.parse(item.startDate) > from_date) {
-                filtered.push(item);
-            }
-        });
-        return filtered;
-    };
 });

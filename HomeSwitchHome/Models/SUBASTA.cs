@@ -28,5 +28,8 @@ namespace HomeSwitchHome
         public virtual PROPIEDAD PROPIEDAD { get; set; }
 
         public string Estado { get; set; }
+
+        [Column(TypeName = "date")]
+        public DateTime FechaReserva { get; set; }
     }
 }

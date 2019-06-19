@@ -1,6 +1,5 @@
 ﻿$(document).ready(function () {
     var datenow = moment().add(6, 'months');
-    var datelimit = moment().add(8, 'months');
        
     $(document).on("change", ".propiedad-select", function () {
 
@@ -81,7 +80,12 @@
 
         $('#boton-modificar-subasta').css('display', 'block');
         $('#boton-crear-subasta').css('display', 'none');
+
         $("#fechaSubasta").attr('readonly', true);
+        $("#fechaSubasta").attr('disabled', true);
+
+        $("#fechaReservaSubasta").attr('readonly', true);
+        $("#fechaReservaSubasta").attr('disabled', true);
 
         $.ajax({
             type: "GET",
@@ -91,6 +95,8 @@
                 
                 $("#identificadorSubasta").val(response.IdSubasta)
                 $("#fechaSubasta").val(response.FechaComienzo);
+                $("#fechaReservaSubasta").val(response.FechaReserva);
+
                 $("#valorMinimo").val(response.ValorMinimo);
                 $("#propiedad_select").val(response.IdPropiedad);
                                 
@@ -105,9 +111,15 @@
 
         $("#identificadorSubasta").val("");
 
-        $("#fechaSubasta").attr('readonly', false);
-
         $("#fechaSubasta").val("");
+        $("#fechaReservaSubasta").val("");
+
+        $("#fechaSubasta").attr('readonly', false);
+        $("#fechaSubasta").attr('disabled', false);
+
+        $("#fechaReservaSubasta").attr('readonly', false);
+        $("#fechaReservaSubasta").attr('disabled', false);
+
         $("#valorMinimo").val("");
 
         $('#propiedad_select').attr('disabled', false);

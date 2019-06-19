@@ -12,6 +12,8 @@ namespace HomeSwitchHome.ViewModels
 
         public string FechaComienzo { get; set; }
 
+        public string FechaReserva { get; set; }
+
         public decimal ValorMinimo { get; set; }
 
         public decimal ValorActual { get; set; }
@@ -32,6 +34,7 @@ namespace HomeSwitchHome.ViewModels
             if (subasta.PROPIEDAD != null)
                 this.Propiedad = new PropiedadViewModel().ToViewModel(subasta.PROPIEDAD);
             this.FechaComienzo = Convert.ToString(subasta.FechaComienzo.Date);
+            this.FechaReserva = Convert.ToString(subasta.FechaReserva.Date);
             this.ValorMinimo = subasta.ValorMinimo;
             this.ValorActual = subasta.ValorActual;
             this.Estado = subasta.Estado;

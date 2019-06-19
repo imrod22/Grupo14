@@ -96,11 +96,12 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
             return Json(currentPropiedad, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult CrearSubasta(string propiedad, string fechaComienzo, string valorMinimo)
+        public JsonResult CrearSubasta(string propiedad, string valorMinimo, string fechaComienzo, string fechaReserva)
         {
             SUBASTA nuevaSubasta = new SUBASTA();
             nuevaSubasta.IdPropiedad = Int32.Parse(propiedad);
             nuevaSubasta.FechaComienzo = DateTime.Parse(fechaComienzo);
+            nuevaSubasta.FechaReserva = DateTime.Parse(fechaReserva);
             nuevaSubasta.ValorMinimo = Convert.ToDecimal(valorMinimo);
             nuevaSubasta.Estado = "NUEVO";
 
@@ -167,26 +168,11 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
             return Json(reservas, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult ObtenerReservasOrdenadasPorFecha() {
+        public JsonResult ObtenerReservasOrdenadasPorFecha() {            
 
-            List<ReservaViewModel> reservasOrdenadas = new List<ReservaViewModel>();
+            var reservasCache = this.servicioReserva.ObtenerReservas();         
 
-            var reservasCache = this.servicioReserva.ObtenerReservas();
-
-            foreach (var reservaEnCache in reservasCache)
-            {
-                ReservaViewModel reservaAjustada = new ReservaViewModel();
-                reservaAjustada.IdPropiedad = reservaEnCache.IdPropiedad;
-                reservaAjustada.Propiedad = reservaEnCache.Propiedad;
-                reservaAjustada.IdCliente = reservaEnCache.IdCliente;
-                reservaAjustada.Cliente = reservaEnCache.Cliente;
-
-                reservaAjustada.FechaReserva = string.Format("{0}-{1}-{2}", Convert.ToDateTime(reservaEnCache.FechaReserva).Day, Convert.ToDateTime(reservaEnCache.FechaReserva).Month, Convert.ToDateTime(reservaEnCache.FechaReserva).Year);
-
-                reservasOrdenadas.Add(reservaAjustada);
-            }
-
-            return Json(reservasOrdenadas, JsonRequestBehavior.AllowGet);
+            return Json(this.FormatearFechaDeReservas(reservasCache), JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult ObtenerFechasOcupadasDePropiedad(int idPropiedad)
@@ -248,12 +234,60 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
 
         public JsonResult FiltrarSubastasPorFecha(string comienzo, string fin)
         {
-            var subastas = this.servicioSubasta.ObtenerSubastasFuturas();
+            var subastas = this.servicioSubasta.ObtenerSubastasDesdeHoy();
 
-            var fechaComienzo = DateTime.ParseExact(comienzo, "M/d/yyyy", System.Globalization.CultureInfo.InvariantCulture);
-            var fechaFin = DateTime.ParseExact(fin, "M/d/yyyy", System.Globalization.CultureInfo.InvariantCulture);            
+            var desdeSubasta = DateTime.ParseExact(comienzo, "M/d/yyyy", CultureInfo.InvariantCulture);
+            var hastaSubasta = DateTime.ParseExact(fin, "M/d/yyyy", CultureInfo.InvariantCulture);
+                       
+            if (hastaSubasta.CompareTo(desdeSubasta.AddMonths(2)) != -1)
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(string.Format("La fecha 'Hasta' : {0} es mayor en dos meses a la fecha 'Desde' : {1}. La busqueda no es posible.", fin, comienzo), JsonRequestBehavior.AllowGet);
+            }
 
-            return Json(subastas.Where(t => Convert.ToDateTime(t.FechaComienzo).CompareTo(fechaComienzo) > 0 && Convert.ToDateTime(t.FechaComienzo).CompareTo(fechaFin) < 0).ToArray(), JsonRequestBehavior.AllowGet);
+            return Json(subastas.Where(t => (Convert.ToDateTime(t.FechaComienzo).CompareTo(desdeSubasta) > -1 
+                                            && Convert.ToDateTime(t.FechaComienzo).CompareTo(hastaSubasta) < 1) ||
+                                            (Convert.ToDateTime(t.FechaReserva).CompareTo(desdeSubasta) > -1)
+                                            && Convert.ToDateTime(t.FechaReserva).CompareTo(hastaSubasta) < 1).ToArray(), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult FiltrarReservasPorFecha(string comienzo, string fin)
+        {
+            var reservas = this.servicioReserva.ObtenerReservas();
+
+            var desdeReserva = DateTime.ParseExact(comienzo, "M/d/yyyy", CultureInfo.InvariantCulture);
+            var hastaReserva = DateTime.ParseExact(fin, "M/d/yyyy", CultureInfo.InvariantCulture);
+
+            if (hastaReserva.CompareTo(desdeReserva.AddMonths(2)) != -1)
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(string.Format("La fecha 'Hasta' : {0} es mayor en dos meses a la fecha 'Desde' : {1}. La busqueda no es posible.", fin, comienzo), JsonRequestBehavior.AllowGet);
+            }
+
+            reservas = reservas.Where(t => (Convert.ToDateTime(t.FechaReserva).CompareTo(desdeReserva) > 0 && Convert.ToDateTime(t.FechaReserva).CompareTo(hastaReserva) < 0) 
+            || (Convert.ToDateTime(t.FechaReserva).AddDays(7).CompareTo(desdeReserva) > 0 && Convert.ToDateTime(t.FechaReserva).AddDays(7).CompareTo(hastaReserva) < 0)).ToList();
+            return Json(this.FormatearFechaDeReservas(reservas).ToArray(), JsonRequestBehavior.AllowGet);
+        }
+
+        private List<ReservaViewModel> FormatearFechaDeReservas(List<ReservaViewModel> reservasSinFormato)
+        {
+            List<ReservaViewModel> reservasOrdenadas = new List<ReservaViewModel>();
+
+            foreach (var reservaEnCache in reservasSinFormato)
+            {
+                ReservaViewModel reservaAjustada = new ReservaViewModel();
+                reservaAjustada.IdReserva = reservaEnCache.IdReserva;
+                reservaAjustada.IdPropiedad = reservaEnCache.IdPropiedad;
+                reservaAjustada.Propiedad = reservaEnCache.Propiedad;
+                reservaAjustada.IdCliente = reservaEnCache.IdCliente;
+                reservaAjustada.Cliente = reservaEnCache.Cliente;
+
+                reservaAjustada.FechaReserva = string.Format("{0}-{1}-{2}", Convert.ToDateTime(reservaEnCache.FechaReserva).Day, Convert.ToDateTime(reservaEnCache.FechaReserva).Month, Convert.ToDateTime(reservaEnCache.FechaReserva).Year);
+
+                reservasOrdenadas.Add(reservaAjustada);
+            }
+
+            return reservasOrdenadas;
         }
 
     }

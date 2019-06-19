@@ -39,7 +39,7 @@ namespace HomeSwitchHome.Services
         {
             List<PropiedadViewModel> propiedadesActuales = this.ObtenerPropiedades();
 
-            if (nuevaPropiedad.Nombre != null && nuevaPropiedad.Pais != null && !propiedadesActuales.Any(t => t.Nombre == nuevaPropiedad.Nombre && t.Pais == nuevaPropiedad.Pais))
+            if (nuevaPropiedad.Pais != null && !propiedadesActuales.Any(t => t.Nombre.Trim().ToLower() == nuevaPropiedad.Nombre.Trim().ToLower()))
             {
                 this.HomeSwitchDB.PROPIEDAD.Add(nuevaPropiedad);
                 this.HomeSwitchDB.SaveChanges();

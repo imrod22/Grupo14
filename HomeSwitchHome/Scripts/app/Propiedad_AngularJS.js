@@ -89,5 +89,4 @@ switchHomeApp.controller('propiedadesController', function ($scope, $http) {
 
         });
     }
-
 });

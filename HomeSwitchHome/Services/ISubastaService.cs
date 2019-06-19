@@ -9,6 +9,8 @@ namespace HomeSwitchHome.Services
 {
     public interface ISubastaService
     {
+        List<SubastaViewModel> ObtenerSubastasDesdeHoy();
+
         List<SubastaViewModel> ObtenerSubastasActivas();
 
         List<SubastaViewModel> ObtenerSubastasFinalizadas();

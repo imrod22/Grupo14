@@ -9,20 +9,26 @@
         <div class="modal-body">
 
             <form>
-                <div class="form-row">                    
+                <div class="form-row">
 
                     <input style="display : none" id="identificadorSubasta">
-                    <div class="form-group col-md-8">
-                        <label for="nombre">Fecha de Subasta:</label>
+                    <div class="form-group col-md-6">
+                        <label for="nombre">Fecha de subasta:</label>
                         <input ng-model="fechaComienzo" type="text" id="fechaSubasta" class="calendar form-control" name="fechasubasta" />
+
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="nombre">Comienzo de semana de Reserva:</label>
+                        <input ng-model="fechaReserva" type="text" id="fechaReservaSubasta" class="calendar form-control" name="fechacomienzoreserva" />
 
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-12">
-                        <label for="description">Valor minimo:</label>
-                        <input ng-model="valorMinimo" type="text" class="form-control" id="valorMinimo">
+                        <label for="description">Valor minimo (USD):</label>
+                        <input ng-model="valorMinimo" type="text" class="form-control" id="valorMinimo" style="width:200px;">
                     </div>
                 </div>
 

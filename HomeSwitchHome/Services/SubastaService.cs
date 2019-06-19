@@ -25,16 +25,16 @@ namespace HomeSwitchHome.Services
             if (nuevaSubasta.ValorMinimo <= 0)
                 return string.Format("No se pudo crear la subasta, el valor de inicial para pujar debe ser mayor que 0.");
             
+            if (nuevaSubasta.FechaReserva.CompareTo(nuevaSubasta.FechaComienzo.AddDays(3)) < 0)
+                return string.Format("No se pudo crear la subasta, la semana que se desea subastar transcurre durante la subasta.");
 
             if (subastasPropiedad.Any(t => nuevaSubasta.FechaComienzo.CompareTo(Convert.ToDateTime(t.FechaComienzo)) >= 0
                                      && nuevaSubasta.FechaComienzo.CompareTo(Convert.ToDateTime(t.FechaComienzo).AddDays(10)) <= 0))
                 return string.Format("No se pudo crear la subasta para la propiedad seleccionada, ya posee una subasta definida durante los dias elegidos.");
-            
 
-            if(reservasPropiedad.Any(t => nuevaSubasta.FechaComienzo.CompareTo(Convert.ToDateTime(t.FechaReserva)) >= 0
-                                     && nuevaSubasta.FechaComienzo.CompareTo(Convert.ToDateTime(t.FechaReserva).AddDays(7)) <= 0))
-                return string.Format("No se pudo crear la subasta para la propiedad seleccionada, posee reservas confirmadas durante los dias elegidos para la subasta.");
-
+            if (reservasPropiedad.Any(t => nuevaSubasta.FechaReserva.CompareTo(Convert.ToDateTime(t.FechaReserva)) >= 0
+                                      && nuevaSubasta.FechaReserva.CompareTo(Convert.ToDateTime(t.FechaReserva).AddDays(7)) <= 0))
+                return string.Format("No se pudo crear la subasta para la propiedad seleccionada, posee reservas confirmadas durante los dias elegidos a subastar.");
 
             this.HomeSwitchDB.SUBASTA.Add(nuevaSubasta);
             this.HomeSwitchDB.SaveChanges();
@@ -133,6 +133,14 @@ namespace HomeSwitchHome.Services
             var subastas = this.ObtenerSubastas();
 
             return subastas.Where(t => DateTime.Now < Convert.ToDateTime(t.FechaComienzo) && t.Estado == "NUEVO").ToList();
+        }
+
+        public List<SubastaViewModel> ObtenerSubastasDesdeHoy()
+        {
+            var subastas = this.ObtenerSubastas();
+
+            return subastas.Where(t => DateTime.Now <= Convert.ToDateTime(t.FechaComienzo)).ToList();
+
         }
 
         private List<SubastaViewModel> ObtenerSubastas()
