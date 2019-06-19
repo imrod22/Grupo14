@@ -215,7 +215,7 @@
                                         <td>{{subasta.FechaReserva}}</td>
 
                                         <td>
-                                            <button ng-show="subasta.Cliente.Nombre != null" id="{{subasta.IdSubasta}}" ng-click="confirmarsubasta($event.currentTarget.id)" class="btn btn-group-sm btn-success"><i class="fa fa-fw fas fa-check"></i></button>
+                                            <button ng-show="subasta.Cliente.Nombre != null" ng-click="confirmarsubasta($event.currentTarget.id)" id="{{subasta.IdSubasta}}" class="btn btn-group-sm btn-success"><i class="fa fa-fw fas fa-check"></i></button>
                                             <button id="{{subasta.IdSubasta}}" ng-click="rechazarsubasta($event.currentTarget.id)" class="btn btn-group-sm btn-danger subasta-a-borrar"> <i class="fa fa-fw fas fa-ban"></i></button>
                                         </td>
                                     </tr>
@@ -258,7 +258,10 @@
                                     <tr>
                                         <td>{{nuevo.Nombre}}</td>
                                         <td>{{nuevo.Apellido}}</td>
-                                        <td><button id="{{nuevo.IdCliente}}" ng-click="aceptarnuevousuario($event.currentTarget.id)" class="btn btn-group-sm btn-success"><i class="fa fa-fw fas fa-check"></i></button></td>
+                                        <td>
+                                            <button id="{{nuevo.IdCliente}}" ng-click="aceptarnuevousuario($event.currentTarget.id)" class="btn btn-group-sm btn-success"><i class="fa fa-fw fas fa-check"></i></button>
+                                            <button id="{{nuevo.IdCliente}}" ng-click="rechazarnuevousuario($event.currentTarget.id)" class="btn btn-group-sm btn-danger"><i class="fa fa-fw fas fa-ban"></i></button>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -276,7 +279,10 @@
                                     <tr>
                                         <td>{{premium.Nombre}}</td>
                                         <td>{{premium.Apellido}}</td>
-                                        <td> <button id="{{premium.IdCliente}}" ng-click="confirmarpremium($event.currentTarget.id)" class="btn btn-group-sm btn-success"><i class="fa fa-fw fas fa-check"></i></button></td>
+                                        <td>
+                                            <button id="{{premium.IdCliente}}" ng-click="confirmarpremium($event.currentTarget.id)" class="btn btn-group-sm btn-success"><i class="fa fa-fw fas fa-check"></i></button>
+                                            <button id="{{premium.IdCliente}}" ng-click="rechazarpremium($event.currentTarget.id)" class="btn btn-group-sm btn-danger"><i class="fa fa-fw fas fa-ban"></i></button>
+                                        </td>
                                     </tr>
                                 </tbody>                               
                             </table>

@@ -272,16 +272,11 @@ adminsection.controller('admincontroller', function ($scope, $http) {
 
         ).then(function successCallback(result) {
 
-            if (result.data == "") {
-                swal("Home Switch Home", "El sistema no puede validar el usuario seleccionado.", "error");
-            }
-            else {
                 swal("Home Switch Home", "Se ha procesado el registro para el nuevo usuario.", "success");
-                $scope.nuevosclientes = result.data;
-            }           
+                $scope.nuevosclientes = result.data;        
 
-        }, function errorCallback() {
-            swal("Home Switch Home", "No se ha podido validar la solicitud. Ha ocurrido un error en el servidor.", "error");
+        }, function errorCallback(jqXHR) {
+            swal("Home Switch Home", jqXHR.data, "error");
 
         });
     }
@@ -297,17 +292,11 @@ adminsection.controller('admincontroller', function ($scope, $http) {
 
         ).then(function successCallback(result) {
 
-            if (result.data == "") {
-                swal("Home Switch Home", "El sistema no puede validar el usuario seleccionado.", "error");
-            }
-            else {
                 swal("Home Switch Home", "Se ha procesado la solicitud premium del usuario seleccionado.", "success");
                 $scope.parapremiums = result.data;
 
-            }           
-
-        }, function errorCallback() {
-            swal("Home Switch Home", "No se ha podido validar la solicitud. Ha ocurrido un error en el servidor.", "error");
+        }, function errorCallback(jqXHR) {
+            swal("Home Switch Home", jqXHR.data, "error");
 
         });
     }
@@ -378,6 +367,43 @@ adminsection.controller('admincontroller', function ($scope, $http) {
 
         }, function errorCallback() {
             swal("Home Switch Home", "No se ha podido cancelar la reserva. Ha ocurrido un error en el servidor.", "error");
+
+        });
+    }
+
+    $scope.rechazarnuevousuario = function (element) {
+        var idCliente = element;
+
+        $http.post("/Administrador/Administrador/CancelarNuevoUsuario",
+            {
+                'idCliente': idCliente
+            }
+
+        ).then(function successCallback(result) {
+
+            swal("Home Switch Home", "Se ha rechazado la solicitud de nuevo usuario.", "success");
+            $scope.nuevosclientes = result.data;
+
+        }, function errorCallback(jqXHR) {
+            swal("Home Switch Home", jqXHR.data, "error");
+
+        });
+    }
+
+    $scope.rechazarpremium = function (element) {
+        var idCliente = element;
+
+        $http.post("/Administrador/Administrador/CancelarPremium",
+            {
+                'idCliente': idCliente
+            }
+
+        ).then(function successCallback(result) {
+                swal("Home Switch Home", "Se ha rechazado la solicitud premium del usuario seleccionado.", "success");
+                $scope.parapremiums = result.data;
+
+        }, function errorCallback(jqXHR) {
+            swal("Home Switch Home", jqXHR.data, "error");
 
         });
     }

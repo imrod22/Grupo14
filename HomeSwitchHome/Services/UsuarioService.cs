@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
 
 namespace HomeSwitchHome.Services
 {
@@ -75,7 +73,7 @@ namespace HomeSwitchHome.Services
 
         }
 
-        public bool RegistrarComoPremium(int IdCliente)
+        public string RegistrarComoPremium(int IdCliente)
         {
             var esNuevaSolicitudPremium =  this.HomeSwitchDB.PREMIUM.Where(t => t.IdCliente == IdCliente).Any();
 
@@ -90,14 +88,14 @@ namespace HomeSwitchHome.Services
 
                 CacheHomeSwitchHome.RemoveOnCache("Clientes");
 
-                return true;
+                return string.Format("OK");
             }
             
-            return false;
+            return string.Format("No se pudo obtener la informacion del usuario seleccionado. Ha ocurrido un error en el servidor.");
 
         }
 
-        public bool ConfirmarNuevoCliente(int idCliente)
+        public string ConfirmarNuevoCliente(int idCliente)
         {
             var nuevoCliente = this.HomeSwitchDB.CLIENTE.SingleOrDefault(t => t.IdCliente == idCliente);
 
@@ -109,21 +107,65 @@ namespace HomeSwitchHome.Services
                 this.HomeSwitchDB.SaveChanges();
 
                 CacheHomeSwitchHome.RemoveOnCache("Clientes");
-                return true;
+                return string.Format("OK");
             }
 
-            else return false;
+            else return string.Format("No se pudo obtener la informacion del usuario seleccionado. Ha ocurrido un error en el servidor.");
         }
 
-        public bool ConfirmarPremium(int IdCliente)
+        public string ConfirmarPremium(int IdCliente)
         {
             var premiumAceptado = this.HomeSwitchDB.PREMIUM.Where(t => t.IdCliente == IdCliente).FirstOrDefault();
-            premiumAceptado.Aceptado = "SI";
-            this.HomeSwitchDB.SaveChanges();
-            CacheHomeSwitchHome.RemoveOnCache("Clientes");
 
-            return true;
+            if (premiumAceptado != null)
+            {
+                premiumAceptado.Aceptado = "SI";
+                this.HomeSwitchDB.SaveChanges();
+                CacheHomeSwitchHome.RemoveOnCache("Clientes");
+
+                return string.Format("OK");
+            }
+            else
+                return string.Format("No se pudo obtener la informacion del usuario seleccionado. Ha ocurrido un error en el servidor.");
         }
+
+        public string RechazarSolicitudNuevoCliente(int rechazado)
+        {
+            var solicitudNuevoCliente = this.HomeSwitchDB.CLIENTE.Where(t => t.IdCliente == rechazado).FirstOrDefault();
+
+            if (solicitudNuevoCliente != null)
+            {
+                var solicitudNuevoUsuario = this.HomeSwitchDB.USUARIO.Where(t => t.Usuario == solicitudNuevoCliente.USUARIO.Usuario).FirstOrDefault(); ; 
+
+                this.HomeSwitchDB.CLIENTE.Remove(solicitudNuevoCliente);
+                this.HomeSwitchDB.USUARIO.Remove(solicitudNuevoUsuario);
+
+                this.HomeSwitchDB.SaveChanges();
+                CacheHomeSwitchHome.RemoveOnCache("Clientes");
+
+                return string.Format("OK");
+            }
+            else
+                return string.Format("No se pudo obtener la informacion del usuario seleccionado. Ha ocurrido un error en el servidor.");
+        }
+
+        public string RechazarSolicitudPremium(int rechazado)
+        {
+            var premiumRechazado = this.HomeSwitchDB.PREMIUM.Where(t => t.IdCliente == rechazado).FirstOrDefault();
+
+            if (premiumRechazado != null)
+            {
+                this.HomeSwitchDB.PREMIUM.Remove(premiumRechazado);
+
+                this.HomeSwitchDB.SaveChanges();
+                CacheHomeSwitchHome.RemoveOnCache("Clientes");
+
+                return string.Format("OK");
+            }
+            else
+                return string.Format("No se pudo obtener la informacion del usuario seleccionado. Ha ocurrido un error en el servidor.");
+        }
+
 
         private List<ClienteViewModel> ObtenerListaDeClientes()
         {

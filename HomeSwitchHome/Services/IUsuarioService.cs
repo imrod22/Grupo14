@@ -17,11 +17,15 @@ namespace HomeSwitchHome.Services
 
         string RegistrarNuevoCliente(ClienteViewModel nuevoCliente);
 
-        bool ConfirmarNuevoCliente(int idCliente);
+        string ConfirmarNuevoCliente(int idCliente);
 
-        bool RegistrarComoPremium(int idCliente);
+        string RegistrarComoPremium(int idCliente);
 
-        bool ConfirmarPremium(int IdCliente);
+        string ConfirmarPremium(int IdCliente);
+
+        string RechazarSolicitudNuevoCliente(int IdCliente);
+
+        string RechazarSolicitudPremium(int IdCliente);
 
         List<ClienteViewModel> ObtenerNuevosClientes();
 

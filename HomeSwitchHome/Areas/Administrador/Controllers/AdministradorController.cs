@@ -147,18 +147,34 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
 
         public JsonResult AceptarPremium(int idCliente)
         {
-            if (this.servicioUsuario.ConfirmarPremium(idCliente))
-                return Json(this.servicioUsuario.ObtenerSolicitudesPremium().ToArray(), JsonRequestBehavior.AllowGet);
+            var mensaje = this.servicioUsuario.ConfirmarPremium(idCliente);
 
-            return null;
+            if (mensaje != "OK")
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(mensaje, JsonRequestBehavior.AllowGet);
+            }
+
+            else
+            {
+                return Json(this.servicioUsuario.ObtenerSolicitudesPremium().ToArray(), JsonRequestBehavior.AllowGet);
+            }
         }
 
         public JsonResult AceptarNuevoUsuario(int idCliente)
         {
-            if (this.servicioUsuario.ConfirmarNuevoCliente(idCliente))
-                return Json(this.servicioUsuario.ObtenerNuevosClientes().ToArray(), JsonRequestBehavior.AllowGet);
+            var mensaje = this.servicioUsuario.ConfirmarNuevoCliente(idCliente);
 
-            return null;
+            if (mensaje != "OK")
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(mensaje, JsonRequestBehavior.AllowGet);
+            }
+
+            else
+            {
+                return Json(this.servicioUsuario.ObtenerNuevosClientes().ToArray(), JsonRequestBehavior.AllowGet);
+            }
         }
 
         public JsonResult ObtenerListadoReservas()
@@ -168,9 +184,9 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
             return Json(reservas, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult ObtenerReservasOrdenadasPorFecha() {            
+        public JsonResult ObtenerReservasOrdenadasPorFecha() {
 
-            var reservasCache = this.servicioReserva.ObtenerReservas();         
+            var reservasCache = this.servicioReserva.ObtenerReservas();
 
             return Json(this.FormatearFechaDeReservas(reservasCache), JsonRequestBehavior.AllowGet);
         }
@@ -267,6 +283,36 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
             reservas = reservas.Where(t => (Convert.ToDateTime(t.FechaReserva).CompareTo(desdeReserva) > 0 && Convert.ToDateTime(t.FechaReserva).CompareTo(hastaReserva) < 0) 
             || (Convert.ToDateTime(t.FechaReserva).AddDays(7).CompareTo(desdeReserva) > 0 && Convert.ToDateTime(t.FechaReserva).AddDays(7).CompareTo(hastaReserva) < 0)).ToList();
             return Json(this.FormatearFechaDeReservas(reservas).ToArray(), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult CancelarNuevoUsuario(int idCliente) {
+
+            var mensaje = this.servicioUsuario.RechazarSolicitudNuevoCliente(idCliente);
+
+            if (mensaje != "OK")
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(mensaje, JsonRequestBehavior.AllowGet);
+            }
+                
+            else
+                return Json(this.servicioUsuario.ObtenerNuevosClientes().ToArray(), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult CancelarPremium(int idCliente) {
+
+            var mensaje = this.servicioUsuario.RechazarSolicitudPremium(idCliente);
+
+            if (mensaje != "OK")
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(mensaje, JsonRequestBehavior.AllowGet);
+            }
+            
+            else
+            {
+                return Json(this.servicioUsuario.ObtenerSolicitudesPremium().ToArray(), JsonRequestBehavior.AllowGet);
+            }
         }
 
         private List<ReservaViewModel> FormatearFechaDeReservas(List<ReservaViewModel> reservasSinFormato)
