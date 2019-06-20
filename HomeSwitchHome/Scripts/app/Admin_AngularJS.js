@@ -335,14 +335,8 @@ adminsection.controller('admincontroller', function ($scope, $http) {
 
         ).then(function successCallback(result) {
 
-            if (result.data == "") {
-                swal("Home Switch Home", "No se ha podido cancelar la subasta seleccionada.", "error");
-            }
-            else {
                 swal("Home Switch Home", "Se ha cancelado la subasta.", "success");
                 $scope.subastasfin = result.data;
-            }
-            
 
         }, function errorCallback() {
             swal("Home Switch Home", "No se ha podido cancelar la subasta. Ha ocurrido un error en el servidor.", "error");

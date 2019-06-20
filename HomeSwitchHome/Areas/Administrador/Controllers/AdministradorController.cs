@@ -215,6 +215,7 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
             if (this.servicioSubasta.RemoverSubasta(idSubasta))
                 return this.ObtenerListadoReservas();
 
+            Response.StatusCode = (int)HttpStatusCode.BadRequest;
             return null;
         }
 
