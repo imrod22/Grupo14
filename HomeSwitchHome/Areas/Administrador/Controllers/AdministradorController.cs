@@ -191,27 +191,6 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
             return Json(this.FormatearFechaDeReservas(reservasCache), JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult ObtenerFechasOcupadasDePropiedad(int idPropiedad)
-        {
-            var reservasDePropiedad = this.servicioReserva.ObtenerReservasPropiedad(idPropiedad);
-
-            var fechasReserva = reservasDePropiedad.Where(t => t.IdPropiedad == idPropiedad).Select(t => Convert.ToDateTime(t.FechaReserva).Date).ToArray();
-
-            List<string> resultadoRangos = new List<string>();
-
-
-            foreach (var comienzoReserva in fechasReserva)
-            {
-                for (int i = 0; i < 3; i++)
-                {
-                    var fechaActual = comienzoReserva.AddDays(i);
-                    resultadoRangos.Add(string.Format("{0}-{1}-{2}", fechaActual.Year, fechaActual.Month, fechaActual.Day));
-                }
-            }
-
-            return Json(resultadoRangos.ToArray(), JsonRequestBehavior.AllowGet);
-        }
-
         public JsonResult ConfirmarReservaDeSubasta(int idSubasta)
         {
             var subastaAceptada = this.servicioSubasta.ObtenerSubastasFinalizadas().Where(t => t.IdSubasta == idSubasta).SingleOrDefault();

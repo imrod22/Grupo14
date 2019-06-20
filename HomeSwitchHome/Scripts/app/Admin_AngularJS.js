@@ -167,7 +167,7 @@ adminsection.controller('admincontroller', function ($scope, $http) {
             }
 
             else {
-                swal("Home Switch Home", "La residencia seleccionada ha sido eliminada.", "warning");
+                swal("Home Switch Home", "La residencia seleccionada ha sido eliminada.", "error");
                 $scope.propiedades = response.data;
             }
 

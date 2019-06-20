@@ -1,45 +1,17 @@
 ﻿$(document).ready(function () {
     var datenow = moment().add(6, 'months');
-       
-    $(document).on("change", ".propiedad-select", function () {
-
-        var propiedadId = $('#propiedad_select option:selected').attr('id');
-
-        $.ajax({
-            type: "GET",
-            url: "/Administrador/Administrador/ObtenerFechasOcupadasDePropiedad",
-            data: { idPropiedad: propiedadId },
-            success: function (response) {
-
-                var resultado = [];
-
-                $.each(response, function (key, value) {
-                        resultado.push(value);
-                });
-
-                $('input.calendar').pignoseCalendar({
-                    minDate: datenow,
-                    date: datenow,
-                    theme: 'blue',
-                    disabledDates:[resultado],
-
-                });
-
-            },
-            error: function () {
-                swal("Home Switch Home", "Ha habido un problema en el servidor.", "error");
-            }
-        });
-
-    })
     
     $(document).on("click", ".add-nueva-propiedad", function () {
 
         $("#nombrePropiedad").val("");
         $("#descripcionPropiedad").val("");
         $("#paisPropiedad").val("");
-
+        
         $('#nombrePropiedad').attr('readonly', false);
+        $("#nombrePropiedad").attr('disabled', false);
+
+        $('#paisPropiedad').attr('readonly', false);
+        $("#paisPropiedad").attr('disabled', false);
 
         $('#boton-crear-propiedad').css('display', 'block');
         $('#boton-modificar-propiedad').css('display', 'none');
@@ -49,8 +21,10 @@
         var propiedadId = $(this).attr('id');
 
         $('#nombrePropiedad').attr('readonly', true);
+        $("#nombrePropiedad").attr('disabled', true);
 
-
+        $('#paisPropiedad').attr('readonly', true);
+        $("#paisPropiedad").attr('disabled', true);
 
         $('#boton-modificar-propiedad').css('display', 'block');
         $('#boton-crear-propiedad').css('display', 'none');        
