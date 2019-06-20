@@ -31,28 +31,22 @@ switchHomeApp.controller('subastasController', function ($scope, $http) {
 
         ).then(function successCallback(result) {
 
-            if (result.data == "") {
-                alert("El valor ingresado es menor al valor actual! o La subasta ya ha terminado/finalizado.");
-            }
-
-            else {
-                alert("Ha pujado satisfactoriamente en la subasta!");
-                $scope.subastasList = result.data;
-                $scope.subastasListFiltradas = result.data;
-            }
-
+            $scope.subastasList = result.data;
             $('#pujaSubastaModal').modal('hide');
 
+            swal("Home Switch Home", "Ha pujado en la subasta!", "success");
 
-        }, function errorCallback() {
-
-            $('#pujaSubastaModal').modal('hide');
-            alert("Se ha producido un error en el servidor.");
-        });
+        }, function errorCallback(jqXHR) {
+                swal("Home Switch Home", jqXHR.data, "error");
+         });
     }
 
     $scope.subastasIsEmpty = function () {
         return $scope.subastasListFiltradas.length == 0;
+    }
+
+    $scope.subastaEstaPujada = function (element) {
+        return element == 0;
     }
 
     $scope.finalizaEn = function (sub) {
@@ -85,22 +79,4 @@ switchHomeApp.controller('subastasController', function ($scope, $http) {
         return result;
     }
 
-});
-
-switchHomeApp.filter('dateRange', function () {
-    return function (items, fromDate, toDate) {
-        var filtered = [];
-        console.log(fromDate, toDate);
-        var from_date = Date.parse(fromDate);
-        var to_date = Date.parse(toDate);
-        if (!to_date || !from_date) {
-            return items;
-        }
-        angular.forEach(items, function (item) {
-            if (Date.parse(item.FechaComienzo) > from_date && Date.parse(item.FechaComienzo) < to_date) {
-                filtered.push(item);
-            }
-        });
-        return filtered;
-    };
 });

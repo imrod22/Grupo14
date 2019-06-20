@@ -43,25 +43,37 @@ namespace HomeSwitchHome.Services
             return "OK";
         }
         
-        public bool PujarSubasta(SUBASTA subastaPujada, int idSubasta, int idCliente)
+        public string PujarSubasta(SUBASTA subastaPujada, int idSubasta, int idCliente)
         {
-                var subastaActualizar = this.HomeSwitchDB.SUBASTA.SingleOrDefault(t => t.IdSubasta == idSubasta);
+            var subastaActualizar = this.HomeSwitchDB.SUBASTA.SingleOrDefault(t => t.IdSubasta == idSubasta);
+            var reservas = new ReservaService();
 
-                if (subastaActualizar != null 
-                        && DateTime.Now < subastaActualizar.FechaComienzo.AddDays(3) 
-                        && subastaActualizar.FechaComienzo <= DateTime.Now 
-                        && subastaActualizar.ValorActual < subastaPujada.ValorActual && subastaActualizar.ValorMinimo < subastaPujada.ValorActual)
-                {
-                    subastaActualizar.ValorActual = subastaPujada.ValorActual;
-                    subastaActualizar.IdCliente = idCliente;
+            if (subastaActualizar == null)
+                return string.Format("Se ha producido un error en el servidor.");
 
-                    this.HomeSwitchDB.SaveChanges();
-                    CacheHomeSwitchHome.RemoveOnCache("Subastas");
+            if(subastaActualizar.ValorActual >= subastaPujada.ValorActual && subastaActualizar.ValorMinimo >= subastaPujada.ValorActual)
+                return string.Format("El valor ingresado es menor al valor actual.");
 
-                    return true;
-                }
-                else
-                    return false;
+            if(reservas.ObtenerReservasCliente(idCliente).Count == 2)
+                return string.Format("Ya posee dos reservas efectuadas, no puede participar de la puja.");
+
+            if(reservas.ObtenerReservasCliente(idCliente).Any(t => (Convert.ToDateTime(t.FechaReserva).CompareTo(Convert.ToDateTime(subastaActualizar.FechaReserva)) <= 0
+                && Convert.ToDateTime(t.FechaReserva).AddDays(7).CompareTo(Convert.ToDateTime(subastaActualizar.FechaReserva)) >= 0 )
+            
+                || (Convert.ToDateTime(subastaActualizar.FechaReserva).CompareTo(Convert.ToDateTime(t.FechaReserva)) <= 0
+                && Convert.ToDateTime(subastaActualizar.FechaReserva).AddDays(7).CompareTo(Convert.ToDateTime(t.FechaReserva)) >= 0)
+
+                ))
+
+                return string.Format("Ya posee una reserva durante la semana que se esta subastando.");
+
+            subastaActualizar.ValorActual = subastaPujada.ValorActual;
+            subastaActualizar.IdCliente = idCliente;
+
+            this.HomeSwitchDB.SaveChanges();
+            CacheHomeSwitchHome.RemoveOnCache("Subastas");
+
+            return string.Format("OK");
         }
 
         public bool ActualizarSubasta(SUBASTA subastaActualizada, int idSubasta)

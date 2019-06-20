@@ -3,6 +3,7 @@ using HomeSwitchHome.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -25,7 +26,8 @@ namespace HomeSwitchHome.Areas.Subasta.Controllers
 
         public JsonResult Subastas()
         {
-            return Json(this.servicioSubasta.ObtenerSubastasActivas().ToArray(), JsonRequestBehavior.AllowGet);
+            var subastasActivas = this.servicioSubasta.ObtenerSubastasActivas();
+            return Json(subastasActivas.ToArray(), JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult PujarEnSubasta(string idSubasta, string valorPujado)
@@ -34,10 +36,13 @@ namespace HomeSwitchHome.Areas.Subasta.Controllers
             subastaPujada.ValorActual = Convert.ToDecimal(valorPujado);
             var sesionUser = (ClienteViewModel)Session["ClienteActual"];
 
-            if (this.servicioSubasta.PujarSubasta(subastaPujada, int.Parse(idSubasta), sesionUser.IdCliente))
-                return Json(this.servicioSubasta.ObtenerSubastasFuturas().ToArray(), JsonRequestBehavior.AllowGet);
+            var mensaje = this.servicioSubasta.PujarSubasta(subastaPujada, int.Parse(idSubasta), sesionUser.IdCliente);
+            
+            if(mensaje == "OK")            
+                return Json(this.servicioSubasta.ObtenerSubastasActivas().ToArray(), JsonRequestBehavior.AllowGet);
 
-            return null;
+            Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            return Json(mensaje, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult ObtenerInformacionSubasta(int idSubasta)

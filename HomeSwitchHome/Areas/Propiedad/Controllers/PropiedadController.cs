@@ -46,9 +46,7 @@ namespace HomeSwitchHome.Areas.Propiedad.Controllers
             var mensaje = this.reservaService.AgregarReserva(reservaNueva);
 
             if (mensaje != "OK")
-            {
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
-            }
 
             return Json(mensaje, JsonRequestBehavior.AllowGet);
         }

@@ -21,7 +21,7 @@ namespace HomeSwitchHome.Services
 
         string CrearSubasta(SUBASTA nuevaSubasta);
 
-        bool PujarSubasta(SUBASTA subastaPujada, int idSubasta, int idCliente);
+        string PujarSubasta(SUBASTA subastaPujada, int idSubasta, int idCliente);
 
         bool ActualizarSubasta(SUBASTA subastaActualizada, int idSubasta);
 
