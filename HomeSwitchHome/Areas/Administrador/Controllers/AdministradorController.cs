@@ -193,27 +193,27 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
 
         public JsonResult ConfirmarReservaDeSubasta(int idSubasta)
         {
-            var subastaAceptada = this.servicioSubasta.ObtenerSubastasFinalizadas().Where(t => t.IdSubasta == idSubasta).SingleOrDefault();
+            var subastaAceptada = this.servicioSubasta.ObtenerSubastasFinalizadas().SingleOrDefault(t => t.IdSubasta == idSubasta);
             var reservaSubasta = new ReservaViewModel();
             reservaSubasta.IdCliente = Convert.ToInt32(subastaAceptada.IdCliente);
             reservaSubasta.IdPropiedad = subastaAceptada.IdPropiedad;
-            reservaSubasta.FechaReserva = subastaAceptada.FechaComienzo;
+            reservaSubasta.FechaReserva = subastaAceptada.FechaReserva;
 
-            var mensaje = this.servicioReserva.AgregarReserva(reservaSubasta);
+            var mensaje = this.servicioReserva.AgregarReservaDesdeSubasta(reservaSubasta);
 
             if (mensaje != "OK") {
                 return this.CancelarSubasta(idSubasta);
             }                
             else {
                 this.servicioSubasta.ConfirmarSubasta(idSubasta);
-                return this.ObtenerListadoReservas();
+                return this.SubastasCerradas();
             }
         }
 
         public JsonResult CancelarSubasta(int idSubasta)
         {
             if (this.servicioSubasta.RemoverSubasta(idSubasta))
-                return this.ObtenerListadoReservas();
+                return this.SubastasCerradas();
 
             Response.StatusCode = (int)HttpStatusCode.BadRequest;
             return null;

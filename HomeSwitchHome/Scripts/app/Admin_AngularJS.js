@@ -312,17 +312,15 @@ adminsection.controller('admincontroller', function ($scope, $http) {
 
         ).then(function successCallback(result) {
 
-            if (result.data == "") {
-                swal("Home Switch Home", "El usuario ya no posee creditos para acceder a la reserva obtenida, se ha cancelado la subasta.", "error");
-            }
-            else {
-                swal("Home Switch Home", "Se ha confirmado la subasta y generado la reserva para usuario que obtuvo la subasta.", "success");
-                $scope.subastasfin = result.data;
-            }            
+            swal("Home Switch Home", "Se han actualizado las listas de subastas cerradas y reservas efectuadas.", "success");
+            $scope.subastasfin = result.data;
+
+            $http.get("/Administrador/Administrador/ObtenerReservasOrdenadasPorFecha").then(function (result) {
+                $scope.reservas = result.data;
+            });                                
 
         }, function errorCallback() {
             swal("Home Switch Home", "No se ha podido confirmar la subasta. Ha ocurrido un error en el servidor.", "error");
-
         });
     }
 
