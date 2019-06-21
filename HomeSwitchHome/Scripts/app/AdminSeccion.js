@@ -104,8 +104,8 @@
         $('input.calendar').pignoseCalendar({
             minDate: datenow,
             date: datenow,
-            theme: 'blue',
+            theme: 'dark',
 
         });
-    });
+    });    
 })

@@ -34,7 +34,6 @@ adminsection.controller('admincontroller', function ($scope, $http) {
 
     $http.get("/Administrador/Administrador/ObtenerReservasOrdenadasPorFecha").then(function (result) {
         $scope.reservas = result.data;
-
     });
 
     $('#fromsubasta').pignoseCalendar({
@@ -43,7 +42,7 @@ adminsection.controller('admincontroller', function ($scope, $http) {
         maxDate: datelimit,
         multiple: true,
         buttons: true,
-        theme: 'blue',
+        theme: 'dark',
         apply: function (dates, context) {
 
             $http.post("/Administrador/Administrador/FiltrarSubastasPorFecha", {
@@ -54,8 +53,8 @@ adminsection.controller('admincontroller', function ($scope, $http) {
                 $scope.subastasoff = result.data;
 
             }, function errorCallback(jqXHR) {
-                swal("Home Switch Home", jqXHR.data, "error");
-
+                    $('#fromreserva').prop('value', "");
+                    swal("Home Switch Home", jqXHR.data, "error");
             });            
         }
     });
@@ -66,7 +65,7 @@ adminsection.controller('admincontroller', function ($scope, $http) {
         maxDate: datelimit,
         multiple: true,
         buttons: true,
-        theme: 'blue',
+        theme: 'dark',
         apply: function (dates, context) {
 
             $http.post("/Administrador/Administrador/FiltrarReservasPorFecha", {
@@ -77,7 +76,8 @@ adminsection.controller('admincontroller', function ($scope, $http) {
                 $scope.reservas = result.data;
 
             }, function errorCallback(jqXHR) {
-                swal("Home Switch Home", jqXHR.data, "error");
+                    $('#fromreserva').prop('value', "");
+                    swal("Home Switch Home", jqXHR.data, "error");
 
             });
         }
@@ -85,9 +85,12 @@ adminsection.controller('admincontroller', function ($scope, $http) {
 
     function datosDePropiedadCorrectos() {
         return (
-            ($("#nombrePropiedad").val().length >= 8)
-            && ($("#descripcionPropiedad").val().length >= 20))
-    }
+            (($("#nombrePropiedad").val() == null)
+            && ($("#descripcionPropiedad").val() == null)
+            && ($("#nombrePropiedad").val().length >= 8)
+            && ($("#descripcionPropiedad").val().length >= 20)
+            && ($("#paisPropiedad").val().length == null)))
+    };
 
     $scope.crearpropiedad = function () {
 
@@ -115,8 +118,7 @@ adminsection.controller('admincontroller', function ($scope, $http) {
             });
         }
         else {
-            swal("Home Switch Home", "No se han ingresado los datos correctamente.", "error");
-            
+            swal("Home Switch Home", "No se han ingresado los datos correctamente.", "error");            
         }
     }
 
@@ -167,7 +169,7 @@ adminsection.controller('admincontroller', function ($scope, $http) {
             }
 
             else {
-                swal("Home Switch Home", "La residencia seleccionada ha sido eliminada.", "error");
+                swal("Home Switch Home", "La residencia seleccionada ha sido eliminada.", "success");
                 $scope.propiedades = response.data;
             }
 
@@ -352,9 +354,7 @@ adminsection.controller('admincontroller', function ($scope, $http) {
                 'idReserva': idReserva
             }
 
-        ).then(function successCallback(result) {
-
-            
+        ).then(function successCallback(result) {            
                 swal("Home Switch Home", "Se ha cancelado la reserva.", "success");
                 $scope.reservas = result.data;
             
@@ -404,7 +404,10 @@ adminsection.controller('admincontroller', function ($scope, $http) {
 
     function valoresDeSubastaAceptados()
     {
-        return $.isNumeric($scope.valorMinimo);
+        return ($.isNumeric($scope.valorMinimo)
+            && ($("#propiedad_select option:selected").text() != "")
+            && ($('#fechaSubasta').prop('value') != "")
+            && ($('#fechaReservaSubasta').prop('value') != "")
+        );
     }
-
 });
