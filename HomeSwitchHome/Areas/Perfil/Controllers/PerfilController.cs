@@ -51,5 +51,19 @@ namespace HomeSwitchHome.Areas.Perfil.Controllers
             Response.StatusCode = (int)HttpStatusCode.BadRequest;
             return Json(string.Format("Ya se esta procesando una solicitud premium. Sera notificado cuando sea aprobado."), JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult CancelarReserva(int idReserva)
+        {
+            var mensaje = this.servicioReserva.CancelarReservaCliente(idReserva);
+
+            if (mensaje != "Ok")
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(mensaje, JsonRequestBehavior.AllowGet);
+            }
+
+            var sesionUser = (ClienteViewModel)Session["ClienteActual"];
+            return Json(this.servicioReserva.ObtenerReservasCliente(sesionUser.IdCliente).ToArray(), JsonRequestBehavior.AllowGet);
+        }
     }
 }

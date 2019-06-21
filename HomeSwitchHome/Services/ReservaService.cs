@@ -27,12 +27,17 @@ namespace HomeSwitchHome.Services
             if (clienteCreditos.Count == 2)
                 return string.Format("Ya dispone de dos reservaciones confirmadas, no puede acceder a una nueva.");            
 
-            if (propiedadReservas.Any(t => Convert.ToDateTime(reservaModelo.FechaReserva).CompareTo(Convert.ToDateTime(t.FechaReserva)) >= 0
-                                     && Convert.ToDateTime(reservaModelo.FechaReserva).CompareTo(Convert.ToDateTime(t.FechaReserva).AddDays(7)) <= 0))            
+            if (propiedadReservas.Any(t => (Convert.ToDateTime(reservaModelo.FechaReserva).CompareTo(Convert.ToDateTime(t.FechaReserva)) >= 0
+                                     && Convert.ToDateTime(reservaModelo.FechaReserva).CompareTo(Convert.ToDateTime(t.FechaReserva).AddDays(7)) <= 0)
+                                    || (Convert.ToDateTime(reservaModelo.FechaReserva).AddDays(7).CompareTo(Convert.ToDateTime(t.FechaReserva)) >= 0
+                                    && Convert.ToDateTime(reservaModelo.FechaReserva).AddDays(7).CompareTo(Convert.ToDateTime(t.FechaReserva).AddDays(7)) <= 0)))
+
                 return string.Format("La semana elegida no esta disponible para la propiedad seleccionada.");
 
-            if (clienteCreditos.Any(t => Convert.ToDateTime(reservaModelo.FechaReserva).CompareTo(Convert.ToDateTime(t.FechaReserva)) >= 0
-                                && Convert.ToDateTime(reservaModelo.FechaReserva).CompareTo(Convert.ToDateTime(t.FechaReserva).AddDays(7)) <= 0))            
+            if (clienteCreditos.Any(t => (Convert.ToDateTime(reservaModelo.FechaReserva).CompareTo(Convert.ToDateTime(t.FechaReserva)) >= 0
+                                && Convert.ToDateTime(reservaModelo.FechaReserva).CompareTo(Convert.ToDateTime(t.FechaReserva).AddDays(7)) <= 0)
+                                || (Convert.ToDateTime(reservaModelo.FechaReserva).AddDays(7).CompareTo(Convert.ToDateTime(t.FechaReserva)) >= 0
+                                    && Convert.ToDateTime(reservaModelo.FechaReserva).AddDays(7).CompareTo(Convert.ToDateTime(t.FechaReserva).AddDays(7)) <= 0)))            
                 return string.Format("Ya posee una reserva en la misma semana en otra propiedad.");
 
             if (propiedadSubastas.Any())
@@ -52,20 +57,19 @@ namespace HomeSwitchHome.Services
                 return "OK";
          }
 
-        public bool CancelarReservaCliente(int idReserva)
+        public string CancelarReservaCliente(int idReserva)
         {
             var reservaBorrar = this.HomeSwitchDB.RESERVA.SingleOrDefault(t => t.IdReserva == idReserva);
 
-            if (reservaBorrar != null && Convert.ToDateTime(reservaBorrar.Fecha.Date) >= DateTime.Now.Date.AddMonths(6))
-            {
+            if (Convert.ToDateTime(reservaBorrar.Fecha.Date) < DateTime.Now.Date.AddMonths(6))
+                return string.Format("No se puede cancelar la reserva, faltan menos de 6 meses.");
+
+            
                 this.HomeSwitchDB.RESERVA.Remove(reservaBorrar);
                 this.HomeSwitchDB.SaveChanges();
                 CacheHomeSwitchHome.RemoveOnCache("Reservas");
-                return true;
-            }
-
-            return false;
-        }
+                return string.Format("Ok");
+         }
 
         public bool CancelarReservaAdministrador(int idReserva)
         {
@@ -107,7 +111,8 @@ namespace HomeSwitchHome.Services
         public List<ReservaViewModel> ObtenerReservasCliente(int idCliente)
         {
             var reservasCliente = this.ObtenerReservas();
-            return reservasCliente.Where(t => t.IdCliente == idCliente &&  DateTime.Now <= Convert.ToDateTime(t.FechaReserva)).ToList();
+            var reservasActuales = reservasCliente.Where(t => t.IdCliente == idCliente &&  DateTime.Now <= Convert.ToDateTime(t.FechaReserva)).ToList();
+            return reservasActuales;
         }
 
         public List<ReservaViewModel> ObtenerReservasPropiedad(int idPropiedad)

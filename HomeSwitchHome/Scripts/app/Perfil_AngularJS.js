@@ -25,4 +25,21 @@ switchHomeApp.controller('perfilcontroller', function ($scope, $http) {
         });
 
     }
+
+    $scope.cancelarreserva = function (element) {
+        var idReserva = element;
+
+        $http.post("/Perfil/Perfil/CancelarReserva", {
+            'idReserva': idReserva
+
+        }).then(function successCallback(result) {
+            $scope.misreservas = result.data;
+            swal("Home Switch Home", "Se ha cancelado correctamente la reserva que tenia acordada.", "success");
+
+
+        }, function errorCallback(jqXHR) {
+            swal("Home Switch Home", jqXHR.data, "error");
+        });
+
+    }
 })

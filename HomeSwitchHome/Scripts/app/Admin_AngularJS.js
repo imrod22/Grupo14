@@ -78,7 +78,6 @@ adminsection.controller('admincontroller', function ($scope, $http) {
             }, function errorCallback(jqXHR) {
                     $('#fromreserva').prop('value', "");
                     swal("Home Switch Home", jqXHR.data, "error");
-
             });
         }
     });
