@@ -15,6 +15,7 @@ namespace HomeSwitchHome
             container.RegisterType<IPropiedadService, PropiedadService>();
             container.RegisterType<IUsuarioService, UsuarioService>();
             container.RegisterType<IReservaService, ReservaService>();
+            container.RegisterType<IPujaService, PujaService>();
 
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }

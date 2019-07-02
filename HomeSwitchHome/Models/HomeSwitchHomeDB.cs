@@ -22,6 +22,7 @@ namespace HomeSwitchHome
         public virtual DbSet<RESERVA> RESERVA { get; set; }
         public virtual DbSet<SUBASTA> SUBASTA { get; set; }
         public virtual DbSet<USUARIO> USUARIO { get; set; }
+        public virtual DbSet<PUJA> PUJA { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -66,6 +67,10 @@ namespace HomeSwitchHome
                 .HasMany(e => e.CLIENTE)
                 .WithRequired(e => e.USUARIO)
                 .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<PUJA>()
+               .Property(e => e.Monto)
+                .HasPrecision(10, 2);
         }
     }
 }

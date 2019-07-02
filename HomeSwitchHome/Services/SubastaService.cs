@@ -46,6 +46,7 @@ namespace HomeSwitchHome.Services
         public string PujarSubasta(SUBASTA subastaPujada, int idSubasta, int idCliente)
         {
             var subastaActualizar = this.HomeSwitchDB.SUBASTA.SingleOrDefault(t => t.IdSubasta == idSubasta);
+            
             var reservas = new ReservaService();
 
             if (subastaActualizar == null)

@@ -12,10 +12,12 @@ namespace HomeSwitchHome.Areas.Subasta.Controllers
     public class SubastaController : Controller
     {
         readonly ISubastaService servicioSubasta;
+        readonly IPujaService pujaService;
 
-        public SubastaController(ISubastaService subastaServicio)
+        public SubastaController(ISubastaService subastaServicio, IPujaService pujaService)
         {
             this.servicioSubasta = subastaServicio;
+            this.pujaService = pujaService;
         }
 
         // GET: Subasta/Subasta
@@ -37,9 +39,16 @@ namespace HomeSwitchHome.Areas.Subasta.Controllers
             var sesionUser = (ClienteViewModel)Session["ClienteActual"];
 
             var mensaje = this.servicioSubasta.PujarSubasta(subastaPujada, int.Parse(idSubasta), sesionUser.IdCliente);
-            
-            if(mensaje == "OK")            
+
+            if (mensaje == "OK")
+            {
+                var activas = this.servicioSubasta.ObtenerSubastasActivas();
+                var subastaActual = activas.Where(t => t.IdSubasta == int.Parse(idSubasta)).SingleOrDefault();
+
+                this.pujaService.RegistrarPuja(subastaActual.IdSubasta, sesionUser.IdCliente, subastaActual.ValorActual);
+
                 return Json(this.servicioSubasta.ObtenerSubastasActivas().ToArray(), JsonRequestBehavior.AllowGet);
+            }                
 
             Response.StatusCode = (int)HttpStatusCode.BadRequest;
             return Json(mensaje, JsonRequestBehavior.AllowGet);
@@ -47,10 +56,10 @@ namespace HomeSwitchHome.Areas.Subasta.Controllers
 
         public JsonResult ObtenerInformacionSubasta(int idSubasta)
         {
-            var subastasActuales = this.servicioSubasta.ObtenerSubastasActivas();
-            var currentPropiedad = subastasActuales.Where(t => t.IdSubasta == idSubasta).SingleOrDefault();
+            var actuales = this.servicioSubasta.ObtenerSubastasActivas();
+            var subastaActual = actuales.Where(t => t.IdSubasta == idSubasta).SingleOrDefault();
 
-            return Json(currentPropiedad, JsonRequestBehavior.AllowGet);
+            return Json(subastaActual, JsonRequestBehavior.AllowGet);
         }
     }
 }
