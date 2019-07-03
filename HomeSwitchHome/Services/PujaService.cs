@@ -15,9 +15,18 @@ namespace HomeSwitchHome.Services
             this.HomeSwitchDB = new HomeSwitchHomeDB();
         }
 
-        public List<PUJA> ObtenerUltimaPuja()
+        public List<PujaViewModel> ObtenerPujas(int idSubasta)
         {
-            throw new NotImplementedException();
+            List<PujaViewModel> pujas = new List<PujaViewModel>();
+
+            var pujasDB = this.HomeSwitchDB.PUJA.Where(t => t.IdSubasta == idSubasta).OrderByDescending(t => t.Monto).ToList();
+
+            foreach (var puja in pujasDB)
+            {
+                pujas.Add(new PujaViewModel().ToViewModel(puja));
+            }
+
+            return pujas;
         }
 
         public void RegistrarPuja(int idSubasta, int idCliente, decimal monto)
@@ -29,6 +38,16 @@ namespace HomeSwitchHome.Services
             registroPuja.IdSubasta = idSubasta;
 
             this.HomeSwitchDB.PUJA.Add(registroPuja);
+            this.HomeSwitchDB.SaveChanges();
+        }
+
+        public void RemoverMaximaPuja(int idSubasta)
+        {
+            var pujaRemover = this.HomeSwitchDB.PUJA.Where(t => t.IdSubasta == idSubasta).OrderByDescending(t => t.Monto).FirstOrDefault();
+
+            this.HomeSwitchDB.PUJA.Remove(pujaRemover);
+            this.HomeSwitchDB.SaveChanges();
+
         }
     }
 }

@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Http;
 
 namespace HomeSwitchHome.Services
 {
@@ -52,7 +51,7 @@ namespace HomeSwitchHome.Services
             if (subastaActualizar == null)
                 return string.Format("Se ha producido un error en el servidor.");
 
-            if(subastaActualizar.ValorActual >= subastaPujada.ValorActual && subastaActualizar.ValorMinimo >= subastaPujada.ValorActual)
+            if(subastaActualizar.ValorActual >= subastaPujada.ValorActual || subastaActualizar.ValorMinimo >= subastaPujada.ValorActual)
                 return string.Format("El valor ingresado es menor al valor actual.");
 
             if(reservas.ObtenerReservasCliente(idCliente).Count == 2)

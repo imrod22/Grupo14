@@ -38,8 +38,8 @@
                         i++;
                         var active = i == 1 ? "active" : string.Empty;
 
-                        <div class="carousel-imagen carousel-item @active" style="background-image: url('../..@subasta.Propiedad.Imagenes.First().path')">
-                            <div class="d-none d-md-block" style="color:#ffffff;">
+                        <div class="carousel-imagen carousel-item novedades-img @active" style="background-image: url('../..@subasta.Propiedad.Imagenes.First().path')">
+                            <div class="d-none d-md-block novedades-text" style="color:#ffffff;">
                                 <h5 class="display-4">@subasta.Propiedad.Nombre</h5>
                                 <h6 class="card-subtitle"> comenzando el <strong style="color:#ffffff;"> @Convert.ToDateTime(subasta.FechaComienzo).Day/@Convert.ToDateTime(subasta.FechaComienzo).Month/@Convert.ToDateTime(subasta.FechaComienzo).Year</strong> en <strong>@subasta.ValorMinimo</strong> U$S </h6>
                             </div>

@@ -15,13 +15,15 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
         readonly ISubastaService servicioSubasta;
         readonly IPropiedadService servicioPropiedad;
         readonly IReservaService servicioReserva;
+        readonly IPujaService servicioPuja;
 
-        public AdministradorController(IPropiedadService propiedadService, ISubastaService subastaService, IUsuarioService usuarioService, IReservaService reservaService)
+        public AdministradorController(IPropiedadService propiedadService, ISubastaService subastaService, IUsuarioService usuarioService, IReservaService reservaService, IPujaService pujaService)
         {
             this.servicioPropiedad = propiedadService;
             this.servicioSubasta = subastaService;
             this.servicioUsuario = usuarioService;
             this.servicioReserva = reservaService;
+            this.servicioPuja = pujaService;
         }
 
         public ActionResult Index()
@@ -202,7 +204,7 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
             var mensaje = this.servicioReserva.AgregarReservaDesdeSubasta(reservaSubasta);
 
             if (mensaje != "OK") {
-                return this.CancelarSubasta(idSubasta);
+                return this.CambiarGanadorPuja(idSubasta);
             }                
             else {
                 this.servicioSubasta.ConfirmarSubasta(idSubasta);
@@ -293,6 +295,30 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
             {
                 return Json(this.servicioUsuario.ObtenerSolicitudesPremium().ToArray(), JsonRequestBehavior.AllowGet);
             }
+        }
+
+        private JsonResult CambiarGanadorPuja(int idSubasta)
+        {
+            var subastaActual = this.servicioSubasta.ObtenerSubastasFinalizadas().Where(t => t.IdSubasta == idSubasta).FirstOrDefault();
+            var usuarioSubasta = subastaActual.Cliente;
+
+            this.servicioPuja.RemoverMaximaPuja(idSubasta);
+            var ultimasPuja = this.servicioPuja.ObtenerPujas(idSubasta);
+
+            if (!ultimasPuja.Any()) {
+
+                this.servicioSubasta.RemoverSubasta(idSubasta);
+
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(string.Format("El sistema no puede confirmar la reserva para la propiedad {0} del cliente {1},{2} ya que no posee creditos. La subasta no posee pujas de menor valor y ha sido cancelada.", subastaActual.Propiedad.Nombre, usuarioSubasta.Apellido, usuarioSubasta.Nombre), JsonRequestBehavior.AllowGet);
+            }
+
+            var maximoPujante = ultimasPuja.FirstOrDefault();
+            var nuevoClienteMaximo = this.servicioUsuario.ObtenerInformacionCliente(maximoPujante.IdCliente);
+
+            Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            return Json(string.Format("El sistema no puede confirmar la reserva para la propiedad {0} del cliente {1},{2} ya que no posee creditos. La subasta se le ha adjudicado al cliente {3}, {4} con un monto de {5}.", subastaActual.Propiedad.Nombre, usuarioSubasta.Apellido, usuarioSubasta.Nombre, nuevoClienteMaximo.Apellido, nuevoClienteMaximo.Nombre, maximoPujante.Monto), JsonRequestBehavior.AllowGet);
+
         }
 
         private List<ReservaViewModel> FormatearFechaDeReservas(List<ReservaViewModel> reservasSinFormato)

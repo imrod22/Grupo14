@@ -1,11 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using HomeSwitchHome.ViewModels;
+using System.Collections.Generic;
 
 namespace HomeSwitchHome.Services
 {
     public interface IPujaService
     {
         void RegistrarPuja(int idSubasta, int idCliente, decimal monto);
+        
+        List<PujaViewModel> ObtenerPujas(int idSubasta);
 
-        List<PUJA> ObtenerUltimaPuja();
+        void RemoverMaximaPuja(int idSubasta);
     }
 }

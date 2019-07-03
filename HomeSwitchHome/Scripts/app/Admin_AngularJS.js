@@ -312,15 +312,17 @@ adminsection.controller('admincontroller', function ($scope, $http) {
 
         ).then(function successCallback(result) {
 
-            swal("Home Switch Home", "Se han actualizado las listas de subastas cerradas y reservas efectuadas.", "success");
             $scope.subastasfin = result.data;
 
             $http.get("/Administrador/Administrador/ObtenerReservasOrdenadasPorFecha").then(function (result) {
                 $scope.reservas = result.data;
+
+                swal("Home Switch Home", "Se ha confirmado la subasta del cliente y generado la reserva correspondiente.", "success");
+
             });                                
 
-        }, function errorCallback() {
-            swal("Home Switch Home", "No se ha podido confirmar la subasta. Ha ocurrido un error en el servidor.", "error");
+        }, function errorCallback(jqXHR) {
+                swal("Home Switch Home", jqXHR.data, "error");
         });
     }
 
