@@ -155,6 +155,12 @@ namespace HomeSwitchHome.Services
 
         }
 
+        public SubastaViewModel ObtenerSubasta(int idSubasta)
+        {
+            var subastas = this.ObtenerSubastas();
+            return subastas.Where(t => t.IdSubasta == idSubasta).SingleOrDefault();
+        }
+
         private List<SubastaViewModel> ObtenerSubastas()
         {
             List<SubastaViewModel> subastasActuales;

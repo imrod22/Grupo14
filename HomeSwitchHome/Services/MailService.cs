@@ -1,10 +1,8 @@
 ﻿using HomeSwitchHome.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Mail;
-using System.Web;
 
 namespace HomeSwitchHome.Services
 {
@@ -50,14 +48,14 @@ namespace HomeSwitchHome.Services
             }
         }
 
-        public bool EnviarMailGanoSubasta(ClienteViewModel clienteModel, SubastaViewModel subastaModel)
+        public bool EnviarMailGanoSubasta(SubastaViewModel subastaModel)
         {
             MailMessage msg = new MailMessage();
 
             msg.From = new MailAddress("notificaciones.hsh@gmail.com");
-            msg.To.Add(new MailAddress(clienteModel.Email));
+            msg.To.Add(new MailAddress(subastaModel.Cliente.Email));
             msg.Subject = "HOME SWITCH HOME - GANADOR DE SUBASTA!";
-            msg.Body = string.Format("Felicitaciones {0}, usted ha resultado vencedor de la subasta de {1} en el sistema HOME SWITCH HOME.", clienteModel.Nombre, subastaModel.Propiedad.Nombre) +
+            msg.Body = string.Format("Felicitaciones {0}, usted ha resultado vencedor de la subasta de {1} en el sistema HOME SWITCH HOME.", subastaModel.Cliente.Nombre, subastaModel.Propiedad.Nombre) +
                        string.Format("Su reserva comienza el dia {0}. Que la disfrute! Atte. Equipo de Home Switch Home.", subastaModel.FechaReserva);
             try
             {

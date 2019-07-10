@@ -215,7 +215,12 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
                 return this.CambiarGanadorPuja(idSubasta);
             }                
             else {
+
                 this.servicioSubasta.ConfirmarSubasta(idSubasta);
+
+                var subastaActual = this.servicioSubasta.ObtenerSubasta(idSubasta);
+                this.servicioMail.EnviarMailGanoSubasta(subastaActual);
+
                 return this.SubastasCerradas();
             }
         }

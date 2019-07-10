@@ -9,7 +9,7 @@ namespace HomeSwitchHome.Services
 
         void EnviarMailReservaHotSale();
 
-        bool EnviarMailGanoSubasta(ClienteViewModel clienteModel, SubastaViewModel subastaModel);
+        bool EnviarMailGanoSubasta(SubastaViewModel subastaModel);
 
         bool EnviarNotificacionNuevaSubasta(List<ClienteViewModel> listaClientes, SubastaViewModel subastaModel);
 
