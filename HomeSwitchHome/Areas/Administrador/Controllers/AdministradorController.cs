@@ -16,14 +16,16 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
         readonly IPropiedadService servicioPropiedad;
         readonly IReservaService servicioReserva;
         readonly IPujaService servicioPuja;
+        readonly IMailService servicioMail;
 
-        public AdministradorController(IPropiedadService propiedadService, ISubastaService subastaService, IUsuarioService usuarioService, IReservaService reservaService, IPujaService pujaService)
+        public AdministradorController(IPropiedadService propiedadService, ISubastaService subastaService, IUsuarioService usuarioService, IReservaService reservaService, IPujaService pujaService, IMailService mailService)
         {
             this.servicioPropiedad = propiedadService;
             this.servicioSubasta = subastaService;
             this.servicioUsuario = usuarioService;
             this.servicioReserva = reservaService;
             this.servicioPuja = pujaService;
+            this.servicioMail = mailService;
         }
 
         public ActionResult Index()
@@ -159,6 +161,9 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
 
             else
             {
+                var nuevoPremium = this.servicioUsuario.ObtenerInformacionCliente(idCliente);
+                this.servicioMail.EnviarPremiumAceptadoMail(nuevoPremium);
+
                 return Json(this.servicioUsuario.ObtenerSolicitudesPremium().ToArray(), JsonRequestBehavior.AllowGet);
             }
         }
@@ -175,6 +180,9 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
 
             else
             {
+                var nuevoUsuario = this.servicioUsuario.ObtenerInformacionCliente(idCliente);
+                this.servicioMail.EnviarUsuarioAceptadoMail(nuevoUsuario);
+
                 return Json(this.servicioUsuario.ObtenerNuevosClientes().ToArray(), JsonRequestBehavior.AllowGet);
             }
         }

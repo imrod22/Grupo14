@@ -35,8 +35,6 @@ namespace HomeSwitchHome.ViewModels
         public int? DNI { get; set; }
 
         public string Email { get; set; }
-
-        public List<NOVEDAD_PROPIEDAD> Notificaciones { get; set; }
         
         public ClienteViewModel() { }
 

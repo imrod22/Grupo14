@@ -1,4 +1,5 @@
 ﻿using HomeSwitchHome.ViewModels;
+using System.Collections.Generic;
 
 namespace HomeSwitchHome.Services
 {
@@ -6,12 +7,16 @@ namespace HomeSwitchHome.Services
     {
         bool EnviarMailConRecuperacionContrasenia(ClienteViewModel clienteModel);
 
-        void EnviarMailReservaPropiedad();
+        void EnviarMailReservaHotSale();
 
-        void EnviarMailGanoSubasta();
+        bool EnviarMailGanoSubasta(ClienteViewModel clienteModel, SubastaViewModel subastaModel);
 
-        void EnviarNotificacionNuevaSubasta();
+        bool EnviarNotificacionNuevaSubasta(List<ClienteViewModel> listaClientes, SubastaViewModel subastaModel);
 
-        void EnviarNotificacionNuevoHotSale();
+        bool EnviarNotificacionNuevoHotSale(List<ClienteViewModel> listaClientes, SubastaViewModel subastaModel);
+
+        bool EnviarUsuarioAceptadoMail(ClienteViewModel cliente);
+
+        bool EnviarPremiumAceptadoMail(ClienteViewModel cliente);
     }
 }

@@ -1,6 +1,5 @@
 ﻿using HomeSwitchHome.Services;
 using HomeSwitchHome.ViewModels;
-using System;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -49,6 +48,22 @@ namespace HomeSwitchHome.Areas.Propiedad.Controllers
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
 
             return Json(mensaje, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult SolicitarNovedadPropiedad(int idPropiedad)
+        {
+            var sesionUser = (ClienteViewModel)Session["ClienteActual"];
+            NovedadViewModel novedadNueva = new NovedadViewModel();
+            novedadNueva.PropiedadId = idPropiedad;
+            novedadNueva.ClienteId = sesionUser.IdCliente;
+
+            if (this.propiedadService.RegistrarNotificacionesDePropiedad(novedadNueva))
+            {
+                return Json("Se registro la solicitud, será notificado a su cuenta de mail cuando haya novedades sobre la residencia elegida.", JsonRequestBehavior.AllowGet);
+            }
+
+            Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            return Json("Ya esta siendo notificado sobre nuevas subastas o hot sales en la residencia elegida.", JsonRequestBehavior.AllowGet);
         }
     }
 }

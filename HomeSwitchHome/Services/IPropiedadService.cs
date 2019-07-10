@@ -13,5 +13,7 @@ namespace HomeSwitchHome.Services
 
         bool RemoverPropiedad(int idPropiedad);
 
+        bool RegistrarNotificacionesDePropiedad(NovedadViewModel nuevaNovedad);
+
     }
 }

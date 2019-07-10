@@ -74,7 +74,7 @@ switchHomeApp.controller('propiedadesController', function ($scope, $http) {
         });
     }
 
-    $scope.solicitarNovedad = function (element) {
+    $scope.solicitarnovedad = function (element) {
 
         var idPropiedad = element;
 
@@ -84,9 +84,10 @@ switchHomeApp.controller('propiedadesController', function ($scope, $http) {
             }
 
         ).then(function successCallback(response) {
+            swal("Home Switch Home", response.data, "success");
 
-        }, function errorCallback() {
-
+        }, function errorCallback(jqXHR) {
+                swal("Home Switch Home", jqXHR.data, "error");
         });
     }
 });

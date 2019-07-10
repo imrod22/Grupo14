@@ -91,5 +91,27 @@ namespace HomeSwitchHome.Services
             else
                 return false;            
         }
+
+        public bool RegistrarNotificacionesDePropiedad(NovedadViewModel nuevaNovedad)
+        {
+            var novedadesParaCliente = this.ObtenerNovedadesCliente(nuevaNovedad.ClienteId);
+
+            if (novedadesParaCliente.Where(t => t.IdPropiedad == nuevaNovedad.PropiedadId).Any())
+                return false;
+
+            NOVEDAD_PROPIEDAD novedadGuardar = new NOVEDAD_PROPIEDAD();
+            novedadGuardar.IdPropiedad = nuevaNovedad.PropiedadId;
+            novedadGuardar.IdCliente = nuevaNovedad.ClienteId;
+
+            this.HomeSwitchDB.NOVEDAD_PROPIEDAD.Add(novedadGuardar);
+            this.HomeSwitchDB.SaveChanges();
+
+            return true;
+        }
+
+        public List<NOVEDAD_PROPIEDAD> ObtenerNovedadesCliente(int idCliente)
+        {
+            return this.HomeSwitchDB.NOVEDAD_PROPIEDAD.Where(t => t.IdCliente == idCliente).ToList();
+        }
     }
 }
