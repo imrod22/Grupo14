@@ -69,9 +69,9 @@
                 <div class="album py-5 bg-light">
                     <div class="container">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="wrimagecard wrimagecard-topimage">
-                                    <div class="wrimagecard-topimage_header" style="background-color: #d37952">
+                                    <div class="wrimagecard-topimage_header" style="background-color: #126f19">
                                         <div class="d-flex justify-content-around grid-divider">
                                             <i class="fa fa-2x fa-fw fas fa-bullhorn" style="color: #ffffff"></i>
                                         </div>
@@ -82,7 +82,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="wrimagecard wrimagecard-topimage">
 
                                     <div class="wrimagecard-topimage_header" style="background-color: #0a3e7d">
@@ -92,6 +92,20 @@
                                     </div>
                                     <div class="wrimagecard-topimage_title">
                                         @Html.ActionLink("RESIDENCIAS", "Index", "Propiedad", new { area = "Propiedad" }, new { @class = "section-card" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="wrimagecard wrimagecard-topimage">
+
+                                    <div class="wrimagecard-topimage_header" style="background-color: #f10606">
+                                        <div class="d-flex justify-content-around grid-divider">
+                                            <i class="fa fa-2x fa-fw fas fa-fire" style="color: #ffffff"></i>
+                                        </div>
+                                    </div>
+                                    <div class="wrimagecard-topimage_title">
+                                        @Html.ActionLink("HOT SALES", "Index", "Propiedad", new { area = "Propiedad" }, new { @class = "section-card" })
                                     </div>
                                 </div>
                             </div>
@@ -106,5 +120,7 @@
 <div class="modal fade" id="LoginModal" role="dialog" aria-hidden="true">
     @Html.Partial("_Login")
 </div>
+
+@Html.Partial("_OlvidoMail")
 
 <script src="~/Scripts/app/HomePage.js"></script>

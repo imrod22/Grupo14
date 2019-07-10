@@ -21,4 +21,23 @@
         });
 
     });
+
+    $('#forget-mail').click(function () {
+
+        $.ajax({
+            type: "POST",
+            url: "/Home/SolicitarMail",
+            data: {
+                usuario: $('#usuariobusqueda').val()
+            },
+            success: function (response) {
+
+                swal("Home Switch Home", response, "success");
+            },
+            error: function (jqXHR) {
+                swal("Home Switch Home", jqXHR.responseJSON, "error");
+            }
+        });
+
+    });
 })

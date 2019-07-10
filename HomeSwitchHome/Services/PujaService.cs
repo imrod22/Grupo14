@@ -44,7 +44,6 @@ namespace HomeSwitchHome.Services
         public void RemoverMaximaPuja(int idSubasta)
         {
             var pujaRemover = this.HomeSwitchDB.PUJA.Where(t => t.IdSubasta == idSubasta).OrderByDescending(t => t.Monto).FirstOrDefault();
-
             this.HomeSwitchDB.PUJA.Remove(pujaRemover);
             this.HomeSwitchDB.SaveChanges();
 

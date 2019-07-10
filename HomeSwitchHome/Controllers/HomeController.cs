@@ -11,11 +11,13 @@ namespace HomeSwitchHome.Controllers
     {
         readonly ISubastaService subastaService;
         readonly IUsuarioService usuarioService;
+        readonly IMailService mailService;
         
-        public HomeController(ISubastaService subastaServicio, IUsuarioService usuarioServicio)
+        public HomeController(ISubastaService subastaServicio, IUsuarioService usuarioServicio, IMailService mailServicio)
         {
             this.subastaService = subastaServicio;
             this.usuarioService = usuarioServicio;
+            this.mailService = mailServicio;
         }
 
         public ActionResult Index()
@@ -90,6 +92,21 @@ namespace HomeSwitchHome.Controllers
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 return Json(string.Format(mensajeRegistro), JsonRequestBehavior.AllowGet);
             }
+        }
+
+        public ActionResult SolicitarMail(string usuario)
+        {   
+            if (this.usuarioService.ExisteUsuario(usuario))
+            {
+                var cliente = this.usuarioService.ObtenerInformacionDeUsuario(usuario);
+                this.mailService.EnviarMailConRecuperacionContrasenia(cliente);
+
+                return Json(string.Format("Se ha enviado la contraseña al correo registrado por el usuario {0}.", usuario), JsonRequestBehavior.AllowGet);
+
+            }
+
+            Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            return Json(string.Format("El usuario: {0} que se desea recuperar la contraseña no esta registrado en el sistema.", usuario), JsonRequestBehavior.AllowGet);
         }
     }
 }

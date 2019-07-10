@@ -15,6 +15,10 @@ namespace HomeSwitchHome.Services
 
         bool EsAdmin(int IdUsuario);
 
+        bool ExisteUsuario(string usuario);
+
+        ClienteViewModel ObtenerInformacionDeUsuario(string usuario);
+
         string RegistrarNuevoCliente(ClienteViewModel nuevoCliente);
 
         string ConfirmarNuevoCliente(int idCliente);

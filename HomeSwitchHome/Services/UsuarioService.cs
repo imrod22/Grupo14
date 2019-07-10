@@ -215,6 +215,18 @@ namespace HomeSwitchHome.Services
 
             return clientes.Where(t => t.Premium == "NO").ToList();
         }
+
+        public ClienteViewModel ObtenerInformacionDeUsuario(string usuario)
+        {
+            var cliente = this.ObtenerListaDeClientes().Where(t => t.Usuario == usuario);
+            return cliente.FirstOrDefault();
+        }
+
+        public bool ExisteUsuario(string usuario)
+        {
+            var cliente = this.ObtenerListaDeClientes().Where(t => t.Usuario == usuario);
+            return cliente.Any();
+        }
         
         private bool ExisteCliente(ClienteViewModel clienteACrear)
         {

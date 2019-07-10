@@ -52,6 +52,8 @@ namespace HomeSwitchHome.ViewModels
             this.Banco = cliente.Banco;
             this.MedioDePago = cliente.MedioDePago;
             this.Email = cliente.Email;
+            this.Usuario = cliente.USUARIO.Usuario;
+            this.Password = cliente.USUARIO.Password;
             this.Login = cliente.USUARIO.Login;
 
             return this;
