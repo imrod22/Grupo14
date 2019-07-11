@@ -27,7 +27,11 @@ namespace HomeSwitchHome
 
         [Required]
         public string Pais { get; set; }
-        
+
+        public string Ciudad { get; set; }
+
+        public bool Activa { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<IMAGEN> IMAGEN { get; set; }
 

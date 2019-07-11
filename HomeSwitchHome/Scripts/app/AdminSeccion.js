@@ -6,12 +6,16 @@
         $("#nombrePropiedad").val("");
         $("#descripcionPropiedad").val("");
         $("#paisPropiedad").val("");
+        $("#ciudadPropiedad").val("");
         
         $('#nombrePropiedad').attr('readonly', false);
         $("#nombrePropiedad").attr('disabled', false);
 
         $('#paisPropiedad').attr('readonly', false);
         $("#paisPropiedad").attr('disabled', false);
+
+        $('#ciudadPropiedad').attr('readonly', false);
+        $("#ciudadPropiedad").attr('disabled', false);
 
         $('#boton-crear-propiedad').css('display', 'block');
         $('#boton-modificar-propiedad').css('display', 'none');
@@ -26,6 +30,9 @@
         $('#paisPropiedad').attr('readonly', true);
         $("#paisPropiedad").attr('disabled', true);
 
+        $('#ciudadPropiedad').attr('readonly', true);
+        $("#ciudadPropiedad").attr('disabled', true);
+
         $('#boton-modificar-propiedad').css('display', 'block');
         $('#boton-crear-propiedad').css('display', 'none');        
 
@@ -39,6 +46,7 @@
                 $("#nombrePropiedad").val(response.Nombre);
                 $("#descripcionPropiedad").val(response.Descripcion);
                 $("#paisPropiedad").val(response.Pais);
+                $("#ciudadPropiedad").val(response.Ciudad);
 
             },
             error: function () {

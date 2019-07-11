@@ -38,6 +38,11 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
             return Json(this.servicioPropiedad.ObtenerPropiedades().ToArray(), JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult ObtenerTodasLasPropiedades()
+        {
+            return Json(this.servicioPropiedad.ObtenerTodasLasPropiedades().ToArray(), JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult SubastasSinEmpezar()
         {
             return Json(this.servicioSubasta.ObtenerSubastasFuturas().ToArray(), JsonRequestBehavior.AllowGet);
@@ -71,21 +76,32 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
             return null;
         }
 
-        public JsonResult BorrarPropiedad(string idpropiedad)
+        public JsonResult ActualizarEstatusPropiedad(string idpropiedad)
         {
-            if (this.servicioPropiedad.RemoverPropiedad(Int32.Parse(idpropiedad)))
-                return Json(this.servicioPropiedad.ObtenerPropiedades().ToArray(), JsonRequestBehavior.AllowGet);
+            if (this.servicioPropiedad.CambiarEstatusPropiedad(Int32.Parse(idpropiedad)))
+                return Json(this.servicioPropiedad.ObtenerTodasLasPropiedades().ToArray(), JsonRequestBehavior.AllowGet);
 
             return null;
 
         }
 
-        public JsonResult CrearPropiedad(string nombre, string domicilio, string descripcion, string pais)
+        public JsonResult EliminarPropiedad(string idpropiedad)
+        {
+            if (this.servicioPropiedad.BorrarPropiedad(Int32.Parse(idpropiedad)))
+                return Json(this.servicioPropiedad.ObtenerTodasLasPropiedades().ToArray(), JsonRequestBehavior.AllowGet);
+
+            return null;
+
+        }
+
+        public JsonResult CrearPropiedad(string nombre, string ciudad, string descripcion, string pais)
         {
             PROPIEDAD nuevaResidencia = new PROPIEDAD();
             nuevaResidencia.Nombre = nombre;
             nuevaResidencia.Pais = pais;
+            nuevaResidencia.Ciudad = ciudad;
             nuevaResidencia.Descripcion = descripcion;
+            nuevaResidencia.Activa = true;
 
             if (this.servicioPropiedad.CrearPropiedad(nuevaResidencia))
                 return Json(this.servicioPropiedad.ObtenerPropiedades().ToArray(), JsonRequestBehavior.AllowGet);

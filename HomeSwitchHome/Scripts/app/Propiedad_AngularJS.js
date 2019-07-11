@@ -24,6 +24,7 @@ switchHomeApp.controller('propiedadesController', function ($scope, $http) {
         $scope.detallenombre = "";
         $scope.detalledescripcion = "";
         $scope.detallepais = "";
+        $scope.detalleciudad = "";
         $scope.detalleimagenes = [];
 
         var idPropiedad = element;
@@ -40,6 +41,7 @@ switchHomeApp.controller('propiedadesController', function ($scope, $http) {
             $scope.detallenombre = response.data.Nombre;
             $scope.detalledescripcion = response.data.Descripcion;
             $scope.detallepais = response.data.Pais;
+            $scope.detalleciudad = response.data.Ciudad;
 
             $scope.detalleimagenes = response.data.Imagenes;
             

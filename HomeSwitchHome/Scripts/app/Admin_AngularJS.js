@@ -20,7 +20,7 @@ adminsection.controller('admincontroller', function ($scope, $http) {
         $scope.subastasfin = result.data;
     });
     
-    $http.get("/Administrador/Administrador/Propiedades").then(function (result) {
+    $http.get("/Administrador/Administrador/ObtenerTodasLasPropiedades").then(function (result) {
         $scope.propiedades = result.data;
     });
 
@@ -84,11 +84,12 @@ adminsection.controller('admincontroller', function ($scope, $http) {
 
     function datosDePropiedadCorrectos() {
         return (
-            (($("#nombrePropiedad").val() == null)
-            && ($("#descripcionPropiedad").val() == null)
+            (($("#nombrePropiedad").val() != null)
+            && ($("#descripcionPropiedad").val() != null)
             && ($("#nombrePropiedad").val().length >= 8)
             && ($("#descripcionPropiedad").val().length >= 20)
-            && ($("#paisPropiedad").val().length == null)))
+            && ($("#paisPropiedad").val().length != null)
+            && ($("#ciudadPropiedad").val().length != null)))
     };
 
     $scope.crearpropiedad = function () {
@@ -96,8 +97,10 @@ adminsection.controller('admincontroller', function ($scope, $http) {
         if (datosDePropiedadCorrectos()) {
             $http.post("/Administrador/Administrador/CrearPropiedad", {
                 'nombre': $scope.nombre,
+                'ciudad': $scope.ciudad,
                 'descripcion': $scope.descripcion,
                 'pais': $scope.pais
+                
             }).then(function successCallback(response) {
 
                 if (response.data == "") {
@@ -156,7 +159,7 @@ adminsection.controller('admincontroller', function ($scope, $http) {
     $scope.borrarpropiedad = function (element) {
         var idPropiedad = element;
 
-        $http.post("/Administrador/Administrador/BorrarPropiedad",
+        $http.post("/Administrador/Administrador/EliminarPropiedad",
             {
                 'idPropiedad': idPropiedad
             }
@@ -175,6 +178,31 @@ adminsection.controller('admincontroller', function ($scope, $http) {
         }, function errorCallback() {
             swal("Home Switch Home", "No se puede eliminar la residencia. Ha ocurrido un error en el servidor", "error");
            
+        });
+    }
+
+    $scope.estadopropiedad = function (element) {
+        var idPropiedad = element;
+
+        $http.post("/Administrador/Administrador/ActualizarEstatusPropiedad",
+            {
+                'idPropiedad': idPropiedad
+            }
+
+        ).then(function successCallback(response) {
+
+            if (response.data == "") {
+                swal("Home Switch Home", "No se puede eliminar la residencia. Ha ocurrido un error en el servidor.", "error");
+            }
+
+            else {
+                swal("Home Switch Home", "La residencia seleccionada ha actualizado su disponiblidad.", "success");
+                $scope.propiedades = response.data;
+            }
+
+        }, function errorCallback() {
+            swal("Home Switch Home", "No se puede eliminar la residencia. Ha ocurrido un error en el servidor", "error");
+
         });
     }
 

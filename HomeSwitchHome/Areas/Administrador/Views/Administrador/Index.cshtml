@@ -56,7 +56,7 @@
                                     </li>
                                     <li>
                                         <div class="input-group" style="align-items: center;">
-                                            <input type="text" class="form-control" ng-model="filtroresidencias.Pais" placeholder="Ubicación" />
+                                            <input type="text" class="form-control" ng-model="filtroresidencias.Ciudad" placeholder="Ubicación" />
                                             <div class="input-group-append">
                                                 <i class="fa fa-fw fas fa-search"></i>
                                             </div>
@@ -85,20 +85,36 @@
                             <table class="table table-sm table-responsive table-borderless col-md-6 mt-2 " style="text-align: left;">
                                 <thead>
                                     <tr>
-                                        <th style="width: 40%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col">NOMBRE</th>
-                                        <th style="width: 40%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col">PAIS</th>
-                                        <th style="width: 20%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col"></th>
+                                        <th style="width: 30%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col">NOMBRE</th>
+                                        <th style="width: 30%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col">UBICACION</th>
+                                        <th style="width: 20%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col">ESTADO</th>
+                                        <th style="width: 10%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col"></th>
+                                        <th style="width: 10%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="propiedad in propiedades | filter:filtroresidencias">
 
                                         <td>{{propiedad.Nombre}}</td>
-                                        <td>{{propiedad.Pais}}</td>
+                                        <td>{{propiedad.Ciudad}} ({{propiedad.Pais}})</td>
+                                        <td>
+                                            <div>
+                                                <div ng-if="propiedad.Activa">
+                                                    <b color:"green">ACTIVA</b>
+                                                </div>
+                                                <div ng-if="!propiedad.Activa">
+                                                    <b color:"red">NO DISPONIBLE</b>
+                                                </div>
+                                                <button id="{{propiedad.IdPropiedad}}" ng-click="estadopropiedad($event.currentTarget.id)" class="btn btn-group-sm btn-info propiedad-a-borrar m-1"> <i class="fa fa-fw fas fa-exchange"></i></button>
+                                            </div>
+                                        </td>
 
                                         <td class="d-flex justify-content-between">
                                             <button id="{{propiedad.IdPropiedad}}" class="btn btn-group-sm btn-primary propiedad-modificar m-1" data-toggle="modal" data-target="#addEditPropiedadModal"><i class="fa fa-fw fas fa-pencil-square-o"></i></button>
-                                            <button id="{{propiedad.IdPropiedad}}" ng-click="borrarpropiedad($event.currentTarget.id)" class="btn btn-group-sm btn-danger propiedad-a-borrar m-1"> <i class="fa fa-fw fas fa-remove"></i></button>
+                                        </td>
+
+                                        <td class="d-flex justify-content-between">
+                                            <button id="{{propiedad.IdPropiedad}}" ng-click="borrarpropiedad($event.currentTarget.id)" class="btn btn-group-sm btn-danger propiedad-a-borrar m-1"> <i class="fa fa-fw fas fa-ban"></i></button>
                                         </td>
                                     </tr>
                                 </tbody>

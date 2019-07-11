@@ -14,6 +14,10 @@ namespace HomeSwitchHome.ViewModels
 
         public string Pais { get; set; }
 
+        public string Ciudad { get; set; }
+
+        public bool Activa { get; set; }
+
         public List<ImagenViewModel> Imagenes { get; set; }
 
         public PropiedadViewModel() { }
@@ -24,6 +28,9 @@ namespace HomeSwitchHome.ViewModels
             this.Nombre = propiedad.Nombre;
             this.Descripcion = propiedad.Descripcion;
             this.Pais = propiedad.Pais;
+            this.Ciudad = propiedad.Ciudad;
+            this.Activa = propiedad.Activa;
+
             this.Imagenes = new List<ImagenViewModel>();
 
             foreach (var imagen in propiedad.IMAGEN)
@@ -37,8 +44,7 @@ namespace HomeSwitchHome.ViewModels
                 imagenDefault.path = "/app-content/noimage_residencia.png";
 
                 this.Imagenes.Add(imagenDefault);
-            } 
-
+            }
 
             return this;
         }

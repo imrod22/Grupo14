@@ -15,6 +15,13 @@ namespace HomeSwitchHome.Services
 
         public List<PropiedadViewModel> ObtenerPropiedades()
         {
+            var propiedadesActuales = this.ObtenerTodasLasPropiedades().Where(t => t.Activa).ToList();
+            
+            return propiedadesActuales;
+        }
+
+        public List<PropiedadViewModel> ObtenerTodasLasPropiedades()
+        {
             List<PropiedadViewModel> propiedadesActuales;
 
             if (!CacheHomeSwitchHome.ExistOnCache("Propiedades"))
@@ -31,13 +38,13 @@ namespace HomeSwitchHome.Services
             }
 
             propiedadesActuales = (List<PropiedadViewModel>)CacheHomeSwitchHome.GetFromCache("Propiedades");
-            
+
             return propiedadesActuales;
-        }       
+        }
 
         public bool CrearPropiedad(PROPIEDAD nuevaPropiedad)
         {
-            List<PropiedadViewModel> propiedadesActuales = this.ObtenerPropiedades();
+            List<PropiedadViewModel> propiedadesActuales = this.ObtenerTodasLasPropiedades();
 
             if (nuevaPropiedad.Pais != null && !propiedadesActuales.Any(t => t.Nombre.Trim().ToLower() == nuevaPropiedad.Nombre.Trim().ToLower()))
             {
@@ -70,7 +77,7 @@ namespace HomeSwitchHome.Services
             }
         }
         
-        public bool RemoverPropiedad(int idPropiedad)
+        public bool BorrarPropiedad(int idPropiedad)
         {
             var propiedadABorrar = this.HomeSwitchDB.PROPIEDAD.SingleOrDefault(t => t.IdPropiedad == idPropiedad);
             var subastaService = new SubastaService();
@@ -90,6 +97,21 @@ namespace HomeSwitchHome.Services
             }
             else
                 return false;            
+        }
+
+        public bool CambiarEstatusPropiedad(int idPropiedad)
+        {
+            var propiedadABorrar = this.HomeSwitchDB.PROPIEDAD.SingleOrDefault(t => t.IdPropiedad == idPropiedad);
+
+            if (propiedadABorrar != null)
+            {
+                propiedadABorrar.Activa = !propiedadABorrar.Activa;
+                this.HomeSwitchDB.SaveChanges();
+                CacheHomeSwitchHome.RemoveOnCache("Propiedades");
+                return true;
+            }
+
+            return false;
         }
 
         public bool RegistrarNotificacionesDePropiedad(NovedadViewModel nuevaNovedad)
