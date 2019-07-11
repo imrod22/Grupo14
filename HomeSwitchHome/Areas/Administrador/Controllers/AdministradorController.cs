@@ -133,6 +133,16 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
                 return Json(mensaje, JsonRequestBehavior.AllowGet);
             }
 
+            var clientesNotificar = this.servicioPropiedad.ObtenerNotificaciones(nuevaSubasta.IdPropiedad);
+            List<string> clientes = new List<string>();
+            var subastaModel = new SubastaViewModel().ToViewModel(nuevaSubasta);
+            subastaModel.Propiedad = this.servicioPropiedad.ObtenerPropiedades().Where(t => t.IdPropiedad == subastaModel.IdPropiedad).SingleOrDefault();
+
+            foreach (var notificacion in clientesNotificar)
+                clientes.Add(notificacion.CLIENTE.Email);
+
+
+            this.servicioMail.EnviarNotificacionNuevaSubasta(clientes, subastaModel);
             return this.SubastasSinEmpezar();
             
         }

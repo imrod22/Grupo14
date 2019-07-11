@@ -11,7 +11,7 @@ namespace HomeSwitchHome.Services
 
         bool EnviarMailGanoSubasta(SubastaViewModel subastaModel);
 
-        bool EnviarNotificacionNuevaSubasta(List<ClienteViewModel> listaClientes, SubastaViewModel subastaModel);
+        bool EnviarNotificacionNuevaSubasta(List<string> listaMails, SubastaViewModel subastaModel);
 
         bool EnviarNotificacionNuevoHotSale(List<ClienteViewModel> listaClientes, SubastaViewModel subastaModel);
 

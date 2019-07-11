@@ -116,7 +116,7 @@ namespace HomeSwitchHome.Services
 
         public bool RegistrarNotificacionesDePropiedad(NovedadViewModel nuevaNovedad)
         {
-            var novedadesParaCliente = this.ObtenerNovedadesCliente(nuevaNovedad.ClienteId);
+            var novedadesParaCliente = this.ObtenerNovedadesDeCliente(nuevaNovedad.ClienteId);
 
             if (novedadesParaCliente.Where(t => t.IdPropiedad == nuevaNovedad.PropiedadId).Any())
                 return false;
@@ -131,9 +131,14 @@ namespace HomeSwitchHome.Services
             return true;
         }
 
-        public List<NOVEDAD_PROPIEDAD> ObtenerNovedadesCliente(int idCliente)
+        public List<NOVEDAD_PROPIEDAD> ObtenerNovedadesDeCliente(int idCliente)
         {
             return this.HomeSwitchDB.NOVEDAD_PROPIEDAD.Where(t => t.IdCliente == idCliente).ToList();
+        }
+
+        public List<NOVEDAD_PROPIEDAD> ObtenerNotificaciones(int idPropiedad)
+        {
+            return this.HomeSwitchDB.NOVEDAD_PROPIEDAD.Where(t => t.IdPropiedad == idPropiedad).ToList();
         }
     }
 }

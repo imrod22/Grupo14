@@ -19,5 +19,7 @@ namespace HomeSwitchHome.Services
 
         bool RegistrarNotificacionesDePropiedad(NovedadViewModel nuevaNovedad);
 
+        List<NOVEDAD_PROPIEDAD> ObtenerNotificaciones(int idPropiedad);
+
     }
 }

@@ -77,20 +77,20 @@ namespace HomeSwitchHome.Services
             throw new NotImplementedException();
         }
 
-        public bool EnviarNotificacionNuevaSubasta(List<ClienteViewModel> listaClientes, SubastaViewModel subastaModel)
+        public bool EnviarNotificacionNuevaSubasta(List<string> listaMails, SubastaViewModel subastaModel)
         {
             MailMessage msg = new MailMessage();
 
             msg.From = new MailAddress("notificaciones.hsh@gmail.com");
 
-            foreach (var cliente in listaClientes)
+            foreach (var mail in listaMails)
             {
-                msg.To.Add(new MailAddress(cliente.Email));
+                msg.To.Add(new MailAddress(mail));
             }
             
             msg.Subject = "HOME SWITCH HOME - PROXIMA SUBASTA EN RESIDENCIA DE SU INTERES!";
-            msg.Body = string.Format("Le informamos que a partir del dia {0}, y durante las proximas 72 HRS, comenzara una subasta en la residencia {1}. ", subastaModel.FechaComienzo, subastaModel.Propiedad.Nombre) +
-                       string.Format("Esperemos contar con usted! Atte. Equipo de Home Switch Home.", subastaModel.FechaReserva);
+            msg.Body = string.Format("Le informamos que a partir del dia {0}, y durante las siguientes 72 horas, se llevara a cabo una subasta en la residencia {1}. ", subastaModel.FechaComienzo, subastaModel.Propiedad.Nombre) +
+                       string.Format("Con un valor inicial de {0} USD. Esperamos contar con usted! Atte. Equipo de Home Switch Home.", subastaModel.ValorMinimo);
             try
             {
                 client.Send(msg);
