@@ -19,6 +19,8 @@ namespace HomeSwitchHome
         [Column(TypeName = "date")]
         public DateTime Fecha { get; set; }
 
+        public bool Credito { get; set; }
+        
         public virtual CLIENTE CLIENTE { get; set; }
 
         public virtual PROPIEDAD PROPIEDAD { get; set; }

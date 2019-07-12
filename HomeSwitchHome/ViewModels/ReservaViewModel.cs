@@ -20,6 +20,8 @@ namespace HomeSwitchHome.ViewModels
 
         public string FechaReserva;
 
+        public bool Credito;
+
         public ReservaViewModel() { }
 
         public ReservaViewModel ToViewModel(RESERVA reserva)
@@ -35,6 +37,7 @@ namespace HomeSwitchHome.ViewModels
             this.IdCliente = this.Cliente.IdCliente;
 
             this.FechaReserva = reserva.Fecha.ToString();
+            this.Credito = reserva.Credito;
 
             return this;
         }

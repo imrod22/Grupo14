@@ -123,10 +123,11 @@
                             <table class="table table-sm table-responsive table-borderless table-borderless col-md-6 mt-2" style="text-align: left;float:right">
                                 <thead>
                                     <tr>
-                                        <th style="width: 30%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col">COMIENZO DE LA SEMANA</th>
+                                        <th style="width: 20%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col">COMIENZO DE LA SEMANA</th>
                                         <th style="width: 30%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col">USUARIO</th>
                                         <th style="width: 20%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col">RESIDENCIA</th>
-                                        <th style="width: 20%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col"></th>
+                                        <th style="width: 20%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col">CON CREDITO</th>
+                                        <th style="width: 10%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col"></th>
                                     </tr>
                                 </thead>
 
@@ -137,18 +138,23 @@
                                         <td>{{reserva.Cliente.Apellido}}, {{reserva.Cliente.Nombre}}</td>
                                         <td>{{reserva.Propiedad.Nombre}}</td>
                                         <td>
+                                            <div ng-if="!reserva.Credito">
+                                                <b color:"">HOT SALE</b>
+                                            </div>
+                                        </td>
+                                        <td>
                                             <button id="{{reserva.IdReserva}}" ng-click="cancelarreserva($event.currentTarget.id)" class="btn btn-group-sm btn-danger subasta-a-borrar"> <i class="fa fa-fw fas fa-ban"></i></button>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
-                        
+
                         </div>
                     </div>
                 </div>
 
             </section>
-            
+
             <section class="section-card services-section mt-5 d-flex justify-content-around" id="subastas">
                 <div class="col-xl-11 col-md-10">
                     <div class="card table-card">
@@ -161,10 +167,10 @@
                                     <li class="col"><button type="button" class="btn btn-success add-nueva-subasta" style="float:right;" data-toggle="modal" data-target="#addEditSubastaModal"><i class="fa fa-fw fas fa-plus"></i></button></li>
 
                                     <li>
-                                        <div class="input-group"  style="align-items: center;">
+                                        <div class="input-group" style="align-items: center;">
                                             <input type="text" class="form-control" ng-model="filtrosubasta.Propiedad.Pais" placeholder="Ubicación" />
                                             <div class="input-group-append">
-                                                    <i class="fa fa-fw fas fa-search"></i>
+                                                <i class="fa fa-fw fas fa-search"></i>
                                             </div>
                                         </div>
                                     </li>
@@ -194,7 +200,7 @@
                                         <th style="width: 20%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col">VALOR MINIMO</th>
                                         <th style="width: 25%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col">FECHA SUBASTA</th>
                                         <th style="width: 25%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col">FECHA RESERVA</th>
-                                        <th style="width: 10%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col"></th>                                    
+                                        <th style="width: 10%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -242,6 +248,63 @@
                 </div>
 
             </section>
+
+            <section class="section-card services-section mt-5 d-flex justify-content-around" id="hotsales">
+                <div class="col-xl-11 col-md-10">
+                    <div class="card table-card">
+                        <div class="card-header" style="background-color:#3e4e75 ; color:#ffffff">
+
+                            <div class="row d-flex justify-content-between">
+                                <h5>HOT SALES</h5>
+                                <ul class="list-unstyled card-option d-flex justify-content-around">
+
+                                    <li class="col"><button type="button" class="btn btn-success add-nueva-subasta" style="float:right;" data-toggle="modal" data-target="#addEditSubastaModal"><i class="fa fa-fw fas fa-plus"></i></button></li>
+
+                                    <li>
+                                        <div class="input-group" style="align-items: center;">
+                                            <input type="text" class="form-control" ng-model="filtrosubasta.Propiedad.Pais" placeholder="Ubicación" />
+                                            <div class="input-group-append">
+                                                <i class="fa fa-fw fas fa-search"></i>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>                           
+                        </div>
+
+                        <div class="d-flex justify-content-around" style="overflow-y: auto; height: 250px;">
+
+                            <table class="table table-responsive-md table-responsive table-borderless col-md-10 mt-2 " style="text-align: left;">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 20%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col">NOMBRE (PAIS)</th>
+                                        <th style="width: 20%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col">VALOR</th>
+                                        <th style="width: 25%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col">FECHA COMIENZO</th>
+                                        <th style="width: 25%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col">FECHA RESERVA</th>
+                                        <th style="width: 10%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="subasta in subastasoff | filter : filtrosubasta">
+
+                                        <td>{{subasta.Propiedad.Nombre}} ({{subasta.Propiedad.Pais}})</td>
+                                        <td>{{subasta.ValorMinimo}} USD</td>
+                                        <td>{{subasta.FechaComienzo}}</td>
+                                        <td>{{subasta.FechaReserva}}</td>
+                                        <td>
+                                            <button id="{{subasta.IdSubasta}}" class="btn btn-group-sm btn-primary subasta-modificar" data-toggle="modal" data-target="#addEditSubastaModal"><i class="fa fa-fw fas fa-pencil-square-o"></i></button>
+                                            <button id="{{subasta.IdSubasta}}" ng-click="borrarsubasta($event.currentTarget.id)" class="btn btn-group-sm btn-danger propiedad-a-borrar"> <i class="fa fa-fw fas fa-remove"></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                          </div>
+                    </div>
+                </div>
+
+            </section>
+
 
             <section class="section-card services-section mt-5 mb-5 d-flex justify-content-around" id="clientes">
                 <div class="col-xl-11 col-md-10">
@@ -300,7 +363,7 @@
                                             <button id="{{premium.IdCliente}}" ng-click="rechazarpremium($event.currentTarget.id)" class="btn btn-group-sm btn-danger"><i class="fa fa-fw fas fa-ban"></i></button>
                                         </td>
                                     </tr>
-                                </tbody>                               
+                                </tbody>
                             </table>
                         </div>
                     </div>

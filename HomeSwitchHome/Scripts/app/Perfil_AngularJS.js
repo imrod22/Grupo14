@@ -17,7 +17,7 @@ switchHomeApp.controller('perfilcontroller', function ($scope, $http) {
     $scope.solicitarsubscripcion = function () {
         $http.post("/Perfil/Perfil/SolicitarSubscripcionPremium").then(function successCallback(result) {
 
-            swal("Home Switch Home", "Su solicitud esta siendo procesada. Se le notificara cuando pueda acceder a las nuevas funcionalidades.", "success");
+            swal("Home Switch Home", result.data, "success");
 
 
         }, function errorCallback(jqXHR) {
@@ -33,9 +33,12 @@ switchHomeApp.controller('perfilcontroller', function ($scope, $http) {
             'idReserva': idReserva
 
         }).then(function successCallback(result) {
-            $scope.misreservas = result.data;
-            swal("Home Switch Home", "Se ha cancelado correctamente la reserva que tenia acordada.", "success");
 
+            swal("Home Switch Home", result.data, "success");
+
+            $http.get("/Perfil/Perfil/ObtenerMisReservas").then(function (result) {
+                $scope.misreservas = result.data;
+            });
 
         }, function errorCallback(jqXHR) {
             swal("Home Switch Home", jqXHR.data, "error");

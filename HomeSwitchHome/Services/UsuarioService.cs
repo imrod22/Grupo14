@@ -31,6 +31,12 @@ namespace HomeSwitchHome.Services
             return this.HomeSwitchDB.PREMIUM.Any(t => t.IdCliente == IdCliente && t.Aceptado == "SI");
         }
 
+        public PREMIUM ObtenerSolicitudPremium(int IdCliente)
+        {
+            return this.HomeSwitchDB.PREMIUM.Where(t => t.IdCliente == IdCliente).SingleOrDefault();
+        }
+
+
         public bool EsAdmin(int IdUsuario)
         {
             return this.HomeSwitchDB.ADMINISTRADOR.Any(t => t.IdUsuario == IdUsuario);
@@ -75,9 +81,9 @@ namespace HomeSwitchHome.Services
 
         public string RegistrarComoPremium(int IdCliente)
         {
-            var esNuevaSolicitudPremium =  this.HomeSwitchDB.PREMIUM.Where(t => t.IdCliente == IdCliente).Any();
+            var tieneSolicitudPremium =  this.HomeSwitchDB.PREMIUM.Where(t => t.IdCliente == IdCliente).Any();
 
-            if (esNuevaSolicitudPremium)
+            if (!tieneSolicitudPremium)
             {
                 var nuevoPremium = new PREMIUM();
                 nuevoPremium.IdCliente = IdCliente;

@@ -17,6 +17,7 @@ namespace HomeSwitchHome
             container.RegisterType<IReservaService, ReservaService>();
             container.RegisterType<IPujaService, PujaService>();
             container.RegisterType<IMailService, MailService>();
+            container.RegisterType<ICreditoService, CreditoService>();
 
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }

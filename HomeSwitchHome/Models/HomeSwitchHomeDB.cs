@@ -23,6 +23,7 @@ namespace HomeSwitchHome
         public virtual DbSet<SUBASTA> SUBASTA { get; set; }
         public virtual DbSet<USUARIO> USUARIO { get; set; }
         public virtual DbSet<PUJA> PUJA { get; set; }
+        public virtual DbSet<CREDITO_CLIENTE> CREDITO_CLIENTE { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

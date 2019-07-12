@@ -35,5 +35,7 @@ namespace HomeSwitchHome.Services
 
         List<ClienteViewModel> ObtenerSolicitudesPremium();
 
+        PREMIUM ObtenerSolicitudPremium(int IdCliente);
+
     }
 }

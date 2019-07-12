@@ -1,6 +1,7 @@
 ﻿using HomeSwitchHome.Services;
 using HomeSwitchHome.ViewModels;
 using System;
+using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 
@@ -10,11 +11,13 @@ namespace HomeSwitchHome.Areas.Perfil.Controllers
     {
         readonly IUsuarioService servicioUsuario;
         readonly IReservaService servicioReserva;
+        readonly ICreditoService servicioCredito;
 
-        public PerfilController(IUsuarioService serviceUsuario, IReservaService serviceReserva)
+        public PerfilController(IUsuarioService serviceUsuario, IReservaService serviceReserva, ICreditoService creditoService)
         {
             this.servicioUsuario = serviceUsuario;
             this.servicioReserva = serviceReserva;
+            this.servicioCredito = creditoService;
         }
 
         public ActionResult Index()
@@ -40,30 +43,38 @@ namespace HomeSwitchHome.Areas.Perfil.Controllers
         public JsonResult SolicitarSubscripcionPremium()
         {
             var sesionUser = (ClienteViewModel)Session["ClienteActual"];
-            var seRegistro= this.servicioUsuario.EsUsuarioPremium(sesionUser.IdCliente);
+            var solicitudPremium = this.servicioUsuario.ObtenerSolicitudPremium(sesionUser.IdCliente);
 
-            if (!seRegistro) {
+            if (solicitudPremium == null) {
 
                 this.servicioUsuario.RegistrarComoPremium(sesionUser.IdCliente);
-                return Json("Ok", JsonRequestBehavior.AllowGet);
+                return Json("Su solicitud se ha registrado y esta siendo procesada se le notificara cuando pueda comenzar a operar como PREMIUM.", JsonRequestBehavior.AllowGet);
             }
 
             Response.StatusCode = (int)HttpStatusCode.BadRequest;
-            return Json(string.Format("Ya se esta procesando una solicitud premium. Sera notificado cuando sea aprobado."), JsonRequestBehavior.AllowGet);
+            return Json(string.Format("Ya se esta procesando una solicitud desde su cuenta. Se le notificará a la brevedad por email."), JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult CancelarReserva(int idReserva)
         {
-            var mensaje = this.servicioReserva.CancelarReservaCliente(idReserva);
-
-            if (mensaje != "Ok")
+            if (this.servicioReserva.CancelarReserva(idReserva))
             {
-                Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                return Json(mensaje, JsonRequestBehavior.AllowGet);
+                var reserva = this.servicioReserva.ObtenerReservas().Where(t => t.IdReserva == idReserva).SingleOrDefault();
+
+                if (DateTime.Now >= DateTime.Parse(reserva.FechaReserva).AddMonths(2))
+                {
+                    var anioReserva = DateTime.Parse(reserva.FechaReserva).Year;
+
+                    this.servicioCredito.DevolverCreditoCliente(reserva.IdCliente, anioReserva);
+                    return Json(string.Format("Se ha cancelado su reserva en la residencia: {0} y se le ha devuelto el credito para el año {1}.", reserva.Propiedad.Nombre, anioReserva), JsonRequestBehavior.AllowGet);
+                }
+
+                return Json(string.Format("Se ha cancelado satisfactoriamente su reserva en la residencia: {0}, para la reserva faltaban menos de 2 meses, no es posible recuperar el credito.", reserva.Propiedad.Nombre), JsonRequestBehavior.AllowGet);
+
             }
 
-            var sesionUser = (ClienteViewModel)Session["ClienteActual"];
-            return Json(this.servicioReserva.ObtenerReservasCliente(sesionUser.IdCliente).ToArray(), JsonRequestBehavior.AllowGet);
+            Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            return Json("Ha ocurrido un error en el servidor y no se ha podido cancelar la reserva.", JsonRequestBehavior.AllowGet);            
         }
     }
 }

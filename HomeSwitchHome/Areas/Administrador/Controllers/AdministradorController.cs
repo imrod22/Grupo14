@@ -17,8 +17,9 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
         readonly IReservaService servicioReserva;
         readonly IPujaService servicioPuja;
         readonly IMailService servicioMail;
+        readonly ICreditoService servicioCredito;
 
-        public AdministradorController(IPropiedadService propiedadService, ISubastaService subastaService, IUsuarioService usuarioService, IReservaService reservaService, IPujaService pujaService, IMailService mailService)
+        public AdministradorController(IPropiedadService propiedadService, ISubastaService subastaService, IUsuarioService usuarioService, IReservaService reservaService, IPujaService pujaService, IMailService mailService, ICreditoService creditoService)
         {
             this.servicioPropiedad = propiedadService;
             this.servicioSubasta = subastaService;
@@ -26,6 +27,7 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
             this.servicioReserva = reservaService;
             this.servicioPuja = pujaService;
             this.servicioMail = mailService;
+            this.servicioCredito = creditoService;
         }
 
         public ActionResult Index()
@@ -45,12 +47,16 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
 
         public JsonResult SubastasSinEmpezar()
         {
-            return Json(this.servicioSubasta.ObtenerSubastasFuturas().ToArray(), JsonRequestBehavior.AllowGet);
+            var subastasFuturas = this.servicioSubasta.ObtenerSubastasFuturas();
+
+            return Json(subastasFuturas.ToArray(), JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult SubastasCerradas()
         {
-            return Json(this.servicioSubasta.ObtenerSubastasFinalizadas().ToArray(), JsonRequestBehavior.AllowGet);
+            var subastasFinalizadas = this.servicioSubasta.ObtenerSubastasFinalizadas();
+
+            return Json(subastasFinalizadas.ToArray(), JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult NuevosClientes()
@@ -82,7 +88,6 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
                 return Json(this.servicioPropiedad.ObtenerTodasLasPropiedades().ToArray(), JsonRequestBehavior.AllowGet);
 
             return null;
-
         }
 
         public JsonResult EliminarPropiedad(string idpropiedad)
@@ -262,8 +267,21 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
 
         public JsonResult CancelarReservaDeCliente(int idReserva)
         {
-            if (this.servicioReserva.CancelarReservaAdministrador(idReserva))
-                return this.ObtenerListadoReservas();
+            if (this.servicioReserva.CancelarReserva(idReserva))
+            {
+                var reserva = this.servicioReserva.ObtenerReservas().Where(t => t.IdReserva == idReserva).SingleOrDefault();
+
+                if (reserva.Credito)
+                {
+                    var anioReserva = DateTime.Parse(reserva.FechaReserva).Year;
+
+                    this.servicioCredito.DevolverCreditoCliente(reserva.IdCliente, anioReserva);
+                    return Json(string.Format("Se ha cancelado la reserva y se ha devuelto el credito al cliente para el año {0}.", anioReserva), JsonRequestBehavior.AllowGet);
+                }
+
+                return Json(string.Format("Se ha cancelado la reserva de HOT SALE."), JsonRequestBehavior.AllowGet);
+
+            }              
 
             Response.StatusCode = (int)HttpStatusCode.BadRequest;
             return null;

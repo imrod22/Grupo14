@@ -382,12 +382,15 @@ adminsection.controller('admincontroller', function ($scope, $http) {
             }
 
         ).then(function successCallback(result) {            
-                swal("Home Switch Home", "Se ha cancelado la reserva.", "success");
-                $scope.reservas = result.data;
-            
 
-        }, function errorCallback() {
-            swal("Home Switch Home", "No se ha podido cancelar la reserva. Ha ocurrido un error en el servidor.", "error");
+            swal("Home Switch Home", result.data, "success");
+
+            $http.get("/Administrador/Administrador/ObtenerReservasOrdenadasPorFecha").then(function (result) {
+                $scope.reservas = result.data;
+            });            
+
+        }, function errorCallback(jqXHR) {
+            swal("Home Switch Home", jqXHR.data, "error");
 
         });
     }

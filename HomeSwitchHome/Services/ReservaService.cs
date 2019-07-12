@@ -49,7 +49,7 @@ namespace HomeSwitchHome.Services
                 nuevaReserva.IdCliente = reservaModelo.IdCliente;
                 nuevaReserva.Fecha = Convert.ToDateTime(reservaModelo.FechaReserva);
                 nuevaReserva.IdPropiedad = reservaModelo.IdPropiedad;
-
+                
                 this.HomeSwitchDB.RESERVA.Add(nuevaReserva);
                 this.HomeSwitchDB.SaveChanges();
                 CacheHomeSwitchHome.RemoveOnCache("Reservas");
@@ -95,21 +95,7 @@ namespace HomeSwitchHome.Services
             return "OK";
         }
 
-        public string CancelarReservaCliente(int idReserva)
-        {
-            var reservaBorrar = this.HomeSwitchDB.RESERVA.SingleOrDefault(t => t.IdReserva == idReserva);
-
-            if (Convert.ToDateTime(reservaBorrar.Fecha.Date) < DateTime.Now.Date.AddMonths(6))
-                return string.Format("No se puede cancelar la reserva, faltan menos de 6 meses.");
-
-            
-                this.HomeSwitchDB.RESERVA.Remove(reservaBorrar);
-                this.HomeSwitchDB.SaveChanges();
-                CacheHomeSwitchHome.RemoveOnCache("Reservas");
-                return string.Format("Ok");
-         }
-
-        public bool CancelarReservaAdministrador(int idReserva)
+        public bool CancelarReserva(int idReserva)
         {
             var reservaBorrar = this.HomeSwitchDB.RESERVA.SingleOrDefault(t => t.IdReserva == idReserva);
 
@@ -134,9 +120,7 @@ namespace HomeSwitchHome.Services
                 var reservasBD = HomeSwitchDB.RESERVA.ToList();
 
                 foreach (var reserva in reservasBD)
-                {
                     reservasActuales.Add(new ReservaViewModel().ToViewModel(reserva));
-                }
 
                 CacheHomeSwitchHome.SaveToCache("Reservas", reservasActuales);
             }
