@@ -240,10 +240,14 @@
     <Compile Include="Models\SUBASTA.cs" />
     <Compile Include="Models\USUARIO.cs" />
     <Compile Include="Services\CacheHomeSwitchHome.cs" />
+    <Compile Include="Services\IMailService.cs" />
     <Compile Include="Services\IPropiedadService.cs" />
+    <Compile Include="Services\IPujaService.cs" />
     <Compile Include="Services\IReservaService.cs" />
     <Compile Include="Services\ISubastaService.cs" />
     <Compile Include="Services\IUsuarioService.cs" />
+    <Compile Include="Services\MailService.cs" />
+    <Compile Include="Services\PujaService.cs" />
     <Compile Include="Services\ReservaService.cs" />
     <Compile Include="Services\SubastaService.cs" />
     <Compile Include="Services\UsuarioService.cs" />
