@@ -6,11 +6,11 @@ namespace HomeSwitchHome.Services
     public interface ICreditoService
     {
         bool GenerarCreditosCliente(ClienteViewModel cliente);
-               
-        bool DescontarCreditoCliente(int creditoClienteId);
+
+        bool DescontarCreditoCliente(int clienteId, int anio);
 
         bool DevolverCreditoCliente(int clienteId, int anio);
 
-        List<ClienteCreditoViewModel> ObtenerCreditosAnio(int anio);
+        ClienteCreditoViewModel ObtenerCreditosAnio(int anio, int clienteId);
     }
 }

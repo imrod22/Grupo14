@@ -1,5 +1,6 @@
 ﻿using HomeSwitchHome.Services;
 using HomeSwitchHome.ViewModels;
+using System;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -10,11 +11,13 @@ namespace HomeSwitchHome.Areas.Propiedad.Controllers
     {
         readonly IPropiedadService propiedadService;
         readonly IReservaService reservaService;
+        readonly ICreditoService creditoService;
 
-        public PropiedadController(IPropiedadService propiedadServicio, IReservaService reservaServicio)
+        public PropiedadController(IPropiedadService propiedadServicio, IReservaService reservaServicio, ICreditoService creditoServicio)
         {
             this.propiedadService = propiedadServicio;
             this.reservaService = reservaServicio;
+            this.creditoService = creditoServicio;
         }
 
         public ActionResult Index()
@@ -41,12 +44,14 @@ namespace HomeSwitchHome.Areas.Propiedad.Controllers
             reservaNueva.IdPropiedad = idPropiedad;
             reservaNueva.IdCliente = sesionUser.IdCliente;
             reservaNueva.FechaReserva = fecha;
+            reservaNueva.Credito = true;
 
             var mensaje = this.reservaService.AgregarReserva(reservaNueva);
 
             if (mensaje != "OK")
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
 
+            this.creditoService.DescontarCreditoCliente(sesionUser.IdCliente, DateTime.Now.Year);
             return Json(mensaje, JsonRequestBehavior.AllowGet);
         }
 

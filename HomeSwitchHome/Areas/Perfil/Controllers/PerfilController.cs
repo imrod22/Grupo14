@@ -57,24 +57,42 @@ namespace HomeSwitchHome.Areas.Perfil.Controllers
 
         public JsonResult CancelarReserva(int idReserva)
         {
+            var reserva = this.servicioReserva.ObtenerReservas().Where(t => t.IdReserva == idReserva).SingleOrDefault();
+
+
             if (this.servicioReserva.CancelarReserva(idReserva))
-            {
-                var reserva = this.servicioReserva.ObtenerReservas().Where(t => t.IdReserva == idReserva).SingleOrDefault();
+            {               
 
-                if (DateTime.Now >= DateTime.Parse(reserva.FechaReserva).AddMonths(2))
+                if (reserva.Credito)
                 {
-                    var anioReserva = DateTime.Parse(reserva.FechaReserva).Year;
+                    if (DateTime.Now >= DateTime.Parse(reserva.FechaReserva).AddMonths(2))
+                    {
+                        var anioReserva = DateTime.Parse(reserva.FechaReserva).Year;
 
-                    this.servicioCredito.DevolverCreditoCliente(reserva.IdCliente, anioReserva);
-                    return Json(string.Format("Se ha cancelado su reserva en la residencia: {0} y se le ha devuelto el credito para el año {1}.", reserva.Propiedad.Nombre, anioReserva), JsonRequestBehavior.AllowGet);
+                        this.servicioCredito.DevolverCreditoCliente(reserva.IdCliente, anioReserva);
+                        return Json(string.Format("Se ha cancelado su reserva en la residencia: {0} y se le ha devuelto el credito para el año {1}.", reserva.Propiedad.Nombre, anioReserva), JsonRequestBehavior.AllowGet);
+                    }
+
+                    return Json(string.Format("Se ha cancelado satisfactoriamente su reserva en la residencia: {0}, para la reserva faltaban menos de 2 meses, no es posible recuperar el credito.", reserva.Propiedad.Nombre), JsonRequestBehavior.AllowGet);
                 }
 
-                return Json(string.Format("Se ha cancelado satisfactoriamente su reserva en la residencia: {0}, para la reserva faltaban menos de 2 meses, no es posible recuperar el credito.", reserva.Propiedad.Nombre), JsonRequestBehavior.AllowGet);
-
+                else {
+                    return Json(string.Format("Se ha cancelado satisfactoriamente su reserva de HOT SALE."), JsonRequestBehavior.AllowGet);
+                }
             }
 
             Response.StatusCode = (int)HttpStatusCode.BadRequest;
             return Json("Ha ocurrido un error en el servidor y no se ha podido cancelar la reserva.", JsonRequestBehavior.AllowGet);            
+        }
+
+        public JsonResult ObtenerCreditosCliente()
+        {
+            var sesionUser = (ClienteViewModel)Session["ClienteActual"];
+
+            var creditoAnio = this.servicioCredito.ObtenerCreditosAnio(DateTime.Now.Year, sesionUser.IdCliente);
+
+            return Json(creditoAnio.Credito, JsonRequestBehavior.AllowGet);
+
         }
     }
 }

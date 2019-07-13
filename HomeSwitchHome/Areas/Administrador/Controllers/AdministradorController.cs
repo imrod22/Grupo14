@@ -249,6 +249,8 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
 
                 this.servicioSubasta.ConfirmarSubasta(idSubasta);
 
+                this.servicioCredito.DescontarCreditoCliente(reservaSubasta.IdCliente, DateTime.Parse(reservaSubasta.FechaReserva).Year);
+
                 var subastaActual = this.servicioSubasta.ObtenerSubasta(idSubasta);
                 this.servicioMail.EnviarMailGanoSubasta(subastaActual);
 

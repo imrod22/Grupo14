@@ -16,10 +16,10 @@ namespace HomeSwitchHome.Services
         }
 
 
-        public bool DescontarCreditoCliente(int creditoClienteId)
+        public bool DescontarCreditoCliente(int clienteId, int anio)
         {
-            var creditoAActualizar =  this.HomeSwitchDB.CREDITO_CLIENTE.Where(t => t.IdCreditoCliente == creditoClienteId).SingleOrDefault();
-            creditoAActualizar.Credito--;
+            var creditoAActualizar =  this.HomeSwitchDB.CREDITO_CLIENTE.Where(t => t.IdCliente == clienteId && t.Anio == anio).SingleOrDefault();
+            creditoAActualizar.Credito-= 1;
             this.HomeSwitchDB.SaveChanges();
             return true;
         }
@@ -27,7 +27,7 @@ namespace HomeSwitchHome.Services
         public bool DevolverCreditoCliente(int clienteId, int anio)
         {
             var creditoAActualizar = this.HomeSwitchDB.CREDITO_CLIENTE.Where(t => t.IdCliente == clienteId && t.Anio == anio).SingleOrDefault();
-            creditoAActualizar.Credito++;
+            creditoAActualizar.Credito+= 1;
             this.HomeSwitchDB.SaveChanges();
             return true;
         }
@@ -48,18 +48,11 @@ namespace HomeSwitchHome.Services
             return true;
         }
 
-        public List<ClienteCreditoViewModel> ObtenerCreditosAnio(int anio)
+        public ClienteCreditoViewModel ObtenerCreditosAnio(int anio, int clienteId)
         {
-            List<ClienteCreditoViewModel> creditosViewModel = new List<ClienteCreditoViewModel>();
-
-            var creditos = this.HomeSwitchDB.CREDITO_CLIENTE.Where(t => t.Anio == anio).ToList();
-
-            foreach (var credito in creditos)
-            {
-                creditosViewModel.Add(new ClienteCreditoViewModel().ToViewModel(credito));
-            }
-
-            return creditosViewModel;
+            var credito = this.HomeSwitchDB.CREDITO_CLIENTE.Where(t => t.Anio == anio && t.IdCliente == clienteId).FirstOrDefault();
+            
+            return new ClienteCreditoViewModel().ToViewModel(credito);
         }
     }
 }
