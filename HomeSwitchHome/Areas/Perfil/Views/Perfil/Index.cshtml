@@ -39,9 +39,9 @@
                             }
                         </div>
 
-                        <div class="card-group">                           
+                        <div class="card-group">
 
-                            <div class="card-body pl-5">
+                            <div class="card-body col-md-3 pl-5">
                                 <h6 class="card-title"><b>DATOS PERSONALES</b></h6>
                                 <p class="card-text">
                                     Numero de Identidad: {{usuario.DNI}}<br>
@@ -54,45 +54,78 @@
                                 </p>
                             </div>
 
-                            <div class="card-body">
-                                <h6 class="card-title"><b>MIS RESERVAS</b></h6>
-
-                                <h6 class="card-header"><b>CREDITOS AÑO {{anioactual | date:'yyyy'}} : </b> {{cantidadcreditos}}</h6>
-
-                                <div class="card-body">
-                                    <table class="table table-sm table-borderless scrolled" style="text-align: left;">
-                                        <thead>
-                                            <tr>
-                                                <td style="width: 30%;" scope="col">NOMBRE</td>
-                                                <td style="width: 20%;" scope="col">UBICACION</td>
-                                                <td style="width: 20%;" scope="col">FECHA</td>
-                                                <td style="width: 10%"  scope="col">TIPO</td>
-                                                <td style="width: 20%;" scope="col"></td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr ng-repeat="reserva in misreservas">
-                                                <td>{{reserva.Propiedad.Nombre}}</td>
-                                                <td>{{reserva.Propiedad.Ciudad}} ({{reserva.Propiedad.Pais}})</td>
-                                                <td>{{reserva.FechaReserva}}</td>
-                                                <td>
-                                                    <div ng-if="reserva.Credito">
-                                                        <b style="color:#24720d">RESERVA o SUBASTA</b>
-                                                    </div>
-                                                    <div ng-if="!reserva.Credito">
-                                                        <b style="color:#ff0000">HOT SALE</b>
-                                                    </div>
-
-                                                </td>
-                                                <td> <button id="{{reserva.IdReserva}}" ng-click="cancelarreserva($event.currentTarget.id)" class="btn btn-group-sm btn-danger" style="float:right;"> <i class="fa fa-fw fas fa-remove"></i></button></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-
-                                </div>
-
+                            <div class="tab col-md-3">
+                                <button class="tablinks" onclick="openAnioReservas(event, 'actual')"><b>RESERVAS AÑO {{anioactual | date:'yyyy'}}</b></button>
+                                <button class="tablinks" onclick="openAnioReservas(event, 'proximo')"><b>RESERVAS AÑO {{anioproximo}}</b></button>
                                 
                             </div>
+
+                            <div id="actual" class="col-md-6 tabcontent">
+                                <h6 class="card-header">CREDITOS: {{actualcreditos}}</h6>
+
+                                <table class="table table-sm table-borderless scrolled" style="text-align: left;">
+                                    <thead>
+                                        <tr>
+                                            <td style="width: 30%;" scope="col">NOMBRE</td>
+                                            <td style="width: 20%;" scope="col">UBICACION</td>
+                                            <td style="width: 20%;" scope="col">FECHA</td>
+                                            <td style="width: 25%" scope="col">TIPO</td>
+                                            <td style="width: 5%;" scope="col"></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="reserva in reservasactuales">
+                                            <td>{{reserva.Propiedad.Nombre}}</td>
+                                            <td>{{reserva.Propiedad.Ciudad}} ({{reserva.Propiedad.Pais}})</td>
+                                            <td>{{reserva.FechaReserva}}</td>
+                                            <td>
+                                                <div ng-if="reserva.Credito">
+                                                    <b style="color:#24720d">RESERVA o SUBASTA</b>
+                                                </div>
+                                                <div ng-if="!reserva.Credito">
+                                                    <b style="color:#ff0000">HOT SALE</b>
+                                                </div>
+
+                                            </td>
+                                            <td> <button id="{{reserva.IdReserva}}" ng-click="cancelarreserva($event.currentTarget.id)" class="btn btn-sm btn-danger" style="float:right;"> <i class="fa fa-fw fas fa-remove"></i></button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div id="proximo" class="col-md-6 tabcontent" style="display: none;">
+                                <h6 class="card-header">CREDITOS: {{proximocreditos}}</h6>
+
+                                <table class="table table-sm table-borderless scrolled" style="text-align: left;">
+                                    <thead>
+                                        <tr>
+                                            <td style="width: 30%;" scope="col">NOMBRE</td>
+                                            <td style="width: 20%;" scope="col">UBICACION</td>
+                                            <td style="width: 20%;" scope="col">FECHA</td>
+                                            <td style="width: 25%" scope="col">TIPO</td>
+                                            <td style="width: 5%;" scope="col"></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="reserva in reservasproximas">
+                                            <td>{{reserva.Propiedad.Nombre}}</td>
+                                            <td>{{reserva.Propiedad.Ciudad}} ({{reserva.Propiedad.Pais}})</td>
+                                            <td>{{reserva.FechaReserva}}</td>
+                                            <td>
+                                                <div ng-if="reserva.Credito">
+                                                    <b style="color:#24720d">RESERVA o SUBASTA</b>
+                                                </div>
+                                                <div ng-if="!reserva.Credito">
+                                                    <b style="color:#ff0000">HOT SALE</b>
+                                                </div>
+
+                                            </td>
+                                            <td> <button id="{{reserva.IdReserva}}" ng-click="cancelarreserva($event.currentTarget.id)" class="btn btn-sm btn-danger" style="float:right;"> <i class="fa fa-fw fas fa-remove"></i></button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -102,3 +135,4 @@
     </div>
 
 <script src="~/Scripts/app/Perfil_AngularJS.js"></script>
+<script src="~/Scripts/app/perfilSection.js"></script>

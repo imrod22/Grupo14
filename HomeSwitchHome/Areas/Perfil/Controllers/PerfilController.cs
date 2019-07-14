@@ -34,10 +34,18 @@ namespace HomeSwitchHome.Areas.Perfil.Controllers
             return Json(sesionUser, JsonRequestBehavior.AllowGet); 
         }
 
-        public JsonResult ObtenerMisReservas()
+        public JsonResult ObtenerReservasActuales()
         {
             var sesionUser = (ClienteViewModel)Session["ClienteActual"];
-            return Json(this.servicioReserva.ObtenerReservasCliente(sesionUser.IdCliente).ToArray(), JsonRequestBehavior.AllowGet);
+            var reservasAnio = this.servicioReserva.ObtenerReservasClientePorAnio(sesionUser.IdCliente, DateTime.Now.Year);
+            return Json(reservasAnio.ToArray(), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult ObtenerReservasProximas()
+        {
+            var sesionUser = (ClienteViewModel)Session["ClienteActual"];
+            var reservasAnio = this.servicioReserva.ObtenerReservasClientePorAnio(sesionUser.IdCliente, DateTime.Now.Year + 1);
+            return Json(reservasAnio.ToArray(), JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult SolicitarSubscripcionPremium()
@@ -65,7 +73,7 @@ namespace HomeSwitchHome.Areas.Perfil.Controllers
 
                 if (reserva.Credito)
                 {
-                    if (DateTime.Now >= DateTime.Parse(reserva.FechaReserva).AddMonths(2))
+                    if (DateTime.Now.AddMonths(2) < DateTime.Parse(reserva.FechaReserva))
                     {
                         var anioReserva = DateTime.Parse(reserva.FechaReserva).Year;
 
@@ -85,11 +93,21 @@ namespace HomeSwitchHome.Areas.Perfil.Controllers
             return Json("Ha ocurrido un error en el servidor y no se ha podido cancelar la reserva.", JsonRequestBehavior.AllowGet);            
         }
 
-        public JsonResult ObtenerCreditosCliente()
+        public JsonResult ObtenerCreditosActuales()
         {
             var sesionUser = (ClienteViewModel)Session["ClienteActual"];
 
             var creditoAnio = this.servicioCredito.ObtenerCreditosAnio(DateTime.Now.Year, sesionUser.IdCliente);
+
+            return Json(creditoAnio.Credito, JsonRequestBehavior.AllowGet);
+
+        }
+
+        public JsonResult ObtenerCreditosProximos()
+        {
+            var sesionUser = (ClienteViewModel)Session["ClienteActual"];
+
+            var creditoAnio = this.servicioCredito.ObtenerCreditosAnio(DateTime.Now.Year + 1, sesionUser.IdCliente);
 
             return Json(creditoAnio.Credito, JsonRequestBehavior.AllowGet);
 

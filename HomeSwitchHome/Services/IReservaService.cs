@@ -13,6 +13,8 @@ namespace HomeSwitchHome.Services
 
         List<ReservaViewModel> ObtenerReservasCliente(int idCliente);
 
+        List<ReservaViewModel> ObtenerReservasClientePorAnio(int idCliente, int anio);
+
         List<ReservaViewModel> ObtenerReservasPropiedad(int idPropiedad);        
 
         string AgregarReserva(ReservaViewModel reserva);

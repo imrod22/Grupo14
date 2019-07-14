@@ -17,15 +17,19 @@ namespace HomeSwitchHome.Services
 
         public string AgregarReserva(ReservaViewModel reservaModelo)
         {
-            var clienteCreditos = this.ObtenerReservasCliente(reservaModelo.IdCliente);
+            var creditoService = new CreditoService();
+
+            var clienteCreditos = creditoService.ObtenerCreditosAnio(DateTime.Parse(reservaModelo.FechaReserva).Year, reservaModelo.IdCliente);
+            var reservasCliente = this.ObtenerReservasCliente(reservaModelo.IdCliente);
+
             var propiedadReservas = this.ObtenerReservasPropiedad(reservaModelo.IdPropiedad);
             var servicioSubasta = new SubastaService();
 
             var propiedadSubastas = servicioSubasta.ObtenerSubastasDePropiedad(reservaModelo.IdPropiedad).Where(t => Convert.ToDateTime(reservaModelo.FechaReserva).CompareTo(Convert.ToDateTime(t.FechaComienzo)) >= 0
                                 && Convert.ToDateTime(reservaModelo.FechaReserva).CompareTo(Convert.ToDateTime(t.FechaComienzo).AddDays(10)) <= 0);
 
-            if (clienteCreditos.Count == 2)
-                return string.Format("Ya dispone de dos reservaciones confirmadas, no puede acceder a una nueva.");            
+            if (clienteCreditos.Credito <= 0)
+                return string.Format("Ya dispone de dos reservaciones en el año {0}, no posee de mas creditos para acceder a una nueva.", clienteCreditos.Anio);            
 
             if (propiedadReservas.Any(t => (Convert.ToDateTime(reservaModelo.FechaReserva).CompareTo(Convert.ToDateTime(t.FechaReserva)) >= 0
                                      && Convert.ToDateTime(reservaModelo.FechaReserva).CompareTo(Convert.ToDateTime(t.FechaReserva).AddDays(7)) <= 0)
@@ -34,7 +38,7 @@ namespace HomeSwitchHome.Services
 
                 return string.Format("La semana elegida no esta disponible para la propiedad seleccionada.");
 
-            if (clienteCreditos.Any(t => (Convert.ToDateTime(reservaModelo.FechaReserva).CompareTo(Convert.ToDateTime(t.FechaReserva)) >= 0
+            if (reservasCliente.Any(t => (Convert.ToDateTime(reservaModelo.FechaReserva).CompareTo(Convert.ToDateTime(t.FechaReserva)) >= 0
                                 && Convert.ToDateTime(reservaModelo.FechaReserva).CompareTo(Convert.ToDateTime(t.FechaReserva).AddDays(7)) <= 0)
                                 || (Convert.ToDateTime(reservaModelo.FechaReserva).AddDays(7).CompareTo(Convert.ToDateTime(t.FechaReserva)) >= 0
                                     && Convert.ToDateTime(reservaModelo.FechaReserva).AddDays(7).CompareTo(Convert.ToDateTime(t.FechaReserva).AddDays(7)) <= 0)))            
@@ -49,6 +53,7 @@ namespace HomeSwitchHome.Services
                 nuevaReserva.IdCliente = reservaModelo.IdCliente;
                 nuevaReserva.Fecha = Convert.ToDateTime(reservaModelo.FechaReserva);
                 nuevaReserva.IdPropiedad = reservaModelo.IdPropiedad;
+                nuevaReserva.Credito = reservaModelo.Credito;
                 
                 this.HomeSwitchDB.RESERVA.Add(nuevaReserva);
                 this.HomeSwitchDB.SaveChanges();
@@ -87,6 +92,7 @@ namespace HomeSwitchHome.Services
             nuevaReserva.IdCliente = reservaModelo.IdCliente;
             nuevaReserva.Fecha = Convert.ToDateTime(reservaModelo.FechaReserva);
             nuevaReserva.IdPropiedad = reservaModelo.IdPropiedad;
+            nuevaReserva.Credito = reservaModelo.Credito;
 
             this.HomeSwitchDB.RESERVA.Add(nuevaReserva);
             this.HomeSwitchDB.SaveChanges();
@@ -136,6 +142,14 @@ namespace HomeSwitchHome.Services
             var reservasActuales = reservasCliente.Where(t => t.IdCliente == idCliente &&  DateTime.Now <= Convert.ToDateTime(t.FechaReserva)).ToList();
             return reservasActuales;
         }
+
+        public List<ReservaViewModel> ObtenerReservasClientePorAnio(int idCliente, int anio)
+        {
+            var reservasCliente = this.ObtenerReservas();
+            var reservasActuales = reservasCliente.Where(t => t.IdCliente == idCliente && anio == Convert.ToDateTime(t.FechaReserva).Year).ToList();
+            return reservasActuales;
+        }
+
 
         public List<ReservaViewModel> ObtenerReservasPropiedad(int idPropiedad)
         {

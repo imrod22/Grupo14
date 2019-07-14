@@ -4,16 +4,31 @@
 switchHomeApp.controller('perfilcontroller', function ($scope, $http) {
 
     $scope.usuario;
-    $scope.misreservas;
+    $scope.reservasactuales;
+    $scope.reservasproximas;
     $scope.anioactual = new Date();
-    $scope.cantidadcreditos;
+    $scope.anioproximo = $scope.anioactual.getFullYear() + 1;
 
-    $http.get("/Perfil/Perfil/ObtenerCreditosCliente").then(function (result) {
-        $scope.cantidadcreditos = result.data;
+    console.log($scope.anioactual);
+    console.log($scope.anioproximo);
+
+    $scope.actualcreditos;
+    $scope.proximocreditos;
+
+    $http.get("/Perfil/Perfil/ObtenerCreditosActuales").then(function (result) {
+        $scope.actualcreditos = result.data;
     });
 
-    $http.get("/Perfil/Perfil/ObtenerMisReservas").then(function (result) {
-        $scope.misreservas = result.data;
+    $http.get("/Perfil/Perfil/ObtenerCreditosProximos").then(function (result) {
+        $scope.proximocreditos = result.data;
+    });    
+
+    $http.get("/Perfil/Perfil/ObtenerReservasActuales").then(function (result) {
+        $scope.reservasactuales = result.data;
+    });
+
+    $http.get("/Perfil/Perfil/ObtenerReservasProximas").then(function (result) {
+        $scope.reservasproximas = result.data;
     });
 
     $http.get("/Perfil/Perfil/ObtenerMiInformacionPersonal").then(function (result) {
@@ -41,12 +56,20 @@ switchHomeApp.controller('perfilcontroller', function ($scope, $http) {
 
             swal("Home Switch Home", result.data, "success");
 
-            $http.get("/Perfil/Perfil/ObtenerCreditosCliente").then(function (result) {
-                $scope.cantidadcreditos = result.data;
+            $http.get("/Perfil/Perfil/ObtenerCreditosActuales").then(function (result) {
+                $scope.actualcreditos = result.data;
             });
 
-            $http.get("/Perfil/Perfil/ObtenerMisReservas").then(function (result) {
-                $scope.misreservas = result.data;
+            $http.get("/Perfil/Perfil/ObtenerCreditosProximos").then(function (result) {
+                $scope.proximocreditos = result.data;
+            });
+
+            $http.get("/Perfil/Perfil/ObtenerReservasActuales").then(function (result) {
+                $scope.reservasactuales = result.data;
+            });
+
+            $http.get("/Perfil/Perfil/ObtenerReservasProximas").then(function (result) {
+                $scope.reservasproximas = result.data;
             });
 
         }, function errorCallback(jqXHR) {

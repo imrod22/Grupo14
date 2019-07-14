@@ -239,6 +239,7 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
             reservaSubasta.IdCliente = Convert.ToInt32(subastaAceptada.IdCliente);
             reservaSubasta.IdPropiedad = subastaAceptada.IdPropiedad;
             reservaSubasta.FechaReserva = subastaAceptada.FechaReserva;
+            reservaSubasta.Credito = true;
 
             var mensaje = this.servicioReserva.AgregarReservaDesdeSubasta(reservaSubasta);
 

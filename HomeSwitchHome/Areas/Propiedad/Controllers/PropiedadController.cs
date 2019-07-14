@@ -49,9 +49,13 @@ namespace HomeSwitchHome.Areas.Propiedad.Controllers
             var mensaje = this.reservaService.AgregarReserva(reservaNueva);
 
             if (mensaje != "OK")
+            {
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            }
+            else {
+                this.creditoService.DescontarCreditoCliente(sesionUser.IdCliente, DateTime.Parse(reservaNueva.FechaReserva).Year);
+            }
 
-            this.creditoService.DescontarCreditoCliente(sesionUser.IdCliente, DateTime.Now.Year);
             return Json(mensaje, JsonRequestBehavior.AllowGet);
         }
 
