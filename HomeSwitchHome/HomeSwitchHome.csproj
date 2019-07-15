@@ -214,6 +214,8 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Administrador\AdministradorAreaRegistration.cs" />
     <Compile Include="Areas\Administrador\Controllers\AdministradorController.cs" />
+    <Compile Include="Areas\Hotsale\Controllers\HotsaleController.cs" />
+    <Compile Include="Areas\Hotsale\HotsaleAreaRegistration.cs" />
     <Compile Include="Areas\Perfil\Controllers\PerfilController.cs" />
     <Compile Include="Areas\Perfil\PerfilAreaRegistration.cs" />
     <Compile Include="Areas\Propiedad\Controllers\PropiedadController.cs" />
@@ -243,7 +245,9 @@
     <Compile Include="Models\USUARIO.cs" />
     <Compile Include="Services\CacheHomeSwitchHome.cs" />
     <Compile Include="Services\CreditoService.cs" />
+    <Compile Include="Services\HotsaleService.cs" />
     <Compile Include="Services\ICreditoService.cs" />
+    <Compile Include="Services\IHotsaleService.cs" />
     <Compile Include="Services\IMailService.cs" />
     <Compile Include="Services\IPropiedadService.cs" />
     <Compile Include="Services\IPujaService.cs" />
@@ -257,6 +261,7 @@
     <Compile Include="Services\UsuarioService.cs" />
     <Compile Include="ViewModels\ClienteCreditoViewModel.cs" />
     <Compile Include="ViewModels\ClienteViewModel.cs" />
+    <Compile Include="ViewModels\HotSaleViewModel.cs" />
     <Compile Include="ViewModels\ImagenViewModel.cs" />
     <Compile Include="Services\PropiedadService.cs" />
     <Compile Include="ViewModels\NovedadViewModel.cs" />
@@ -271,12 +276,16 @@
     <Content Include="app-content\alemania_casa.jpg" />
     <Content Include="app-content\antartidaisland.jpg" />
     <Content Include="app-content\australia_house.jpg" />
+    <Content Include="app-content\bg-red-hotsale.jpg" />
+    <Content Include="app-content\bg_blue_tech.jpg" />
+    <Content Include="app-content\bg_hotsale.jpg" />
     <Content Include="app-content\fiji_house.jpg" />
     <Content Include="app-content\fogo_canada.jpg" />
     <Content Include="app-content\franceplace.jpg" />
     <Content Include="app-content\icelandhouse.jpg" />
     <Content Include="app-content\irelandhouse.png" />
     <Content Include="app-content\madagascar_home.jpg" />
+    <Content Include="app-content\noimage_residencia.png" />
     <Content Include="app-content\whitehouse_rusia.png" />
     <Content Include="app-content\woodland_us.jpg" />
     <Content Include="Content\bootstrap-datepicker.css" />
@@ -414,6 +423,8 @@
     <Content Include="fonts\pignose.calendar.eot" />
     <Content Include="fonts\pignose.calendar.ttf" />
     <Content Include="fonts\pignose.calendar.woff" />
+    <Content Include="Areas\Hotsale\Views\web.config" />
+    <Content Include="Areas\Hotsale\Views\Hotsale\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\i18n\angular-locale_af-na.js" />
     <Content Include="Scripts\i18n\angular-locale_af-za.js" />
@@ -1295,10 +1306,12 @@
     <Content Include="Scripts\version.json" />
     <Content Include="Views\Home\_Login.cshtml" />
     <Content Include="Views\Home\Registro.cshtml" />
+    <Content Include="Views\Home\_OlvidoMail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Administrador\Models\" />
+    <Folder Include="Areas\Hotsale\Models\" />
     <Folder Include="Areas\Perfil\Models\" />
     <Folder Include="Areas\Propiedad\Models\" />
     <Folder Include="Areas\Subasta\Models\" />

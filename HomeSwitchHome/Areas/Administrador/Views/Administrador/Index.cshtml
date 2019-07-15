@@ -255,51 +255,84 @@
                         <div class="card-header" style="background-color:#3e4e75 ; color:#ffffff">
 
                             <div class="row d-flex justify-content-between">
-                                <h5>HOT SALES</h5>
+                                <h5>HISTORIAL HOT SALES</h5>
                                 <ul class="list-unstyled card-option d-flex justify-content-around">
 
                                     <li class="col"><button type="button" class="btn btn-success add-nueva-subasta" style="float:right;" data-toggle="modal" data-target="#addEditSubastaModal"><i class="fa fa-fw fas fa-plus"></i></button></li>
 
                                     <li>
                                         <div class="input-group" style="align-items: center;">
-                                            <input type="text" class="form-control" ng-model="filtrosubasta.Propiedad.Pais" placeholder="Ubicación" />
+                                            <input type="text" class="form-control" ng-model="filtrohotsale.Propiedad.Ciudad" placeholder="Ubicación" />
                                             <div class="input-group-append">
                                                 <i class="fa fa-fw fas fa-search"></i>
                                             </div>
                                         </div>
                                     </li>
                                 </ul>
-                            </div>                           
+                            </div>
+
+                            <hr class="border border-whitestyle" />
+
+                            <div class="input-group-append" style="align-items: center;">
+                                <input ng-model="from_date_hotsale" style="width: 300px;" type="text" id="fromhotsale" class="calendar form-control" name="fromhotsale" placeholder="fecha de reserva" />
+
+                                <i class="fa fa-fw fas fa-calendar"></i>
+                            </div>
+
+                            <div class="row d-flex flex-row-reverse">
+                                <h5>PROXIMOS HOT SALES</h5>
+
+                            </div>
                         </div>
 
                         <div class="d-flex justify-content-around" style="overflow-y: auto; height: 250px;">
 
-                            <table class="table table-responsive-md table-responsive table-borderless col-md-10 mt-2 " style="text-align: left;">
+                            <table class="table table-sm table-responsive table-borderless col-md-6 mt-2 " style="text-align: left;">
                                 <thead>
                                     <tr>
-                                        <th style="width: 20%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col">NOMBRE (PAIS)</th>
-                                        <th style="width: 20%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col">VALOR</th>
-                                        <th style="width: 25%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col">FECHA COMIENZO</th>
+                                        <th style="width: 20%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col">NOMBRE</th>
+                                        <th style="width: 20%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col">UBICACION</th>
+                                        <th style="width: 20%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col">PRECIO</th>
                                         <th style="width: 25%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col">FECHA RESERVA</th>
-                                        <th style="width: 10%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="subasta in subastasoff | filter : filtrosubasta">
+                                    <tr ng-repeat="hotsale in hotsalehistorico | filter : filtrohotsale">
 
-                                        <td>{{subasta.Propiedad.Nombre}} ({{subasta.Propiedad.Pais}})</td>
-                                        <td>{{subasta.ValorMinimo}} USD</td>
-                                        <td>{{subasta.FechaComienzo}}</td>
-                                        <td>{{subasta.FechaReserva}}</td>
-                                        <td>
-                                            <button id="{{subasta.IdSubasta}}" class="btn btn-group-sm btn-primary subasta-modificar" data-toggle="modal" data-target="#addEditSubastaModal"><i class="fa fa-fw fas fa-pencil-square-o"></i></button>
-                                            <button id="{{subasta.IdSubasta}}" ng-click="borrarsubasta($event.currentTarget.id)" class="btn btn-group-sm btn-danger propiedad-a-borrar"> <i class="fa fa-fw fas fa-remove"></i></button>
-                                        </td>
+                                        <td>{{hotsale.Propiedad.Nombre}}</td>
+                                        <td>{{hotsale.Propiedad.Ciudad}} ({{hotsale.Propiedad.Pais}})</td>
+                                        <td>{{hotsale.Precio}} USD</td>
+                                        <td>{{hotsale.FechaDisponible}}</td>
                                     </tr>
                                 </tbody>
                             </table>
 
-                          </div>
+                            <table class="table table-sm table-responsive table-borderless table-borderless col-md-6 mt-2" style="text-align: left;float:right">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 20%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col">NOMBRE</th>
+                                        <th style="width: 20%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col">UBICACION</th>
+                                        <th style="width: 25%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col">PRECIO</th>
+                                        <th style="width: 25%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col">FECHA</th>
+                                        <th style="width: 10%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="futurohotsale in hotsalefuturos">
+
+                                        <td>{{futurohotsale.Propiedad.Nombre}}</td>
+                                        <td>{{futurohotsale.Propiedad.Ciudad}} ({{futurohotsale.Propiedad.Pais}})</td>
+                                        <td>{{futurohotsale.Precio}} USD</td>
+                                        <td>{{futurohotsale.FechaDisponible}}</td>
+
+                                        <td>
+                                            <button id="{{futurohotsale.IdHotSale}}" ng-click="modificarhotsale($event.currentTarget.id)" class="btn btn-group-sm btn-success"><i class="fa fa-fw fas fa-check"></i></button>
+                                            <button id="{{futurohotsale.IdHotSale}}" ng-click="rechazarhotsale($event.currentTarget.id)" class="btn btn-group-sm btn-danger subasta-a-borrar"> <i class="fa fa-fw fas fa-ban"></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
 

@@ -8,6 +8,8 @@ adminsection.controller('admincontroller', function ($scope, $http) {
     $scope.nuevosclientes;
     $scope.propiedades;
     $scope.reservas;
+    $scope.hotsalehistorico;
+    $scope.hotsalefuturos;
 
     var datenow = moment().add(6, 'months');
     var datelimit = moment().add(12, 'months');
@@ -34,6 +36,14 @@ adminsection.controller('admincontroller', function ($scope, $http) {
 
     $http.get("/Administrador/Administrador/ObtenerReservasOrdenadasPorFecha").then(function (result) {
         $scope.reservas = result.data;
+    });
+
+    $http.get("/Administrador/Administrador/ObtenerHistoricoHotSales").then(function (result) {
+        $scope.hotsalehistorico = result.data;
+    });
+
+    $http.get("/Administrador/Administrador/ObtenerProximosHotSales").then(function (result) {
+        $scope.hotsalefuturos = result.data;
     });
 
     $('#fromsubasta').pignoseCalendar({

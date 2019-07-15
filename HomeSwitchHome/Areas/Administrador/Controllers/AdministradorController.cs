@@ -18,8 +18,9 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
         readonly IPujaService servicioPuja;
         readonly IMailService servicioMail;
         readonly ICreditoService servicioCredito;
+        readonly IHotsaleService servicioHotSale;
 
-        public AdministradorController(IPropiedadService propiedadService, ISubastaService subastaService, IUsuarioService usuarioService, IReservaService reservaService, IPujaService pujaService, IMailService mailService, ICreditoService creditoService)
+        public AdministradorController(IPropiedadService propiedadService, ISubastaService subastaService, IUsuarioService usuarioService, IReservaService reservaService, IPujaService pujaService, IMailService mailService, ICreditoService creditoService, IHotsaleService hotsaleService)
         {
             this.servicioPropiedad = propiedadService;
             this.servicioSubasta = subastaService;
@@ -28,6 +29,7 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
             this.servicioPuja = pujaService;
             this.servicioMail = mailService;
             this.servicioCredito = creditoService;
+            this.servicioHotSale = hotsaleService;
         }
 
         public ActionResult Index()
@@ -270,10 +272,10 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
 
         public JsonResult CancelarReservaDeCliente(int idReserva)
         {
-            if (this.servicioReserva.CancelarReserva(idReserva))
-            {
-                var reserva = this.servicioReserva.ObtenerReservas().Where(t => t.IdReserva == idReserva).SingleOrDefault();
+            var reserva = this.servicioReserva.ObtenerReservas().Where(t => t.IdReserva == idReserva).SingleOrDefault();
 
+            if (this.servicioReserva.CancelarReserva(idReserva))
+            {   
                 if (reserva.Credito)
                 {
                     var anioReserva = DateTime.Parse(reserva.FechaReserva).Year;
@@ -355,6 +357,18 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
             {
                 return Json(this.servicioUsuario.ObtenerSolicitudesPremium().ToArray(), JsonRequestBehavior.AllowGet);
             }
+        }
+
+        public JsonResult ObtenerHistoricoHotSales()
+        {
+            var hotsales = this.servicioHotSale.ObtenerHotSalesHistoricos();
+            return Json(hotsales.ToArray(), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult ObtenerProximosHotSales()
+        {
+            var hotsales = this.servicioHotSale.ObtenerHotSalesFuturos();
+            return Json(hotsales.ToArray(), JsonRequestBehavior.AllowGet);
         }
 
         private JsonResult CambiarGanadorPuja(int idSubasta)
