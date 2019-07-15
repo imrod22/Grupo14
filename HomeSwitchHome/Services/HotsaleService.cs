@@ -72,13 +72,16 @@ namespace HomeSwitchHome.Services
 
         public List<HotSaleViewModel> ObtenerHotSalesFuturos()
         {
-            var hotSales = this.ObtenerHotSales().Where(t => DateTime.Now <= DateTime.Parse(t.FechaDisponible)).OrderBy(t =>  DateTime.Parse(t.FechaDisponible));
+            var hotSales = this.ObtenerHotSales().Where(t => (DateTime.Now <= DateTime.Parse(t.FechaDisponible))
+                                                              && t.Estado).OrderBy(t =>  DateTime.Parse(t.FechaDisponible));
             return hotSales.ToList();
         }
 
         public List<HotSaleViewModel> ObtenerHotSalesHistoricos()
         {
-            var hotSales = this.ObtenerHotSales().Where(t => DateTime.Parse(t.FechaDisponible) <= DateTime.Now).OrderBy(t => DateTime.Parse(t.FechaDisponible));
+            var hotSales = this.ObtenerHotSales().Where(t => DateTime.Parse(t.FechaDisponible) <= DateTime.Now
+                                                             || (DateTime.Now <= DateTime.Parse(t.FechaDisponible))
+                                                              && !t.Estado).OrderBy(t => DateTime.Parse(t.FechaDisponible));
             return hotSales.ToList();
         }
 
@@ -92,6 +95,23 @@ namespace HomeSwitchHome.Services
         {
             var hotsales = this.ObtenerHotSales();
             return hotsales.Where(t => t.IdHotSale == idHotSale).SingleOrDefault();
+        }
+
+        public bool OcuparHotSale(int idHotSale)
+        {
+            var hotsale = this.HomeSwitchDB.HOTSALE.Where(t => t.IdHotSale == idHotSale).SingleOrDefault();
+
+            if (hotsale != null)
+            {
+                hotsale.Estado = false;
+
+                this.HomeSwitchDB.SaveChanges();
+                CacheHomeSwitchHome.RemoveOnCache("HotSales");
+
+                return true;
+            }
+
+            return false;
         }
 
         private List<HotSaleViewModel> ObtenerHotSales()

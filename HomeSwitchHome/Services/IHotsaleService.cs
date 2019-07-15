@@ -19,5 +19,7 @@ namespace HomeSwitchHome.Services
 
         List<HotSaleViewModel> ObtenerHotSalesFuturos();
 
+        bool OcuparHotSale(int idHotSale);
+
     }
 }

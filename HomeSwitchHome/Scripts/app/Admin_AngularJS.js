@@ -442,6 +442,59 @@ adminsection.controller('admincontroller', function ($scope, $http) {
         });
     }
 
+    $scope.rechazarhotsale = function (element) {
+        var idHotSale = element;
+
+        $http.post("/Administrador/Administrador/RemoverHotSale",
+            {
+                'idHotSale': idHotSale
+            }
+
+        ).then(function successCallback(result) {
+
+            swal("Home Switch Home", result, "success");
+            $http.get("/Administrador/Administrador/ObtenerProximosHotSales").then(function (result) {
+                $scope.hotsalefuturos = result.data;
+            });
+
+        }, function errorCallback(jqXHR) {
+            swal("Home Switch Home", jqXHR.data, "error");
+
+        });
+    }
+
+    $scope.modificarhotsale = function () {
+        $http.post("/Administrador/Administrador/ModificarHotSale", {
+
+            'idHotSale': $("#idHotsale").val(),
+            'valor': $("#valorhotsale").val()
+
+        }).then(function successCallback(response) {
+            swal("Home Switch Home", response.data, "success");
+
+        }, function errorCallback(jqXHR) {
+            swal("Home Switch Home", jqXHR.data, "error");
+
+        });
+    }
+
+    $scope.altahotsale = function () {
+        $http.post("/Administrador/Administrador/CrearHotSale", {
+
+            'valor': $("#valorhotsale").val(),
+            'propiedad': idPropiedad,
+            'fecha': $('input[name="fechahotsale"]').val(),
+
+        }).then(function successCallback(response) {
+            swal("Home Switch Home", response.data, "success");
+
+        }, function errorCallback(jqXHR) {
+            swal("Home Switch Home", jqXHR.data, "error");
+
+        });
+    }
+
+
     function valoresDeSubastaAceptados()
     {
         return ($.isNumeric($scope.valorMinimo)

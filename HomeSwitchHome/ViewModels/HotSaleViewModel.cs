@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace HomeSwitchHome.ViewModels
+﻿namespace HomeSwitchHome.ViewModels
 {
     public class HotSaleViewModel
     {
@@ -15,6 +10,8 @@ namespace HomeSwitchHome.ViewModels
 
         public decimal Precio { get; set; }
 
+        public bool Estado { get; set; }
+
         public PropiedadViewModel Propiedad { get; set; }
 
         public HotSaleViewModel() { }
@@ -25,6 +22,7 @@ namespace HomeSwitchHome.ViewModels
             this.IdPropiedad = hotsale.IdPropiedad;
             this.FechaDisponible = hotsale.FechaDisponible.ToString();
             this.Precio = hotsale.Precio;
+            this.Estado = hotsale.Estado;
             this.Propiedad = new PropiedadViewModel().ToViewModel(hotsale.PROPIEDAD);
 
             return this;

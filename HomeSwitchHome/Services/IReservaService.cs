@@ -20,7 +20,9 @@ namespace HomeSwitchHome.Services
         string AgregarReserva(ReservaViewModel reserva);
 
         string AgregarReservaDesdeSubasta(ReservaViewModel reservaModelo);
-        
+
+        string AgregarReservaDesdeHotSale(ReservaViewModel reservaModelo);
+
         bool CancelarReserva(int idReserva);
     }
 }

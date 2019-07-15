@@ -19,6 +19,8 @@ namespace HomeSwitchHome
 
         public decimal Precio { get; set; }
 
+        public bool Estado { get; set; }
+
         public virtual PROPIEDAD PROPIEDAD { get; set; }
     }
 }

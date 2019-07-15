@@ -116,4 +116,58 @@
 
         });
     });    
+    
+    $(document).on("click", ".hotsale-modificar", function () {
+        var idHotSale = $(this).attr('id');
+
+        $('#propiedad_select').attr('disabled', true);
+
+        $('#boton-modificar-hotsale').css('display', 'block');
+        $('#boton-crear-hotsale').css('display', 'none');
+
+        $("#fechaHotSale").attr('readonly', true);
+        $("#fechaHotSale").attr('disabled', true);
+
+        $.ajax({
+            type: "GET",
+            url: "/Administrador/Administrador/ObtenerInformacionHotSale",
+            data: { idHotSale: idHotSale },
+            success: function (response) {
+
+                $("#identificadorHotSale").val(response.IdHotSale)
+                $("#fechaHotSale").val(response.FechaDisponible);
+
+                $("#valor").val(response.ValorMinimo);
+                $("#propiedad_select").val(response.IdPropiedad);
+
+            },
+            error: function () {
+                swal("Home Switch Home", "Ha habido un problema en el servidor.", "error");
+            }
+        });
+    });
+
+    $(document).on("click", ".add-nuevo-hotsale", function () {
+
+        $("#identificadorHotSale").val("");
+
+        $("#fechaHotSale").val("");
+
+        $("#fechaHotSale").attr('readonly', false);
+        $("#fechaHotSale").attr('disabled', false);
+
+        $("#valor").val("");
+
+        $('#propiedad_select').attr('disabled', false);
+
+        $('#boton-crear-hotsale').css('display', 'block');
+        $('#boton-modificar-hotsale').css('display', 'none');
+
+        $('input.calendar').pignoseCalendar({
+            minDate: datenow,
+            date: datenow,
+            theme: 'dark',
+
+        });
+    });   
 })

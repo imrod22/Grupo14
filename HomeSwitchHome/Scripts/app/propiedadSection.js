@@ -6,5 +6,12 @@
         minDate: datenow,
         date: datenow,
         theme: 'blue',
-    });    
+    });
+
+    $('.post-module').hover(function () {
+        $(this).find('.description').stop().animate({
+            height: "toggle",
+            opacity: "toggle"
+        }, 300);
+    });
 });

@@ -80,7 +80,7 @@
                                             <td>{{reserva.FechaReserva}}</td>
                                             <td>
                                                 <div ng-if="reserva.Credito">
-                                                    <b style="color:#24720d">RESERVA o SUBASTA</b>
+                                                    <b style="color:#24720d">RESERVA</b>
                                                 </div>
                                                 <div ng-if="!reserva.Credito">
                                                     <b style="color:#ff0000">HOT SALE</b>
@@ -112,8 +112,8 @@
                                             <td>{{reserva.Propiedad.Ciudad}} ({{reserva.Propiedad.Pais}})</td>
                                             <td>{{reserva.FechaReserva}}</td>
                                             <td>
-                                                <div ng-if="reserva.Credito">
-                                                    <b style="color:#24720d">RESERVA o SUBASTA</b>
+                                                <div ng-if="reserva.Credito == true">
+                                                    <b style="color:#24720d">RESERVA</b>
                                                 </div>
                                                 <div ng-if="!reserva.Credito">
                                                     <b style="color:#ff0000">HOT SALE</b>

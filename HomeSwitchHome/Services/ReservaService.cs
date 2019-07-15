@@ -101,6 +101,30 @@ namespace HomeSwitchHome.Services
             return "OK";
         }
 
+        public string AgregarReservaDesdeHotSale(ReservaViewModel reservaModelo)
+        {
+            var reservasCliente = this.ObtenerReservasCliente(reservaModelo.IdCliente);
+
+            if (reservasCliente.Any(t => (Convert.ToDateTime(reservaModelo.FechaReserva).CompareTo(Convert.ToDateTime(t.FechaReserva)) >= 0
+                              && Convert.ToDateTime(reservaModelo.FechaReserva).CompareTo(Convert.ToDateTime(t.FechaReserva).AddDays(7)) <= 0)
+                              || (Convert.ToDateTime(reservaModelo.FechaReserva).AddDays(7).CompareTo(Convert.ToDateTime(t.FechaReserva)) >= 0
+                                  && Convert.ToDateTime(reservaModelo.FechaReserva).AddDays(7).CompareTo(Convert.ToDateTime(t.FechaReserva).AddDays(7)) <= 0)))
+                return string.Format("Ya posee una reserva en la misma semana en otra propiedad.");
+
+            RESERVA nuevaReserva = new RESERVA();
+
+            nuevaReserva.IdCliente = reservaModelo.IdCliente;
+            nuevaReserva.Fecha = Convert.ToDateTime(reservaModelo.FechaReserva);
+            nuevaReserva.IdPropiedad = reservaModelo.IdPropiedad;
+            nuevaReserva.Credito = reservaModelo.Credito;
+
+            this.HomeSwitchDB.RESERVA.Add(nuevaReserva);
+            this.HomeSwitchDB.SaveChanges();
+            CacheHomeSwitchHome.RemoveOnCache("Reservas");
+
+            return "OK";
+        }
+
         public bool CancelarReserva(int idReserva)
         {
             var reservaBorrar = this.HomeSwitchDB.RESERVA.SingleOrDefault(t => t.IdReserva == idReserva);
@@ -149,8 +173,7 @@ namespace HomeSwitchHome.Services
             var reservasActuales = reservasCliente.Where(t => t.IdCliente == idCliente && anio == Convert.ToDateTime(t.FechaReserva).Year).ToList();
             return reservasActuales;
         }
-
-
+        
         public List<ReservaViewModel> ObtenerReservasPropiedad(int idPropiedad)
         {
             var reservasPropiedad = this.ObtenerReservas();

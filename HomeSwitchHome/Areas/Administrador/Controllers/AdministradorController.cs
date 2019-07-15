@@ -371,6 +371,79 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
             return Json(hotsales.ToArray(), JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult RemoverHotSale(int idHotSale)
+        {
+            var borro = this.servicioHotSale.BorrarSemanaHotSale(idHotSale);
+            string mensaje;
+
+            if (!borro)
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                mensaje = "Ha ocurrido un error en el servidor y no se hay podido eliminar la semana de HOT SALE.";
+            }
+            else
+            {
+                mensaje = "Se ha borrado satisfactoriamente la semana definida como HOT SALE.";
+            }
+
+            return Json(mensaje, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult ModificarHotSale(int idHotSale, decimal valor)
+        {
+            string mensaje;
+
+            if (valor <= 0)
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                mensaje = "El valor ingresado no es valido. No se ha podido actualizar el HOT SALE.";
+            }
+            else
+            {
+                mensaje = "Se ha actualizado satisfactoriamente el HOT SALE.";
+            }
+
+            return Json(mensaje, JsonRequestBehavior.AllowGet);
+
+        }
+
+        public JsonResult CrearHotSale(int idPropiedad, string fecha, decimal valor)
+        {
+            var reservasPropiedad = this.servicioReserva.ObtenerReservasPropiedad(idPropiedad);
+            var propiedad = this.servicioPropiedad.ObtenerPropiedades().Where(t => t.IdPropiedad == idPropiedad).SingleOrDefault();
+            string mensaje;
+
+            if (reservasPropiedad.Where(t => (DateTime.Parse(fecha) <= DateTime.Parse(t.FechaReserva).AddDays(7)) && DateTime.Parse(t.FechaReserva) <= DateTime.Parse(fecha)
+                                    || (DateTime.Parse(fecha).AddDays(7) <= DateTime.Parse(t.FechaReserva).AddDays(7)  && DateTime.Parse(t.FechaReserva) <= DateTime.Parse(fecha).AddDays(7))).Any())
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                mensaje = string.Format("La residencia {0} no esta disponible durante la fecha seleccionada como HOT SALE.", propiedad.Nombre);
+            }
+
+            if (valor <= 0)
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                mensaje = "El valor ingresado no es valido. No se ha podido generar la semana HOT SALE.";
+            }
+
+            HotSaleViewModel nuevoHotSale = new HotSaleViewModel();
+            nuevoHotSale.FechaDisponible = fecha;
+            nuevoHotSale.Precio = valor;
+            nuevoHotSale.IdPropiedad = idPropiedad;
+
+            this.servicioHotSale.CrearSemanaHotSale(nuevoHotSale);
+
+            mensaje = string.Format("Se ha creado la semana HOT SALE para la propiedad {0}.", propiedad.Nombre);
+            return Json(mensaje, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult ObtenerInformacionHotSale(int idHotSale)
+        {
+            var hotsalesActuales = this.servicioHotSale.ObtenerHotSalesFuturos();
+            var hotSaleActual = hotsalesActuales.Where(t => t.IdHotSale == idHotSale).SingleOrDefault();
+            return Json(hotSaleActual, JsonRequestBehavior.AllowGet);
+        }
+
         private JsonResult CambiarGanadorPuja(int idSubasta)
         {
             var subastaActual = this.servicioSubasta.ObtenerSubastasFinalizadas().Where(t => t.IdSubasta == idSubasta).FirstOrDefault();
@@ -407,6 +480,7 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
                 reservaAjustada.Propiedad = reservaEnCache.Propiedad;
                 reservaAjustada.IdCliente = reservaEnCache.IdCliente;
                 reservaAjustada.Cliente = reservaEnCache.Cliente;
+                reservaAjustada.Credito = reservaEnCache.Credito;
 
                 reservaAjustada.FechaReserva = string.Format("{0}-{1}-{2}", Convert.ToDateTime(reservaEnCache.FechaReserva).Day, Convert.ToDateTime(reservaEnCache.FechaReserva).Month, Convert.ToDateTime(reservaEnCache.FechaReserva).Year);
 

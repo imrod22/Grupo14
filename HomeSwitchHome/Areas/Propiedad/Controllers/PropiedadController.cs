@@ -27,7 +27,9 @@ namespace HomeSwitchHome.Areas.Propiedad.Controllers
 
         public JsonResult Propiedades()
         {
-            return Json(this.propiedadService.ObtenerPropiedades().ToArray(), JsonRequestBehavior.AllowGet);
+            var propiedades = this.propiedadService.ObtenerPropiedades().ToArray();
+
+            return Json(propiedades, JsonRequestBehavior.AllowGet);
         }
    
         public JsonResult ObtenerInformacionPropiedad(int idPropiedad)

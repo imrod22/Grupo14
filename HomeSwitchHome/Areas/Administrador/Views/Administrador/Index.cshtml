@@ -47,7 +47,15 @@
 
                             <div class="row d-flex justify-content-between">
                                 <h5>RESIDENCIAS</h5>
+                            </div>
 
+                            <div class="row d-flex flex-row-reverse">
+                                <h5>RESERVAS</h5>
+                            </div>
+
+                            <hr class="border border-whitestyle" />
+
+                            <div class="row d-flex justify-content-between">
                                 <ul class="list-unstyled card-option d-flex justify-content-around">
                                     <li class="col">
                                         <button type="button" class="btn btn-success add-nueva-propiedad" style="float:right;" data-toggle="modal" data-target="#addEditPropiedadModal">
@@ -63,21 +71,14 @@
                                         </div>
                                     </li>
                                 </ul>
+
+                                <div class="input-group-append" style="align-items: center; float:left;">
+                                    <input ng-model="from_date_reserva" style="width: 220px;" type="text" id="fromreserva" class="calendar form-control" name="fromreserva" />
+
+                                    <i class="fa fa-fw fas fa-calendar"></i>
+                                </div>
                             </div>
 
-                            <hr class="border border-whitestyle" />
-
-                            <div class="input-group-append" style="align-items: center; float:left;">
-                                <input ng-model="from_date_reserva" style="width: 220px;" type="text" id="fromreserva" class="calendar form-control" name="fromreserva" />
-
-                                <i class="fa fa-fw fas fa-calendar"></i>
-                            </div>
-
-                            <div class="row d-flex flex-row-reverse">
-
-                                <h5>RESERVAS</h5>
-
-                            </div>
                         </div>
 
                         <div class="d-flex justify-content-around" style="overflow-y: auto; height: 250px;">
@@ -126,7 +127,7 @@
                                         <th style="width: 20%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col">COMIENZO DE LA SEMANA</th>
                                         <th style="width: 30%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col">USUARIO</th>
                                         <th style="width: 20%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col">RESIDENCIA</th>
-                                        <th style="width: 20%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col">CON CREDITO</th>
+                                        <th style="width: 20%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col">TIPO</th>
                                         <th style="width: 10%; position: sticky; top: 0; background:#2c5fa1; color:white" scope="col"></th>
                                     </tr>
                                 </thead>
@@ -138,8 +139,12 @@
                                         <td>{{reserva.Cliente.Apellido}}, {{reserva.Cliente.Nombre}}</td>
                                         <td>{{reserva.Propiedad.Nombre}}</td>
                                         <td>
+                                            <div ng-if="reserva.Credito">
+                                                <b style="color:#0c600d">RESERVA</b>
+                                            </div>
+
                                             <div ng-if="!reserva.Credito">
-                                                <b color:"">HOT SALE</b>
+                                                <b style="color:#ff0000">HOT SALE</b>
                                             </div>
                                         </td>
                                         <td>
@@ -258,7 +263,7 @@
                                 <h5>HISTORIAL HOT SALES</h5>
                                 <ul class="list-unstyled card-option d-flex justify-content-around">
 
-                                    <li class="col"><button type="button" class="btn btn-success add-nueva-subasta" style="float:right;" data-toggle="modal" data-target="#addEditSubastaModal"><i class="fa fa-fw fas fa-plus"></i></button></li>
+                                    <li class="col"><button type="button" class="btn btn-success add-nuevo-hotsale" style="float:right;" data-toggle="modal" data-target="#addEditHotSaleModal"><i class="fa fa-fw fas fa-plus"></i></button></li>
 
                                     <li>
                                         <div class="input-group" style="align-items: center;">
@@ -326,8 +331,8 @@
                                         <td>{{futurohotsale.FechaDisponible}}</td>
 
                                         <td>
-                                            <button id="{{futurohotsale.IdHotSale}}" ng-click="modificarhotsale($event.currentTarget.id)" class="btn btn-group-sm btn-success"><i class="fa fa-fw fas fa-check"></i></button>
-                                            <button id="{{futurohotsale.IdHotSale}}" ng-click="rechazarhotsale($event.currentTarget.id)" class="btn btn-group-sm btn-danger subasta-a-borrar"> <i class="fa fa-fw fas fa-ban"></i></button>
+                                            <button id="{{futurohotsale.IdHotSale}}" ng-click="modificarhotsale($event.currentTarget.id)" class="btn btn-group-sm btn-info"><i class="fa fa-fw fas fa-edit"></i></button>
+                                            <button id="{{futurohotsale.IdHotSale}}" ng-click="rechazarhotsale($event.currentTarget.id)" class="btn btn-group-sm btn-danger hotsale-a-borrar"> <i class="fa fa-fw fas fa-remove"></i></button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -337,7 +342,6 @@
                 </div>
 
             </section>
-
 
             <section class="section-card services-section mt-5 mb-5 d-flex justify-content-around" id="clientes">
                 <div class="col-xl-11 col-md-10">
@@ -351,7 +355,7 @@
                             <hr class="border border-whitestyle" />
 
                             <div class="row d-flex flex-row-reverse">
-                                <h5>SUBSCRIPCIONES PREMIUMS</h5>
+                                <h5>SUBSCRIPCIONES PREMIUM</h5>
                             </div>
                         </div>
 
@@ -410,6 +414,10 @@
 
             <div class="modal fade" id="addEditSubastaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 @Html.Partial("_AgregarEditarSubasta")
+            </div>
+
+            <div class="modal fade" id="addEditHotSaleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                @Html.Partial("_AgregarEditarHotSale")
             </div>
 
         </div>
