@@ -493,8 +493,7 @@ adminsection.controller('admincontroller', function ($scope, $http) {
 
         });
     }
-
-
+    
     function valoresDeSubastaAceptados()
     {
         return ($.isNumeric($scope.valorMinimo)
