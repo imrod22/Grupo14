@@ -140,5 +140,38 @@ namespace HomeSwitchHome.Services
         {
             return this.HomeSwitchDB.NOVEDAD_PROPIEDAD.Where(t => t.IdPropiedad == idPropiedad).ToList();
         }
+
+        public bool AgregarImagen(int idPropiedad, string nombreImagen)
+        {
+            var yaExiste = this.HomeSwitchDB.IMAGEN.Where(t => t.Nombre == nombreImagen).Any();
+
+            if (yaExiste)
+                return false;
+
+            IMAGEN nuevaImagen = new IMAGEN();
+            nuevaImagen.Nombre = nombreImagen;
+            nuevaImagen.IdPropiedad = idPropiedad;
+            nuevaImagen.Path = string.Format("/app-content/{0}", nombreImagen);
+
+            this.HomeSwitchDB.IMAGEN.Add(nuevaImagen);
+            this.HomeSwitchDB.SaveChanges();
+
+            CacheHomeSwitchHome.RemoveOnCache("Propiedades");
+            return true;
+
+        }
+
+        public bool EliminarImagen(int idImagen) {
+            var imagenAEliminar = this.HomeSwitchDB.IMAGEN.Where(t => t.IdImagen == idImagen).SingleOrDefault();
+
+            if (imagenAEliminar == null)
+                return false;
+
+            this.HomeSwitchDB.IMAGEN.Remove(imagenAEliminar);
+            this.HomeSwitchDB.SaveChanges();
+
+            CacheHomeSwitchHome.RemoveOnCache("Propiedades");
+            return true;
+        }
     }
 }

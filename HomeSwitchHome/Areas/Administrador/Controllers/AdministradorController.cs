@@ -54,6 +54,13 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
             return Json(subastasFuturas.ToArray(), JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult SubastasHistorial()
+        {
+            var subastasFuturas = this.servicioSubasta.ObtenerHistorialSubastas();
+
+            return Json(subastasFuturas.ToArray(), JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult SubastasCerradas()
         {
             var subastasFinalizadas = this.servicioSubasta.ObtenerSubastasFinalizadas();
@@ -160,7 +167,7 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
             subastaActualizada.ValorMinimo = Convert.ToDecimal(valorMinimo);
 
             if (this.servicioSubasta.ActualizarSubasta(subastaActualizada, Int32.Parse(idSubasta)))
-                return Json(this.servicioSubasta.ObtenerSubastasFuturas().ToArray(), JsonRequestBehavior.AllowGet);
+                return Json(this.servicioSubasta.ObtenerHistorialSubastas().ToArray(), JsonRequestBehavior.AllowGet);
 
             return null;
         }
@@ -168,7 +175,7 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
         public JsonResult BorrarSubasta(string idSubasta)
         {
             if (this.servicioSubasta.RemoverSubasta(Int32.Parse(idSubasta)))
-                return Json(this.servicioSubasta.ObtenerSubastasFuturas().ToArray(), JsonRequestBehavior.AllowGet);
+                return Json(this.servicioSubasta.ObtenerHistorialSubastas().ToArray(), JsonRequestBehavior.AllowGet);
 
             return null;
         }
@@ -454,13 +461,25 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
             return Json(hotSaleActual, JsonRequestBehavior.AllowGet);
         }
 
-        public void GuardarImagen()
+        public JsonResult GuardarImagen(int idPropiedad, string nombre)
         {
+            if (this.servicioPropiedad.AgregarImagen(idPropiedad, nombre))
+                return Json(string.Format("Se ha asociado la imagen {0} a la residencia", nombre), JsonRequestBehavior.AllowGet);
+            else {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(string.Format("Ha ocurrido un error en el servidor y no se ha podido asociar la imagen a la residencia."), JsonRequestBehavior.AllowGet);
+            }
         }
 
-        public void BorrarImagen()
+        public JsonResult EliminarImagen(int idImagen)
         {
-
+            if (this.servicioPropiedad.EliminarImagen(idImagen))
+                return Json(string.Format("Se ha eliminado satisfactoriamente la imagen."), JsonRequestBehavior.AllowGet);
+            else
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(string.Format("No se ha podido eliminar la imagen seleccionada, ocurrio un error en el servidor."), JsonRequestBehavior.AllowGet);
+            }
         }
 
         public JsonResult ObtenerImagenesDePropiedad(int idPropiedad)

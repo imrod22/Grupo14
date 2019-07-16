@@ -9,9 +9,6 @@ switchHomeApp.controller('perfilcontroller', function ($scope, $http) {
     $scope.anioactual = new Date();
     $scope.anioproximo = $scope.anioactual.getFullYear() + 1;
 
-    console.log($scope.anioactual);
-    console.log($scope.anioproximo);
-
     $scope.actualcreditos;
     $scope.proximocreditos;
 

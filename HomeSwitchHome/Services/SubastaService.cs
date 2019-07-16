@@ -140,6 +140,14 @@ namespace HomeSwitchHome.Services
             return subastas.Where(t => Convert.ToDateTime(t.FechaComienzo).AddDays(3) < DateTime.Now && t.Estado == "NUEVO").ToList();
         }
 
+        public List<SubastaViewModel> ObtenerHistorialSubastas()
+        {
+            var subastas = this.ObtenerSubastas();
+
+            return subastas.OrderByDescending(t => DateTime.Parse(t.FechaComienzo)).ToList();
+        }
+
+
         public List<SubastaViewModel> ObtenerSubastasFuturas()
         {
             var subastas = this.ObtenerSubastas();

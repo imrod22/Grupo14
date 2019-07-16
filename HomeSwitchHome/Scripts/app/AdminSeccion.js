@@ -170,5 +170,11 @@
 
         });
     });
-   
+
+    $(document).on("click", ".propiedad-imagenes", function () {
+        var idPropiedad = $(this).attr('id');
+
+        $('#identificadorPropImagenes').val(idPropiedad);
+        
+    });
 })

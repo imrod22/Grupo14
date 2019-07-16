@@ -9,7 +9,7 @@
         <div class="modal-body">
 
             <form>
-                <input style="display : none" id="identificadorPropImagenes" ng-model="idpropimagen">
+                <input style="display : none" id="identificadorPropImagenes">
                 <div class="form-row">
                     <div class="form-group col-md-12">
                         <div>
@@ -18,10 +18,8 @@
                                     <slide ng-repeat="imagen in imagenes" active="imagen.active">
                                         <div class="card">
                                             <div class="card-header"><img ng-src="{{imagen.path}}" style="margin:auto; width: 200px; height: 200px"></div>
-                                            <div class="card-body"><button type="button" id={{imagen.idImagen}} ng-click="borrarimagen()">QUITAR</button></div>
-                                        </div>
-
-                                        
+                                            <div class="card-body"><button type="button" id={{imagen.idImagen}} ng-click="eliminarimagen($event.currentTarget.id)">QUITAR</button></div>
+                                        </div>                                       
                                         
                                     </slide>
                                 </carousel>
@@ -29,17 +27,14 @@
                         </div>
                     </div>
 
-                    <div class="form-group col-md-12">
-                        <input type="file" fileread="uploadme" />
-                        <img src="{{uploadme}}" width="100" height="50" alt="Image preview...">
-                        <br />
-                        <p>
-                            Image dataURI:
-                            <pre>{{uploadme}}</pre>
-                        </p>
-                        <br />
-                        <button ng-click="uploadImage()">upload image</button>
+                    <div ng-controller="fileUploadCtrl">
+                        <div class="form-group col-md-12">
+                            <div>
+                                <div img-upload method="POST"></div>
+                            </div>
+                        </div>
                     </div>
+                    
                 </div>
             </form>
 

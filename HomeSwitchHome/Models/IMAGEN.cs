@@ -17,6 +17,8 @@ namespace HomeSwitchHome
         [Required]
         public string Path { get; set; }
 
+        public string Nombre { get; set; }
+
         public virtual PROPIEDAD PROPIEDAD { get; set; }
     }
 }

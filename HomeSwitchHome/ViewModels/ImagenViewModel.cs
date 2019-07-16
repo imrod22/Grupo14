@@ -6,7 +6,9 @@
 
         public int idPropiedad;
 
-        public string path;        
+        public string path;
+
+        public string Nombre;
 
         public ImagenViewModel() { }
 
@@ -14,6 +16,7 @@
         {
             this.idImagen = imagen.IdImagen;
             this.idPropiedad = imagen.IdPropiedad;
+            this.Nombre = imagen.Nombre;
             this.path = imagen.Path;
 
             return this;

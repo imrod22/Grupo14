@@ -19,6 +19,8 @@ namespace HomeSwitchHome.Services
 
         List<SubastaViewModel> ObtenerSubastasFuturas();
 
+        List<SubastaViewModel> ObtenerHistorialSubastas();
+
         List<SubastaViewModel> ObtenerSubastasDePropiedad(int idPropiedad);
 
         string CrearSubasta(SUBASTA nuevaSubasta);

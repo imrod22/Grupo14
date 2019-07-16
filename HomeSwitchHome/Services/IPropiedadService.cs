@@ -21,5 +21,8 @@ namespace HomeSwitchHome.Services
 
         List<NOVEDAD_PROPIEDAD> ObtenerNotificaciones(int idPropiedad);
 
+        bool AgregarImagen(int idPropiedad, string nombreImagen);
+
+        bool EliminarImagen(int idImagen);
     }
 }
