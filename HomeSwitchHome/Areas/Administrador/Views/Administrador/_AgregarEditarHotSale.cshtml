@@ -14,21 +14,21 @@
                     <input style="display : none" id="identificadorHotSale">
                     <div class="form-group col-md-6">
                         <label for="nombre">Fecha de HOT SALE:</label>
-                        <input ng-model="fecha" type="text" id="fechaHotsale" class="calendar form-control" name="fechaHotSale" />
+                        <input ng-model="fecha" type="text" id="fechahotsale" class="calendar form-control" name="fechahotsale" />
 
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-12">
                         <label for="description">Valor (USD):</label>
-                        <input ng-model="valor" type="text" class="form-control" id="valor" style="width:200px;">
+                        <input ng-model="valor" type="text" class="form-control" id="valorhotsale" style="width:200px;">
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-8">
                         <label for="pais">Residencia:</label>
-                        <select ng-model="propiedad" type="text" class="form-control propiedad-select" id="propiedad_select" placeholder="Seleccione una propiedad">
+                        <select ng-model="propiedad" type="text" class="form-control propiedad-select" id="propiedad_hotsale" placeholder="Seleccione una propiedad">
                             <option id="{{ prop.IdPropiedad }}" value="{{ prop.IdPropiedad }}" ng-repeat="prop in propiedades"> {{ prop.Nombre}} ({{prop.Pais}})</option>
                         </select>
 
@@ -39,8 +39,8 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-            <button type="button" id="boton-crear-subasta" style="display:none" ng-click="altahotsale()" class="btn btn-primary">Agregar</button>
-            <button type="button" id="boton-modificar-subasta" style="display:none" ng-click="modificarhotsale()" class="btn btn-primary">Guardar Cambios</button>
+            <button type="button" id="boton-crear-hotsale" style="display:none" ng-click="altahotsale()" class="btn btn-primary">Agregar</button>
+            <button type="button" id="boton-modificar-hotsale" style="display:none" ng-click="modificarhotsale()" class="btn btn-primary">Guardar Cambios</button>
         </div>
     </div>
 </div>

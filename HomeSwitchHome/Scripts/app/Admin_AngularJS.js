@@ -10,6 +10,8 @@ adminsection.controller('admincontroller', function ($scope, $http) {
     $scope.reservas;
     $scope.hotsalehistorico;
     $scope.hotsalefuturos;
+    $scope.imagenes;
+    $scope.pathnuevafoto;
 
     var datenow = moment().add(6, 'months');
     var datelimit = moment().add(12, 'months');
@@ -452,7 +454,7 @@ adminsection.controller('admincontroller', function ($scope, $http) {
 
         ).then(function successCallback(result) {
 
-            swal("Home Switch Home", result, "success");
+            swal("Home Switch Home", result.data, "success");
             $http.get("/Administrador/Administrador/ObtenerProximosHotSales").then(function (result) {
                 $scope.hotsalefuturos = result.data;
             });
@@ -466,34 +468,106 @@ adminsection.controller('admincontroller', function ($scope, $http) {
     $scope.modificarhotsale = function () {
         $http.post("/Administrador/Administrador/ModificarHotSale", {
 
-            'idHotSale': $("#idHotsale").val(),
+            'idHotSale': $("#identificadorHotSale").val(),
             'valor': $("#valorhotsale").val()
 
         }).then(function successCallback(response) {
+
+            $('#addEditHotSaleModal').modal('hide');
             swal("Home Switch Home", response.data, "success");
 
+            $http.get("/Administrador/Administrador/ObtenerProximosHotSales").then(function (result) {
+                $scope.hotsalefuturos = result.data;
+            });
+
         }, function errorCallback(jqXHR) {
+
             swal("Home Switch Home", jqXHR.data, "error");
 
         });
     }
 
     $scope.altahotsale = function () {
+        var idPropiedad = $('#propiedad_select option:selected').attr('id');
+
         $http.post("/Administrador/Administrador/CrearHotSale", {
 
             'valor': $("#valorhotsale").val(),
-            'propiedad': idPropiedad,
+            'idPropiedad': idPropiedad,
             'fecha': $('input[name="fechahotsale"]').val(),
 
         }).then(function successCallback(response) {
+            $('#addEditHotSaleModal').modal('hide');
             swal("Home Switch Home", response.data, "success");
 
+            $http.get("/Administrador/Administrador/ObtenerProximosHotSales").then(function (result) {
+                
+
+                $scope.hotsalefuturos = result.data;
+            });
+
         }, function errorCallback(jqXHR) {
+                
             swal("Home Switch Home", jqXHR.data, "error");
 
         });
     }
-    
+
+    $scope.obtenerimagenes = function (element) {
+
+        var idPropiedad = element;
+        $scope.idpropimagen = idPropiedad;
+
+        $http.post("/Administrador/Administrador/ObtenerImagenesDePropiedad",
+            {
+                'idPropiedad': idPropiedad
+            }
+
+        ).then(function successCallback(response) {
+                       
+            $scope.imagenes = response.data;
+
+        })
+    }
+
+
+    $scope.uploadme;
+
+    $scope.uploadImage = function () {
+        var fd = new FormData();
+        var imgBlob = dataURItoBlob($scope.uploadme);
+        fd.append('file', imgBlob);
+        $http.post(
+            'imageURL',
+            fd, {
+                transformRequest: angular.identity,
+                headers: {
+                    'Content-Type': undefined
+                }
+            }
+        )
+            .success(function (response) {
+                console.log('success', response);
+            })
+            .error(function (response) {
+                console.log('error', response);
+            });
+    }
+
+
+    //you need this function to convert the dataURI
+    function dataURItoBlob(dataURI) {
+        var binary = atob(dataURI.split(',')[1]);
+        var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+        var array = [];
+        for (var i = 0; i < binary.length; i++) {
+            array.push(binary.charCodeAt(i));
+        }
+        return new Blob([new Uint8Array(array)], {
+            type: mimeString
+        });
+    }
+
     function valoresDeSubastaAceptados()
     {
         return ($.isNumeric($scope.valorMinimo)

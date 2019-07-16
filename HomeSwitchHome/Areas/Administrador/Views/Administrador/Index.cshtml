@@ -111,6 +111,7 @@
                                         </td>
 
                                         <td class="d-flex justify-content-between">
+                                            <button id="{{propiedad.IdPropiedad}}"  ng-click="obtenerimagenes($event.currentTarget.id)" class="btn btn-group-sm btn-primary propiedad-imagenes m-1" data-toggle="modal" data-target="#editImagenesModal"><i class="fa fa-fw fas fa-image"></i></button>
                                             <button id="{{propiedad.IdPropiedad}}" class="btn btn-group-sm btn-primary propiedad-modificar m-1" data-toggle="modal" data-target="#addEditPropiedadModal"><i class="fa fa-fw fas fa-pencil-square-o"></i></button>
                                         </td>
 
@@ -278,14 +279,8 @@
 
                             <hr class="border border-whitestyle" />
 
-                            <div class="input-group-append" style="align-items: center;">
-                                <input ng-model="from_date_hotsale" style="width: 300px;" type="text" id="fromhotsale" class="calendar form-control" name="fromhotsale" placeholder="fecha de reserva" />
-
-                                <i class="fa fa-fw fas fa-calendar"></i>
-                            </div>
-
                             <div class="row d-flex flex-row-reverse">
-                                <h5>PROXIMOS HOT SALES</h5>
+                                <h5>HOT SALES ACTUALES</h5>
 
                             </div>
                         </div>
@@ -331,7 +326,7 @@
                                         <td>{{futurohotsale.FechaDisponible}}</td>
 
                                         <td>
-                                            <button id="{{futurohotsale.IdHotSale}}" ng-click="modificarhotsale($event.currentTarget.id)" class="btn btn-group-sm btn-info"><i class="fa fa-fw fas fa-edit"></i></button>
+                                            <button id="{{futurohotsale.IdHotSale}}" class="btn btn-group-sm btn-info hotsale-modificar" data-toggle="modal" data-target="#addEditHotSaleModal"><i class="fa fa-fw fas fa-edit"></i></button>
                                             <button id="{{futurohotsale.IdHotSale}}" ng-click="rechazarhotsale($event.currentTarget.id)" class="btn btn-group-sm btn-danger hotsale-a-borrar"> <i class="fa fa-fw fas fa-remove"></i></button>
                                         </td>
                                     </tr>
@@ -418,6 +413,10 @@
 
             <div class="modal fade" id="addEditHotSaleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 @Html.Partial("_AgregarEditarHotSale")
+            </div>
+
+            <div class="modal fade" id="editImagenesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                @Html.Partial("_ImagenesEditar")
             </div>
 
         </div>

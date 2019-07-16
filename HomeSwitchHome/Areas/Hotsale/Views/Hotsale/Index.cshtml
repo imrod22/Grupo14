@@ -19,15 +19,15 @@
             </div>
         </div>
 
-        <div class="flex-row flex-md-column">
-            <div class="card transition" ng-repeat="hotsale in hotsales" >
+        <div class="flex-container">
+            <div class="card transition flex-item" ng-repeat="hotsale in hotsales">
                 <h2 class="transition">{{hotsale.Propiedad.Nombre}}</h2>
                 <p>{{hotsale.Propiedad.Ciudad}} ({{hotsale.Propiedad.Pais}}) - {{hotsale.FechaDisponible}}</p>
-                <div class="cta-container transition"><button id="{{hotsale.IdHotSale}}"  ng-click="reservahotsale($event.currentTarget.id)" class="cta">{{hotsale.Precio}} USD </button></div>
+                <div class="cta-container transition"><button id="{{hotsale.IdHotSale}}" ng-click="reservahotsale($event.currentTarget.id)" class="cta">{{hotsale.Precio}} USD </button></div>
                 <div class="card_circle transition" style="background: url('{{hotsale.Propiedad.Imagenes[0].path}}') no-repeat center bottom;"> </div>
             </div>
         </div>
-    </section>
-</div>
+            
+</section>
 
 <script src="~/Scripts/app/HotSale_AngularJS.js"></script>

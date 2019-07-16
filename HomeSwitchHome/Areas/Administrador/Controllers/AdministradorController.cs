@@ -393,13 +393,17 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
         {
             string mensaje;
 
-            if (valor <= 0)
+            var hotsaleModificar = this.servicioHotSale.ObtenerHotSalesFuturos().Where(t => t.IdHotSale == idHotSale).SingleOrDefault();
+
+            if (valor <= 0 || hotsaleModificar.Precio == valor)
             {
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 mensaje = "El valor ingresado no es valido. No se ha podido actualizar el HOT SALE.";
             }
             else
             {
+                this.servicioHotSale.ModificarSemanaHotSale(idHotSale, valor);
+
                 mensaje = "Se ha actualizado satisfactoriamente el HOT SALE.";
             }
 
@@ -407,7 +411,7 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
 
         }
 
-        public JsonResult CrearHotSale(int idPropiedad, string fecha, decimal valor)
+        public JsonResult CrearHotSale(decimal valor, int idPropiedad, string fecha)
         {
             var reservasPropiedad = this.servicioReserva.ObtenerReservasPropiedad(idPropiedad);
             var propiedad = this.servicioPropiedad.ObtenerPropiedades().Where(t => t.IdPropiedad == idPropiedad).SingleOrDefault();
@@ -430,10 +434,16 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
             nuevoHotSale.FechaDisponible = fecha;
             nuevoHotSale.Precio = valor;
             nuevoHotSale.IdPropiedad = idPropiedad;
+            nuevoHotSale.Estado = true;
 
-            this.servicioHotSale.CrearSemanaHotSale(nuevoHotSale);
-
+           if(!this.servicioHotSale.CrearSemanaHotSale(nuevoHotSale))
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                mensaje = string.Format("Ya hay definida una semana HOT SALE para la propiedad {0} dentro de la fecha elegida.", propiedad.Nombre);
+            }
+           else
             mensaje = string.Format("Se ha creado la semana HOT SALE para la propiedad {0}.", propiedad.Nombre);
+
             return Json(mensaje, JsonRequestBehavior.AllowGet);
         }
 
@@ -442,6 +452,21 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
             var hotsalesActuales = this.servicioHotSale.ObtenerHotSalesFuturos();
             var hotSaleActual = hotsalesActuales.Where(t => t.IdHotSale == idHotSale).SingleOrDefault();
             return Json(hotSaleActual, JsonRequestBehavior.AllowGet);
+        }
+
+        public void GuardarImagen()
+        {
+        }
+
+        public void BorrarImagen()
+        {
+
+        }
+
+        public JsonResult ObtenerImagenesDePropiedad(int idPropiedad)
+        {
+            var propiedad = this.servicioPropiedad.ObtenerTodasLasPropiedades().Where(t => t.IdPropiedad == idPropiedad).SingleOrDefault();
+            return Json(propiedad.Imagenes.ToArray(), JsonRequestBehavior.AllowGet);
         }
 
         private JsonResult CambiarGanadorPuja(int idSubasta)

@@ -1,0 +1,51 @@
+﻿<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content px-4 py-2">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle">GESTION DE IMAGENES</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="modal-body">
+
+            <form>
+                <input style="display : none" id="identificadorPropImagenes" ng-model="idpropimagen">
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <div>
+                            <div>
+                                <carousel interval="intervaloimagen">
+                                    <slide ng-repeat="imagen in imagenes" active="imagen.active">
+                                        <div class="card">
+                                            <div class="card-header"><img ng-src="{{imagen.path}}" style="margin:auto; width: 200px; height: 200px"></div>
+                                            <div class="card-body"><button type="button" id={{imagen.idImagen}} ng-click="borrarimagen()">QUITAR</button></div>
+                                        </div>
+
+                                        
+                                        
+                                    </slide>
+                                </carousel>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <input type="file" fileread="uploadme" />
+                        <img src="{{uploadme}}" width="100" height="50" alt="Image preview...">
+                        <br />
+                        <p>
+                            Image dataURI:
+                            <pre>{{uploadme}}</pre>
+                        </p>
+                        <br />
+                        <button ng-click="uploadImage()">upload image</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        </div>
+    </div>
+</div>

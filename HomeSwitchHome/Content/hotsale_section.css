@@ -85,14 +85,13 @@ p {
 .cta {
     -moz-border-radius: 2px;
     -moz-transition: 0.2s ease-out;
-    -ms-transition: 0.2s ease-out;
     -o-transition: 0.2s ease-out;
     -webkit-border-radius: 2px;
     -webkit-transition: 0.2s ease-out;
     background-clip: padding-box;
     border: 2px solid #169220;
     border-radius: 2px;
-    color: #3487f7;
+    color: #169220;
     display: inline-block;
     font-size: 17px;
     font-weight: 400;
@@ -113,3 +112,18 @@ p {
         -moz-box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         -webkit-box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     }
+
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: flex-start;
+    align-items: flex-start;
+}
+
+.flex-item {
+    order: 0;
+    flex: 0 1 auto;
+    align-self: auto;
+}

@@ -21,5 +21,6 @@ namespace HomeSwitchHome.Services
 
         bool OcuparHotSale(int idHotSale);
 
+        bool LiberarHotSale(DateTime fecha, int idPropiedad);
     }
 }

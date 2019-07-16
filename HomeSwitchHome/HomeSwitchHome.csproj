@@ -307,6 +307,7 @@
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\hotsale_section.css" />
     <Content Include="Content\nanoScroller.css" />
+    <Content Include="Content\perfilSection.css" />
     <Content Include="Content\pignose.calendar.min.css" />
     <Content Include="Content\residencia_section.css" />
     <Content Include="Content\sweetalert.css" />
@@ -345,6 +346,7 @@
     <Content Include="Scripts\app\Admin_AngularJS.js" />
     <Content Include="Scripts\app\HomePage.js" />
     <Content Include="Scripts\app\HotSale_AngularJS.js" />
+    <Content Include="Scripts\app\Imagenes_AngularJS.js" />
     <Content Include="Scripts\app\perfilSection.js" />
     <Content Include="Scripts\app\Perfil_AngularJS.js" />
     <Content Include="Scripts\app\propiedadSection.js" />
@@ -430,6 +432,7 @@
     <Content Include="Areas\Hotsale\Views\web.config" />
     <Content Include="Areas\Hotsale\Views\Hotsale\Index.cshtml" />
     <Content Include="Areas\Administrador\Views\Administrador\_AgregarEditarHotSale.cshtml" />
+    <Content Include="Areas\Administrador\Views\Administrador\_ImagenesEditar.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\i18n\angular-locale_af-na.js" />
     <Content Include="Scripts\i18n\angular-locale_af-za.js" />

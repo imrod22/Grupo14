@@ -120,13 +120,13 @@
     $(document).on("click", ".hotsale-modificar", function () {
         var idHotSale = $(this).attr('id');
 
-        $('#propiedad_select').attr('disabled', true);
+        $('#propiedad_hotsale').attr('disabled', true);
 
         $('#boton-modificar-hotsale').css('display', 'block');
         $('#boton-crear-hotsale').css('display', 'none');
 
-        $("#fechaHotSale").attr('readonly', true);
-        $("#fechaHotSale").attr('disabled', true);
+        $("#fechahotsale").attr('readonly', true);
+        $("#fechahotsale").attr('disabled', true);
 
         $.ajax({
             type: "GET",
@@ -135,10 +135,10 @@
             success: function (response) {
 
                 $("#identificadorHotSale").val(response.IdHotSale)
-                $("#fechaHotSale").val(response.FechaDisponible);
+                $("#fechahotsale").val(response.FechaDisponible);
 
-                $("#valor").val(response.ValorMinimo);
-                $("#propiedad_select").val(response.IdPropiedad);
+                $("#valorhotsale").val(response.Precio);
+                $("#propiedad_hotsale").val(response.IdPropiedad);
 
             },
             error: function () {
@@ -169,5 +169,6 @@
             theme: 'dark',
 
         });
-    });   
+    });
+   
 })

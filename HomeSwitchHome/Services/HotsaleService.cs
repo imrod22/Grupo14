@@ -42,6 +42,7 @@ namespace HomeSwitchHome.Services
                 hotSaleNueva.IdPropiedad = hotSaleModel.IdPropiedad;
                 hotSaleNueva.FechaDisponible = DateTime.Parse(hotSaleModel.FechaDisponible);
                 hotSaleNueva.Precio = hotSaleModel.Precio;
+                hotSaleNueva.Estado = hotSaleModel.Estado;
 
                 this.HomeSwitchDB.HOTSALE.Add(hotSaleNueva);
                 this.HomeSwitchDB.SaveChanges();
@@ -104,6 +105,23 @@ namespace HomeSwitchHome.Services
             if (hotsale != null)
             {
                 hotsale.Estado = false;
+
+                this.HomeSwitchDB.SaveChanges();
+                CacheHomeSwitchHome.RemoveOnCache("HotSales");
+
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool LiberarHotSale(DateTime fecha, int idPropiedad)
+        {
+            var hotsale = this.HomeSwitchDB.HOTSALE.Where(t => t.IdPropiedad == idPropiedad && t.FechaDisponible == fecha).SingleOrDefault();
+
+            if (hotsale != null)
+            {
+                hotsale.Estado = true;
 
                 this.HomeSwitchDB.SaveChanges();
                 CacheHomeSwitchHome.RemoveOnCache("HotSales");
