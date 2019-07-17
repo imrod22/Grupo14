@@ -123,7 +123,7 @@ adminsection.controller('admincontroller', function ($scope, $http) {
             }).then(function successCallback(response) {
 
                 if (response.data == "") {
-                    swal("Home Switch Home", "No se ha podido crear la residencia con los campos ingresados. Ya existe una residencia con el titulo ingresado.", "error");
+                    swal("Home Switch Home", "No se ha podido crear la residencia con los campos ingresados. Ya existe una residencia con el título ingresado.", "error");
 
                 }
                 else {
@@ -186,7 +186,7 @@ adminsection.controller('admincontroller', function ($scope, $http) {
         ).then(function successCallback(response) {
 
             if (response.data == "") {
-                swal("Home Switch Home", "No se ha podido eliminar la residencia, tiene subastas asociadas o reservas futuras.", "warning");
+                swal("Home Switch Home", "No se ha podido eliminar la residencia, tiene subastas asociadas o reservas futuras.", "error");
             }
 
             else {
@@ -265,7 +265,7 @@ adminsection.controller('admincontroller', function ($scope, $http) {
             }).then(function successCallback(response) {
 
                 if (response.data == "") {
-                    swal("Home Switch Home", "El monto de la subasta ingresado no es valido.", "error");
+                    swal("Home Switch Home", "El monto de la subasta ingresado no es válido.", "error");
                     
                 }
                 else {
@@ -597,15 +597,15 @@ adminsection.directive("imgUpload", function ($http, $compile) {
         },
         template: '<input class="fileUpload" type="file" multiple />' +
             '<div class="dropzone">' +
-            '<p class="msg">Click or Drag and Drop files to upload</p>' +
+            '<p class="msg">Haga click o arrastre y suelte las imágenes aquí para cargarlas</p>' +
             '</div>' +
             '<div class="preview clearfix">' +
             '<div class="previewData clearfix" ng-repeat="data in previewData track by $index">' +
             '<img src={{data.src}}></img>' +
             '<div class="previewDetails">' +
-            '<div class="detail"><b>Name : </b>{{data.name}}</div>' +
-            '<div class="detail"><b>Type : </b>{{data.type}}</div>' +
-            '<div class="detail"><b>Size : </b> {{data.size}}</div>' +
+            '<div class="detail"><b>Nombre: </b>{{data.name}}</div>' +
+            '<div class="detail"><b>Tipo: </b>{{data.type}}</div>' +
+            '<div class="detail"><b>Tamaño: </b> {{data.size}}</div>' +
             '</div>' +
             '<div class="previewControls">' +
             '<span ng-click="upload(data)" class="circle upload">' +
@@ -651,7 +651,7 @@ adminsection.directive("imgUpload", function ($http, $compile) {
                     if (file.type.indexOf("image") !== -1) {
                         previewFile(file);
                     } else {
-                        alert(file.name + " is not supported");
+                        alert(file.name + " no es soportado.");
                     }
                 }
             }

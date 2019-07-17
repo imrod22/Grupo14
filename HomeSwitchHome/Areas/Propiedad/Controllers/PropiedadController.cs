@@ -60,9 +60,9 @@ namespace HomeSwitchHome.Areas.Propiedad.Controllers
                 this.creditoService.DescontarCreditoCliente(sesionUser.IdCliente, DateTime.Parse(reservaNueva.FechaReserva).Year);
 
                 if (this.reservaService.CancelarSubastasDePropiedadReservada(reservaNueva))
-                    mensaje = string.Format("Se ha confirmado la reserva, se ha descontado un credito para el año {0} y se han cancelado las subastas definidas en el rango de fechas de la reserva.", DateTime.Parse(fecha).Year);
+                    mensaje = string.Format("Se ha confirmado la reserva, se ha descontado un crédito para el año {0} y se han cancelado las subastas definidas en el rango de fechas de la reserva.", DateTime.Parse(fecha).Year);
                 else
-                    mensaje = string.Format("Se ha confirmado la reserva y se ha descontado un credito para el año {0}.", DateTime.Parse(fecha).Year);
+                    mensaje = string.Format("Se ha confirmado la reserva y se ha descontado un crédito para el año {0}.", DateTime.Parse(fecha).Year);
             }
 
             return Json(mensaje, JsonRequestBehavior.AllowGet);
@@ -77,11 +77,11 @@ namespace HomeSwitchHome.Areas.Propiedad.Controllers
 
             if (this.propiedadService.RegistrarNotificacionesDePropiedad(novedadNueva))
             {
-                return Json("Se registro la solicitud, será notificado a su cuenta de mail cuando haya novedades sobre la residencia elegida.", JsonRequestBehavior.AllowGet);
+                return Json("Se registró la solicitud, será notificado a su cuenta de mail cuando haya novedades sobre la residencia elegida.", JsonRequestBehavior.AllowGet);
             }
 
             Response.StatusCode = (int)HttpStatusCode.BadRequest;
-            return Json("Ya esta siendo notificado sobre nuevas subastas o hot sales en la residencia elegida.", JsonRequestBehavior.AllowGet);
+            return Json("Ya está siendo notificado sobre nuevas subastas o hot sales en la residencia elegida.", JsonRequestBehavior.AllowGet);
         }
     }
 }

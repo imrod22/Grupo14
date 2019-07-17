@@ -75,7 +75,7 @@ namespace HomeSwitchHome.Services
                 return string.Format("OK");
             }
 
-            return string.Format("El nombre de usuario ingresado: '{0}' no esta disponible.", nuevoCliente.Usuario);
+            return string.Format("El nombre de usuario ingresado: '{0}' no está disponible.", nuevoCliente.Usuario);
 
         }
 
@@ -97,7 +97,7 @@ namespace HomeSwitchHome.Services
                 return string.Format("OK");
             }
             
-            return string.Format("No se pudo obtener la informacion del usuario seleccionado. Ha ocurrido un error en el servidor.");
+            return string.Format("No se pudo obtener la información del usuario seleccionado. Ha ocurrido un error en el servidor.");
 
         }
 
@@ -116,7 +116,7 @@ namespace HomeSwitchHome.Services
                 return string.Format("OK");
             }
 
-            else return string.Format("No se pudo obtener la informacion del usuario seleccionado. Ha ocurrido un error en el servidor.");
+            else return string.Format("No se pudo obtener la información del usuario seleccionado. Ha ocurrido un error en el servidor.");
         }
 
         public string ConfirmarPremium(int IdCliente)
@@ -132,7 +132,7 @@ namespace HomeSwitchHome.Services
                 return string.Format("OK");
             }
             else
-                return string.Format("No se pudo obtener la informacion del usuario seleccionado. Ha ocurrido un error en el servidor.");
+                return string.Format("No se pudo obtener la información del usuario seleccionado. Ha ocurrido un error en el servidor.");
         }
 
         public string RechazarSolicitudNuevoCliente(int rechazado)
@@ -152,7 +152,7 @@ namespace HomeSwitchHome.Services
                 return string.Format("OK");
             }
             else
-                return string.Format("No se pudo obtener la informacion del usuario seleccionado. Ha ocurrido un error en el servidor.");
+                return string.Format("No se pudo obtener la información del usuario seleccionado. Ha ocurrido un error en el servidor.");
         }
 
         public string RechazarSolicitudPremium(int rechazado)
@@ -169,7 +169,7 @@ namespace HomeSwitchHome.Services
                 return string.Format("OK");
             }
             else
-                return string.Format("No se pudo obtener la informacion del usuario seleccionado. Ha ocurrido un error en el servidor.");
+                return string.Format("No se pudo obtener la información del usuario seleccionado. Ha ocurrido un error en el servidor.");
         }
 
 

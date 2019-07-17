@@ -22,18 +22,18 @@ namespace HomeSwitchHome.Services
             var reservasPropiedad = servicioReserva.ObtenerReservasPropiedad(nuevaSubasta.IdPropiedad);
 
             if (nuevaSubasta.ValorMinimo <= 0)
-                return string.Format("No se pudo crear la subasta, el valor de inicial para pujar debe ser mayor que 0.");
+                return string.Format("No se pudo crear la subasta, el valor inicial para pujar debe ser mayor que 0.");
             
             if (nuevaSubasta.FechaReserva.CompareTo(nuevaSubasta.FechaComienzo.AddDays(3)) < 0)
                 return string.Format("No se pudo crear la subasta, la semana que se desea subastar transcurre durante o antes que la subasta.");
 
             if (subastasPropiedad.Any(t => nuevaSubasta.FechaComienzo.CompareTo(Convert.ToDateTime(t.FechaComienzo)) >= 0
                                      && nuevaSubasta.FechaComienzo.CompareTo(Convert.ToDateTime(t.FechaComienzo).AddDays(10)) <= 0))
-                return string.Format("No se pudo crear la subasta para la propiedad seleccionada, ya posee una subasta definida durante los dias elegidos.");
+                return string.Format("No se pudo crear la subasta para la propiedad seleccionada, ya posee una subasta definida durante los días elegidos.");
 
             if (reservasPropiedad.Any(t => nuevaSubasta.FechaReserva.CompareTo(Convert.ToDateTime(t.FechaReserva)) >= 0
                                       && nuevaSubasta.FechaReserva.CompareTo(Convert.ToDateTime(t.FechaReserva).AddDays(7)) <= 0))
-                return string.Format("No se pudo crear la subasta para la propiedad seleccionada, posee reservas confirmadas durante los dias elegidos a subastar.");
+                return string.Format("No se pudo crear la subasta para la propiedad seleccionada, posee reservas confirmadas durante los días elegidos a subastar.");
 
             this.HomeSwitchDB.SUBASTA.Add(nuevaSubasta);
             this.HomeSwitchDB.SaveChanges();
@@ -65,7 +65,7 @@ namespace HomeSwitchHome.Services
 
                 ))
 
-                return string.Format("Ya posee una reserva durante la semana que se esta subastando.");
+                return string.Format("Ya posee una reserva durante la semana que se está subastando.");
 
             subastaActualizar.ValorActual = subastaPujada.ValorActual;
             subastaActualizar.IdCliente = idCliente;

@@ -288,7 +288,7 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
                     var anioReserva = DateTime.Parse(reserva.FechaReserva).Year;
 
                     this.servicioCredito.DevolverCreditoCliente(reserva.IdCliente, anioReserva);
-                    return Json(string.Format("Se ha cancelado la reserva y se ha devuelto el credito al cliente para el año {0}.", anioReserva), JsonRequestBehavior.AllowGet);
+                    return Json(string.Format("Se ha cancelado la reserva y se ha devuelto el crédito al cliente para el año {0}.", anioReserva), JsonRequestBehavior.AllowGet);
                 }
 
                 return Json(string.Format("Se ha cancelado la reserva de HOT SALE."), JsonRequestBehavior.AllowGet);
@@ -309,7 +309,7 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
             if (hastaSubasta.CompareTo(desdeSubasta.AddMonths(2)) != -1)
             {
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                return Json(string.Format("La fecha 'Hasta' : {0} es mayor en dos meses a la fecha 'Desde' : {1}. La busqueda no es posible.", fin, comienzo), JsonRequestBehavior.AllowGet);
+                return Json(string.Format("La fecha 'Hasta' : {0} es mayor en dos meses a la fecha 'Desde' : {1}. La búsqueda no es posible.", fin, comienzo), JsonRequestBehavior.AllowGet);
             }
 
             return Json(subastas.Where(t => (Convert.ToDateTime(t.FechaComienzo).CompareTo(desdeSubasta) > -1 
@@ -328,7 +328,7 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
             if (hastaReserva.CompareTo(desdeReserva.AddMonths(2)) != -1)
             {
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                return Json(string.Format("La fecha 'Hasta' : {0} es mayor en dos meses a la fecha 'Desde' : {1}. La busqueda no es posible.", fin, comienzo), JsonRequestBehavior.AllowGet);
+                return Json(string.Format("La fecha 'Hasta' : {0} es mayor en dos meses a la fecha 'Desde' : {1}. La búsqueda no es posible.", fin, comienzo), JsonRequestBehavior.AllowGet);
             }
 
             reservas = reservas.Where(t => (Convert.ToDateTime(t.FechaReserva).CompareTo(desdeReserva) > 0 && Convert.ToDateTime(t.FechaReserva).CompareTo(hastaReserva) < 0) 
@@ -386,7 +386,7 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
             if (!borro)
             {
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                mensaje = "Ha ocurrido un error en el servidor y no se hay podido eliminar la semana de HOT SALE.";
+                mensaje = "Ha ocurrido un error en el servidor y no se ha podido eliminar la semana de HOT SALE.";
             }
             else
             {
@@ -405,7 +405,7 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
             if (valor <= 0 || hotsaleModificar.Precio == valor)
             {
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                mensaje = "El valor ingresado no es valido. No se ha podido actualizar el HOT SALE.";
+                mensaje = "El valor ingresado no es válido. No se ha podido actualizar el HOT SALE.";
             }
             else
             {
@@ -428,13 +428,13 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
                                     || (DateTime.Parse(fecha).AddDays(7) <= DateTime.Parse(t.FechaReserva).AddDays(7)  && DateTime.Parse(t.FechaReserva) <= DateTime.Parse(fecha).AddDays(7))).Any())
             {
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                mensaje = string.Format("La residencia {0} no esta disponible durante la fecha seleccionada como HOT SALE.", propiedad.Nombre);
+                mensaje = string.Format("La residencia {0} no está disponible durante la fecha seleccionada como HOT SALE.", propiedad.Nombre);
             }
 
             if (valor <= 0)
             {
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                mensaje = "El valor ingresado no es valido. No se ha podido generar la semana HOT SALE.";
+                mensaje = "El valor ingresado no es válido. No se ha podido generar la semana HOT SALE.";
             }
 
             HotSaleViewModel nuevoHotSale = new HotSaleViewModel();
@@ -478,7 +478,7 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
             else
             {
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                return Json(string.Format("No se ha podido eliminar la imagen seleccionada, ocurrio un error en el servidor."), JsonRequestBehavior.AllowGet);
+                return Json(string.Format("No se ha podido eliminar la imagen seleccionada, ocurrió un error en el servidor."), JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -501,14 +501,14 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
                 this.servicioSubasta.RemoverSubasta(idSubasta);
 
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                return Json(string.Format("El sistema no puede confirmar la reserva para la propiedad {0} del cliente {1},{2} ya que no posee creditos. La subasta no posee pujas de menor valor y ha sido cancelada.", subastaActual.Propiedad.Nombre, usuarioSubasta.Apellido, usuarioSubasta.Nombre), JsonRequestBehavior.AllowGet);
+                return Json(string.Format("El sistema no puede confirmar la reserva para la propiedad {0} del cliente {1}, {2} ya que no posee créditos. La subasta no posee pujas de menor valor y ha sido cancelada.", subastaActual.Propiedad.Nombre, usuarioSubasta.Apellido, usuarioSubasta.Nombre), JsonRequestBehavior.AllowGet);
             }
 
             var maximoPujante = ultimasPuja.FirstOrDefault();
             var nuevoClienteMaximo = this.servicioUsuario.ObtenerInformacionCliente(maximoPujante.IdCliente);
 
             Response.StatusCode = (int)HttpStatusCode.BadRequest;
-            return Json(string.Format("El sistema no puede confirmar la reserva para la propiedad {0} del cliente {1},{2} ya que no posee creditos. La subasta se le ha adjudicado al cliente {3}, {4} con un monto de {5}.", subastaActual.Propiedad.Nombre, usuarioSubasta.Apellido, usuarioSubasta.Nombre, nuevoClienteMaximo.Apellido, nuevoClienteMaximo.Nombre, maximoPujante.Monto), JsonRequestBehavior.AllowGet);
+            return Json(string.Format("El sistema no puede confirmar la reserva para la propiedad {0} del cliente {1}, {2} ya que no posee créditos. La subasta se le ha adjudicado al cliente {3}, {4} con un monto de {5}.", subastaActual.Propiedad.Nombre, usuarioSubasta.Apellido, usuarioSubasta.Nombre, nuevoClienteMaximo.Apellido, nuevoClienteMaximo.Nombre, maximoPujante.Monto), JsonRequestBehavior.AllowGet);
 
         }
 

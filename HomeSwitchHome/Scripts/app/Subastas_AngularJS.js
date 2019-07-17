@@ -34,7 +34,7 @@ switchHomeApp.controller('subastasController', function ($scope, $http) {
             $scope.subastasList = result.data;
             $('#pujaSubastaModal').modal('hide');
 
-            swal("Home Switch Home", "Ha pujado en la subasta!", "success");
+            swal("Home Switch Home", "¡Ha pujado en la subasta!", "success");
 
         }, function errorCallback(jqXHR) {
                 swal("Home Switch Home", jqXHR.data, "error");

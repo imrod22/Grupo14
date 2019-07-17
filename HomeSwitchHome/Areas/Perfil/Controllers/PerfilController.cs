@@ -59,11 +59,11 @@ namespace HomeSwitchHome.Areas.Perfil.Controllers
             if (solicitudPremium == null) {
 
                 this.servicioUsuario.RegistrarComoPremium(sesionUser.IdCliente);
-                return Json("Su solicitud se ha registrado y esta siendo procesada se le notificara cuando pueda comenzar a operar como PREMIUM.", JsonRequestBehavior.AllowGet);
+                return Json("Su solicitud se ha registrado y está siendo procesada, se le notificará cuando pueda comenzar a operar como PREMIUM.", JsonRequestBehavior.AllowGet);
             }
 
             Response.StatusCode = (int)HttpStatusCode.BadRequest;
-            return Json(string.Format("Ya se esta procesando una solicitud desde su cuenta. Se le notificará a la brevedad por email."), JsonRequestBehavior.AllowGet);
+            return Json(string.Format("Ya se está procesando una solicitud desde su cuenta. Se le notificará a la brevedad por email."), JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult CancelarReserva(int idReserva)
@@ -89,10 +89,10 @@ namespace HomeSwitchHome.Areas.Perfil.Controllers
                             var anioReserva = fechaReserva.Year;
 
                             this.servicioCredito.DevolverCreditoCliente(reserva.IdCliente, anioReserva);
-                            return Json(string.Format("Se ha cancelado su reserva en la residencia: {0} y se le ha devuelto el credito para el año {1}.", reserva.Propiedad.Nombre, anioReserva), JsonRequestBehavior.AllowGet);
+                            return Json(string.Format("Se ha cancelado su reserva en la residencia {0}, y se le ha devuelto el crédito para el año {1}.", reserva.Propiedad.Nombre, anioReserva), JsonRequestBehavior.AllowGet);
                         }
 
-                        return Json(string.Format("Se ha cancelado satisfactoriamente su reserva en la residencia: {0}, para la reserva faltaban menos de 2 meses, no es posible recuperar el credito.", reserva.Propiedad.Nombre), JsonRequestBehavior.AllowGet);
+                        return Json(string.Format("Se ha cancelado satisfactoriamente su reserva en la residencia {0}, pero para la reserva faltaban menos de 2 meses, no se le ha devuelto el crédito.", reserva.Propiedad.Nombre), JsonRequestBehavior.AllowGet);
                     }
 
                     else {
@@ -142,11 +142,11 @@ namespace HomeSwitchHome.Areas.Perfil.Controllers
             if (nueva.Count() < 8 || !rg.IsMatch(nueva))
             {
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                return Json(string.Format("La nueva contraseña no tiene un formato alfanumerico de mas de 8 caracteres, verifique el campo ingresado."), JsonRequestBehavior.AllowGet);
+                return Json(string.Format("La nueva contraseña no tiene un formato alfanumérico de más de 8 caracteres, verifique el campo ingresado."), JsonRequestBehavior.AllowGet);
             }                
 
             if(this.servicioUsuario.ActualizarContrasenia(sesionUser.IdCliente, nueva))
-                return Json(string.Format("Se ha actualizado satisfactoriamente su contraseña, ya puede iniciar sesion con la nueva ingresada."), JsonRequestBehavior.AllowGet);
+                return Json(string.Format("Se ha actualizado satisfactoriamente su contraseña, ya puede iniciar sesión con la nueva ingresada."), JsonRequestBehavior.AllowGet);
 
             Response.StatusCode = (int)HttpStatusCode.BadRequest;
             return Json(string.Format("Ha ocurrido un error en el servidor y no se ha podido actualizar la contraseña."), JsonRequestBehavior.AllowGet);

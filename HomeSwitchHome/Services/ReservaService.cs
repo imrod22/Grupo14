@@ -29,14 +29,14 @@ namespace HomeSwitchHome.Services
                                 && Convert.ToDateTime(reservaModelo.FechaReserva).CompareTo(Convert.ToDateTime(t.FechaComienzo).AddDays(10)) <= 0);
 
             if (clienteCreditos.Credito <= 0)
-                return string.Format("Ya dispone de dos reservaciones en el año {0}, no posee de mas creditos para acceder a una nueva.", clienteCreditos.Anio);            
+                return string.Format("Ya dispone de dos reservas en el año {0}, no posee de más créditos para acceder a una nueva.", clienteCreditos.Anio);            
 
             if (propiedadReservas.Any(t => (Convert.ToDateTime(reservaModelo.FechaReserva).CompareTo(Convert.ToDateTime(t.FechaReserva)) >= 0
                                      && Convert.ToDateTime(reservaModelo.FechaReserva).CompareTo(Convert.ToDateTime(t.FechaReserva).AddDays(7)) <= 0)
                                     || (Convert.ToDateTime(reservaModelo.FechaReserva).AddDays(7).CompareTo(Convert.ToDateTime(t.FechaReserva)) >= 0
                                     && Convert.ToDateTime(reservaModelo.FechaReserva).AddDays(7).CompareTo(Convert.ToDateTime(t.FechaReserva).AddDays(7)) <= 0)))
 
-                return string.Format("La semana elegida no esta disponible para la propiedad seleccionada.");
+                return string.Format("La semana elegida no está disponible para la propiedad seleccionada.");
 
             if (reservasCliente.Any(t => (Convert.ToDateTime(reservaModelo.FechaReserva).CompareTo(Convert.ToDateTime(t.FechaReserva)) >= 0
                                 && Convert.ToDateTime(reservaModelo.FechaReserva).CompareTo(Convert.ToDateTime(t.FechaReserva).AddDays(7)) <= 0)
