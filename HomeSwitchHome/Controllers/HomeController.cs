@@ -106,7 +106,7 @@ namespace HomeSwitchHome.Controllers
             }
 
             Response.StatusCode = (int)HttpStatusCode.BadRequest;
-            return Json(string.Format("El usuario: {0} que se desea recuperar la contraseña no esta registrado en el sistema.", usuario), JsonRequestBehavior.AllowGet);
+            return Json(string.Format("El usuario {0}, que desea recuperar la contraseña, no esta registrado en el sistema.", usuario), JsonRequestBehavior.AllowGet);
         }
     }
 }
