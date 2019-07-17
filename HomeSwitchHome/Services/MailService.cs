@@ -29,9 +29,9 @@ namespace HomeSwitchHome.Services
             msg.From = new MailAddress("notificaciones.hsh@gmail.com");
             msg.To.Add(new MailAddress(clienteModel.Email));
             msg.Subject = "HOME SWITCH HOME - Mail de recuperación de contraseña";
-            msg.Body = string.Format("{0} {1} ", clienteModel.Nombre, clienteModel.Apellido) +
-                       "Usted ha solicitado la recuperación de su contraseña de acceso para el sistema HOME SWITCH HOME. " +
-                       string.Format("Usuario:    {0}. ", clienteModel.Usuario) +
+            msg.Body = string.Format("{0} {1}", clienteModel.Nombre, clienteModel.Apellido) +
+                       ", usted ha solicitado la recuperación de su contraseña de acceso para el sistema HOME SWITCH HOME." + Environment.NewLine +
+                       string.Format("Usuario: {0}. ", clienteModel.Usuario) + Environment.NewLine +
                        string.Format("Contraseña: {0}.", clienteModel.Password);
             try
             {
