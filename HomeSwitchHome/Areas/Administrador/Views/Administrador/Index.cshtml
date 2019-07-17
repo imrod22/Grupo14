@@ -115,7 +115,7 @@
                                         </td>
 
                                         <td class="d-flex justify-content-between">
-                                            <button id="{{propiedad.IdPropiedad}}"  ng-click="obtenerimagenes($event.currentTarget.id)" class="btn btn-group-sm btn-primary propiedad-imagenes m-1" data-toggle="modal" data-target="#editImagenesModal"><i class="fa fa-fw fas fa-image"></i></button>
+                                            <button id="{{propiedad.IdPropiedad}}" ng-click="obtenerimagenes($event.currentTarget.id)" class="btn btn-group-sm btn-primary propiedad-imagenes m-1" data-toggle="modal" data-target="#editImagenesModal"><i class="fa fa-fw fas fa-image"></i></button>
                                             <button id="{{propiedad.IdPropiedad}}" class="btn btn-group-sm btn-primary propiedad-modificar m-1" data-toggle="modal" data-target="#addEditPropiedadModal"><i class="fa fa-fw fas fa-pencil-square-o"></i></button>
                                         </td>
 
@@ -193,8 +193,8 @@
                                 <input ng-model="from_date" style="width: 300px;" type="text" id="fromsubasta" class="calendar form-control" name="fromsubasta" placeholder="fecha de comienzo de subasta/reserva" />
 
                                 <i class="fa fa-fw fas fa-calendar"></i>
-                            
-                                <button class="btn btn-sm btn-secondary fa fa-eraser"  ng-click="refrescarsubastas()"></button>
+
+                                <button class="btn btn-sm btn-secondary fa fa-eraser" ng-click="refrescarsubastas()"></button>
                             </div>
 
                             <div class="row d-flex flex-row-reverse">
@@ -222,7 +222,7 @@
                                         <td>{{subasta.ValorMinimo}} USD</td>
                                         <td>{{subasta.FechaComienzo}}</td>
                                         <td>{{subasta.FechaReserva}}</td>
-                                        <td ng-show="subasta.IdCliente === null" >
+                                        <td ng-show="subasta.IdCliente === null">
                                             <button id="{{subasta.IdSubasta}}" class="btn btn-group-sm btn-primary subasta-modificar" data-toggle="modal" data-target="#addEditSubastaModal"><i class="fa fa-fw fas fa-pencil-square-o"></i></button>
                                             <button id="{{subasta.IdSubasta}}" ng-click="borrarsubasta($event.currentTarget.id)" class="btn btn-group-sm btn-danger propiedad-a-borrar"> <i class="fa fa-fw fas fa-remove"></i></button>
                                         </td>
@@ -324,7 +324,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="futurohotsale in hotsalefuturos">
+                                    <tr ng-repeat="futurohotsale in hotsalefuturos | filter: filtrohotsale">
 
                                         <td>{{futurohotsale.Propiedad.Nombre}}</td>
                                         <td>{{futurohotsale.Propiedad.Ciudad}} ({{futurohotsale.Propiedad.Pais}})</td>
