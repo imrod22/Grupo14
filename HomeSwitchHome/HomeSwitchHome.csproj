@@ -307,6 +307,9 @@
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\hotsale_section.css" />
+    <Content Include="Content\icons\concierge-bell-solid.svg" />
+    <Content Include="Content\icons\fire-solid.svg" />
+    <Content Include="Content\icons\user-regular.svg" />
     <Content Include="Content\nanoScroller.css" />
     <Content Include="Content\perfilSection.css" />
     <Content Include="Content\pignose.calendar.min.css" />

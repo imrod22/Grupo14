@@ -222,6 +222,25 @@ namespace HomeSwitchHome.Services
             return clientes.Where(t => t.Premium == "NO").ToList();
         }
 
+        public bool ActualizarContrasenia(int idCliente, string nuevaPass)
+        {
+            var cliente = this.HomeSwitchDB.CLIENTE.Where(t => t.IdCliente == idCliente).SingleOrDefault();
+
+            if (cliente != null)
+            {
+                var usuario = this.HomeSwitchDB.USUARIO.Where(t => t.IdUsuario == cliente.IdUsuario).SingleOrDefault();
+
+                usuario.Password = nuevaPass;
+
+                this.HomeSwitchDB.SaveChanges();
+                CacheHomeSwitchHome.RemoveOnCache("Clientes");
+
+                return true;
+            }
+
+            return false;            
+        }
+
         public ClienteViewModel ObtenerInformacionDeUsuario(string usuario)
         {
             var cliente = this.ObtenerListaDeClientes().Where(t => t.Usuario == usuario);
@@ -259,5 +278,6 @@ namespace HomeSwitchHome.Services
             else return false;            
         }           
 
+        
     }
 }

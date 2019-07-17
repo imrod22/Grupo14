@@ -25,7 +25,7 @@
         position: absolute;
         width: 150px;
         height: 100%;
-        background: linear-gradient(#140f58, #28327e);
+        background: linear-gradient(#0a3ea8, #1e4594);
         transition: width 0.4s;
         overflow: hidden;
         z-index: 2;
@@ -56,7 +56,6 @@
             right: -2px;
             height: 80%;
             border-left: 2px solid rgba(0,0,0,0.025);
-            */
         }
 
         .card .additional .user-card .level,

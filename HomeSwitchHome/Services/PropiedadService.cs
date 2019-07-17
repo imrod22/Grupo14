@@ -157,6 +157,7 @@ namespace HomeSwitchHome.Services
             this.HomeSwitchDB.SaveChanges();
 
             CacheHomeSwitchHome.RemoveOnCache("Propiedades");
+            CacheHomeSwitchHome.RemoveOnCache("Subastas");
             return true;
 
         }
@@ -171,6 +172,7 @@ namespace HomeSwitchHome.Services
             this.HomeSwitchDB.SaveChanges();
 
             CacheHomeSwitchHome.RemoveOnCache("Propiedades");
+            CacheHomeSwitchHome.RemoveOnCache("Subastas");
             return true;
         }
     }

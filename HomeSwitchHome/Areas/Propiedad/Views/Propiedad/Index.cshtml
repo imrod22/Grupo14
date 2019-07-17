@@ -34,8 +34,8 @@
                 <div ng-repeat="propiedad in propiedadesListFiltradas" class="column">
                         <div class="post-module">
                             <div class="thumbnail">
-                                <button style="background-color:#ffd800" id="{{propiedad.IdPropiedad}}" ng-click="detallar($event.currentTarget.id)" class="btn date propiedad-detalle" data-toggle="modal" data-target="#detallePropiedadModal">
-                                    +
+                                <button style="background-color:#f3e80e" id="{{propiedad.IdPropiedad}}" ng-click="detallar($event.currentTarget.id)" class="btn date propiedad-detalle" data-toggle="modal" data-target="#detallePropiedadModal">
+                                    <i class="fa fa-2x fa-info"></i>
                                 </button>
                                 <img src={{propiedad.Imagenes[0].path}} />
                             </div>
@@ -44,7 +44,7 @@
                                 @{if (User.Identity.Name == "PREMIUM")
                                     {
                                         <button style="background-color:#ff0000" id="{{propiedad.IdPropiedad}}" ng-click="elegirfecha($event.currentTarget.id)" class="category btn" data-toggle="modal" data-target="#reservaPropiedadModal">
-                                            RESERVAR YA
+                                            <i class="fa fa-2x fa-suitcase"></i>
                                         </button>
                                     }
                                 }
@@ -52,7 +52,7 @@
                                 <h2 class="sub_title">{{propiedad.Ciudad}} ({{propiedad.Pais}})</h2>
 
                                 <button style="float:right; background-color:#f67507; color:white" id="{{propiedad.IdPropiedad}}" ng-click="solicitarnovedad($event.currentTarget.id)" class="comments btn">
-                                    NOTIFICARME
+                                    <i class="fa far fa-2x fa-bell"></i>
                                 </button>
                             </div>
                         </div>

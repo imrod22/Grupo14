@@ -54,8 +54,15 @@ namespace HomeSwitchHome.Areas.Propiedad.Controllers
             {
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
             }
+
             else {
+
                 this.creditoService.DescontarCreditoCliente(sesionUser.IdCliente, DateTime.Parse(reservaNueva.FechaReserva).Year);
+
+                if (this.reservaService.CancelarSubastasDePropiedadReservada(reservaNueva))
+                    mensaje = string.Format("Se ha confirmado la reserva, se ha descontado un credito para el año {0} y se han cancelado las subastas definidas en el rango de fechas de la reserva.", DateTime.Parse(fecha).Year);
+                else
+                    mensaje = string.Format("Se ha confirmado la reserva y se ha descontado un credito para el año {0}.", DateTime.Parse(fecha).Year);
             }
 
             return Json(mensaje, JsonRequestBehavior.AllowGet);

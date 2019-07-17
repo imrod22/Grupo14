@@ -3,6 +3,7 @@ using HomeSwitchHome.ViewModels;
 using System;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Web.Mvc;
 
 namespace HomeSwitchHome.Areas.Perfil.Controllers
@@ -72,7 +73,7 @@ namespace HomeSwitchHome.Areas.Perfil.Controllers
 
             string mensaje;
 
-            if (fechaReserva.Day <= DateTime.Now.Day)
+            if (fechaReserva <= DateTime.Now)
             {
                 mensaje = "No se puede cancelar la reserva, ya ha sido efectuada.";
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
@@ -125,5 +126,30 @@ namespace HomeSwitchHome.Areas.Perfil.Controllers
 
         }
 
+        public JsonResult CambiarContraseña(string vieja, string nueva)
+        {
+            var sesionUser = (ClienteViewModel)Session["ClienteActual"];
+            var infoUsuario = this.servicioUsuario.ObtenerInformacionDeUsuario(sesionUser.Usuario);
+
+            if (!infoUsuario.Password.Equals(vieja))
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(string.Format("La contraseña actual no es la registrada, verifique el campo ingresado."), JsonRequestBehavior.AllowGet);
+            }                
+
+            Regex rg = new Regex(@"^[a-zA-Z0-9\s,]*$");
+
+            if (nueva.Count() < 8 || !rg.IsMatch(nueva))
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(string.Format("La nueva contraseña no tiene un formato alfanumerico de mas de 8 caracteres, verifique el campo ingresado."), JsonRequestBehavior.AllowGet);
+            }                
+
+            if(this.servicioUsuario.ActualizarContrasenia(sesionUser.IdCliente, nueva))
+                return Json(string.Format("Se ha actualizado satisfactoriamente su contraseña, ya puede iniciar sesion con la nueva ingresada."), JsonRequestBehavior.AllowGet);
+
+            Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            return Json(string.Format("Ha ocurrido un error en el servidor y no se ha podido actualizar la contraseña."), JsonRequestBehavior.AllowGet);
+        }
     }
 }

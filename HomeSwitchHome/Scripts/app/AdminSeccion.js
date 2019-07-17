@@ -1,6 +1,8 @@
 ﻿$(document).ready(function () {
     var datenow = moment().add(6, 'months');
-    
+    var datecurrent = moment().add(1, 'days');
+    var lastDayHotSale = moment().add(6, 'months').add(1, 'days');
+
     $(document).on("click", ".add-nueva-propiedad", function () {
 
         $("#nombrePropiedad").val("");
@@ -163,9 +165,9 @@
         $('#boton-crear-hotsale').css('display', 'block');
         $('#boton-modificar-hotsale').css('display', 'none');
 
-        $('input.calendar').pignoseCalendar({
-            minDate: datenow,
-            date: datenow,
+        $('input.calendarhotsale').pignoseCalendar({
+            minDate: moment(),
+            maxDate: lastDayHotSale,
             theme: 'dark',
 
         });

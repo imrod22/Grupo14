@@ -18,23 +18,28 @@
                         <div class="level center">
                             @{if (User.Identity.Name == "CLIENTE")
                                 {
-                                    <h6 class="col-10" style="color:#605c5c">basica</h6>
-
-
+                                    <h6 class="col-10" style="color:#605c5c" ng-click="solicitarsubscripcion()">basica</h6>
                                 }
                                 else
                                 {
                                     <h6 style="color:#eaca0c;">premium</h6>
                                 }
-
                             }
                         </div>
-                        <div class="points center">
+                        <div class="points center" data-toggle="modal" data-target="#editPassModal">
                             cambiar contraseña
                         </div>
-                        <svg width="110" height="110" viewBox="0 0 250 250" role="img" aria-labelledby="title desc" class="center">
+                        <svg width="110" height="110" viewBox="0 0 250 250" role="img" aria-labelledby="title desc" class="center fa fa-2x fa-user-circle ">
 
-                            <circle cx="125" cy="125" r="120" fill="rgba(0,0,0,0.15)" />
+                            <defs>
+                                <pattern id="image" x="0%" y="0%" height="100%" width="100%"
+                                         viewBox="0 0 512 512">
+                                    <image x="0%" y="0%" width="512" height="512" xlink:href="~/Content/icons/user-regular.svg"></image>
+                                </pattern>
+                            </defs>
+
+
+                            <circle cx="125" cy="125" r="120" fill="url(#image)" style="color:white"></circle>
 
                         </svg>
                     </div>
@@ -74,7 +79,7 @@
                             <th class="col-md-5"></th>
                         </tr>
                     </thead>
-                    <tbody >
+                    <tbody>
                         <tr ng-repeat="reserva in reservasactuales">
                             <td>{{reserva.Propiedad.Nombre}}</td>
                             <td>{{reserva.Propiedad.Ciudad}} ({{reserva.Propiedad.Pais}})</td>
@@ -89,7 +94,7 @@
 
                             </td>
                             <td> <button id="{{reserva.IdReserva}}" ng-click="cancelarreserva($event.currentTarget.id)" class="btn btn-sm btn-danger" style="float:right;"> <i class="fa fa-fw fas fa-remove"></i></button></td>
-                        </tr>                        
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -122,13 +127,16 @@
 
                             </td>
                             <td> <button id="{{reserva.IdReserva}}" ng-click="cancelarreserva($event.currentTarget.id)" class="btn btn-sm btn-danger" style="float:right;"> <i class="fa fa-fw fas fa-remove"></i></button></td>
-                        </tr>                        
+                        </tr>
                     </tbody>
                 </table>
             </div>
 
-
             <div id="push"></div>
+        </div>
+
+        <div class="modal fade" id="editPassModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            @Html.Partial("_CambiarContraseña")
         </div>
 
     </div>

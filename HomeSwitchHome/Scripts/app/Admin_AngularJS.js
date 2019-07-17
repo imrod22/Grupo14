@@ -103,6 +103,14 @@ adminsection.controller('admincontroller', function ($scope, $http) {
             && ($("#ciudadPropiedad").val().length != null)))
     };
 
+    function valoresDeSubastaAceptados() {
+        return ($.isNumeric($scope.valorMinimo)
+            && ($("#propiedad_select option:selected").text() != "")
+            && ($('#fechaSubasta').prop('value') != "")
+            && ($('#fechaReservaSubasta').prop('value') != "")
+        );
+    }
+
     $scope.crearpropiedad = function () {
 
         if (datosDePropiedadCorrectos()) {
@@ -349,16 +357,18 @@ adminsection.controller('admincontroller', function ($scope, $http) {
                 'idSubasta': idSubasta
             }
 
-        ).then(function successCallback(result) {
+        ).then(function successCallback(result) {           
 
-            $scope.subastasfin = result.data;
 
-            $http.get("/Administrador/Administrador/ObtenerReservasOrdenadasPorFecha").then(function (result) {
-                $scope.reservas = result.data;
+            $http.get("/Administrador/Administrador/SubastasCerradas").then(function (subastas) {
+                $scope.subastasfin = subastas.data;
+            });
 
-                swal("Home Switch Home", "Se ha confirmado la subasta del cliente y generado la reserva correspondiente.", "success");
-
+            $http.get("/Administrador/Administrador/ObtenerReservasOrdenadasPorFecha").then(function (reservas) {
+                $scope.reservas = reservas.data;
             });                                
+
+            swal("Home Switch Home", result.data, "success");
 
         }, function errorCallback(jqXHR) {
                 swal("Home Switch Home", jqXHR.data, "error");
@@ -565,7 +575,6 @@ adminsection.controller('admincontroller', function ($scope, $http) {
             ).then(function successCallback(response) {
 
                 $scope.imagenes = response.data;
-
             })
 
         }, function errorCallback(jqXHR) {
@@ -664,21 +673,23 @@ adminsection.directive("imgUpload", function ($http, $compile) {
 
             scope.upload = function (obj) {
 
-                var idPropiedad = $("#identificadorPropImagenes").val();
+                var propiedadActual = $("#identificadorPropImagenes").val();
 
                 $http.post("/Administrador/Administrador/GuardarImagen",
                     {
-                        'idPropiedad': idPropiedad,
+                        'idPropiedad': propiedadActual,
                         'nombre': obj.name
                     }
 
                 ).then(function successCallback(result) {
 
+                    var propiedadActual = $("#identificadorPropImagenes").val();
+
                     swal("Home Switch Home", result.data, "success");
 
                     $http.post("/Administrador/Administrador/ObtenerImagenesDePropiedad",
                         {
-                            'idPropiedad': idPropiedad
+                            'idPropiedad': propiedadActual
                         }
 
                     ).then(function successCallback(response) {

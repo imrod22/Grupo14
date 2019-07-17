@@ -25,7 +25,7 @@ namespace HomeSwitchHome.Services
                 return string.Format("No se pudo crear la subasta, el valor de inicial para pujar debe ser mayor que 0.");
             
             if (nuevaSubasta.FechaReserva.CompareTo(nuevaSubasta.FechaComienzo.AddDays(3)) < 0)
-                return string.Format("No se pudo crear la subasta, la semana que se desea subastar transcurre durante la subasta.");
+                return string.Format("No se pudo crear la subasta, la semana que se desea subastar transcurre durante o antes que la subasta.");
 
             if (subastasPropiedad.Any(t => nuevaSubasta.FechaComienzo.CompareTo(Convert.ToDateTime(t.FechaComienzo)) >= 0
                                      && nuevaSubasta.FechaComienzo.CompareTo(Convert.ToDateTime(t.FechaComienzo).AddDays(10)) <= 0))

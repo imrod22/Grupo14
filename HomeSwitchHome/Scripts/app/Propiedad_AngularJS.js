@@ -69,7 +69,7 @@ switchHomeApp.controller('propiedadesController', function ($scope, $http) {
             }
 
         ).then(function successCallback(response) {
-                swal("Home Switch Home", "Se ha reservado la residencia en la fecha seleccionada.", "success"); 
+            swal("Home Switch Home", response.data, "success"); 
 
         }, function errorCallback(jqXHR) {
                 swal("Home Switch Home", jqXHR.data, "error");

@@ -101,7 +101,7 @@ namespace HomeSwitchHome.Controllers
                 var cliente = this.usuarioService.ObtenerInformacionDeUsuario(usuario);
                 this.mailService.EnviarMailConRecuperacionContrasenia(cliente);
 
-                return Json(string.Format("Se ha enviado la contraseña al correo registrado por el usuario {0}.", usuario), JsonRequestBehavior.AllowGet);
+                return Json(string.Format("Se han enviado los pasos necesarios al correo registrado por el usuario {0} para recuperar la contraseña.", usuario), JsonRequestBehavior.AllowGet);
 
             }
 

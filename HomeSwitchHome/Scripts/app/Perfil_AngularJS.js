@@ -74,4 +74,24 @@ switchHomeApp.controller('perfilcontroller', function ($scope, $http) {
         });
 
     }
+
+    $scope.cambiarcontrasenia = function () {       
+
+        $http.post("/Perfil/Perfil/CambiarContraseña",
+            {
+                'vieja': $('#passvieja').val(),
+                'nueva': $('#passnueva').val()
+            }
+
+        ).then(function successCallback(result) {
+            $('#editPassModal').modal('hide');
+            swal("Home Switch Home", result.data, "success");
+
+        }, function errorCallback(jqXHR) {
+            $('#editPassModal').modal('hide');
+            swal("Home Switch Home", jqXHR.data, "error");
+
+        });
+
+    }
 })

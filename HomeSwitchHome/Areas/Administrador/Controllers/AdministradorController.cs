@@ -250,7 +250,7 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
             reservaSubasta.FechaReserva = subastaAceptada.FechaReserva;
             reservaSubasta.Credito = true;
 
-            var mensaje = this.servicioReserva.AgregarReservaDesdeSubasta(reservaSubasta);
+            var mensaje = this.servicioReserva.AgregarReserva(reservaSubasta);
 
             if (mensaje != "OK") {
                 return this.CambiarGanadorPuja(idSubasta);
@@ -264,7 +264,7 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
                 var subastaActual = this.servicioSubasta.ObtenerSubasta(idSubasta);
                 this.servicioMail.EnviarMailGanoSubasta(subastaActual);
 
-                return this.SubastasCerradas();
+                return Json(string.Format("Se ha confirmado la subasta para el cliente y se ha generado la reserva correspondiente."));
             }
         }
 

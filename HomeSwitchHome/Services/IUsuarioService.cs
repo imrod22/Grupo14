@@ -37,5 +37,6 @@ namespace HomeSwitchHome.Services
 
         PREMIUM ObtenerSolicitudPremium(int IdCliente);
 
+        bool ActualizarContrasenia(int idCliente, string nuevaPass);
     }
 }
