@@ -1,0 +1,31 @@
+{
+  "name": "homeswitchhome",
+  "version": "1.0.0",
+  "description": "Ing SW 2",
+  "main": "index.js",
+  "dependencies": {
+    "angular": "^1.7.8",
+    "angular-animations": "0.0.9",
+    "angular-carousel": "^1.1.0",
+    "angular-cookie": "^4.1.0",
+    "angular-cookies": "^1.7.8",
+    "angular-font-awesome": "^3.1.2",
+    "angular-route": "^1.7.8",
+    "bootstrap": "^4.3.1",
+    "bootstrap-ui": "^3.0.0",
+    "express": "^4.17.0",
+    "font-awesome": "^4.7.0",
+    "http-server": "^0.11.1",
+    "jquery": "^3.4.1",
+    "node": "^12.2.0",
+    "router": "^1.3.3",
+    "tedious": "^6.1.1",
+    "zone.js": "^0.9.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "grupo14-imanol.rodriguez-tadeo.velis-hernan.leiva",
+  "license": "ISC"
+}
