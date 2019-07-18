@@ -27,8 +27,8 @@ namespace HomeSwitchHome.Services
             if (nuevaSubasta.FechaReserva.CompareTo(nuevaSubasta.FechaComienzo.AddDays(3)) < 0)
                 return string.Format("No se pudo crear la subasta, la semana que se desea subastar transcurre durante o antes que la subasta.");
 
-            if (subastasPropiedad.Any(t => nuevaSubasta.FechaComienzo.CompareTo(Convert.ToDateTime(t.FechaComienzo)) >= 0
-                                     && nuevaSubasta.FechaComienzo.CompareTo(Convert.ToDateTime(t.FechaComienzo).AddDays(10)) <= 0))
+            if (subastasPropiedad.Any(t => nuevaSubasta.FechaComienzo.CompareTo(Convert.ToDateTime(t.FechaReserva)) >= 0
+                                     && nuevaSubasta.FechaComienzo.CompareTo(Convert.ToDateTime(t.FechaReserva).AddDays(7)) <= 0))
                 return string.Format("No se pudo crear la subasta para la propiedad seleccionada, ya posee una subasta definida durante los días elegidos.");
 
             if (reservasPropiedad.Any(t => nuevaSubasta.FechaReserva.CompareTo(Convert.ToDateTime(t.FechaReserva)) >= 0

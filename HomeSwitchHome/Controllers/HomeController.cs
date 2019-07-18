@@ -12,12 +12,14 @@ namespace HomeSwitchHome.Controllers
         readonly ISubastaService subastaService;
         readonly IUsuarioService usuarioService;
         readonly IMailService mailService;
+        readonly ICreditoService creditoService;
         
-        public HomeController(ISubastaService subastaServicio, IUsuarioService usuarioServicio, IMailService mailServicio)
+        public HomeController(ISubastaService subastaServicio, IUsuarioService usuarioServicio, IMailService mailServicio, ICreditoService serviceCredito)
         {
             this.subastaService = subastaServicio;
             this.usuarioService = usuarioServicio;
             this.mailService = mailServicio;
+            this.creditoService = serviceCredito;
         }
 
         public ActionResult Index()
@@ -86,7 +88,11 @@ namespace HomeSwitchHome.Controllers
             var mensajeRegistro = this.usuarioService.RegistrarNuevoCliente(nuevoUsuario);
 
             if (mensajeRegistro.Equals("OK"))
+            {
+                var clienteNuevo = this.usuarioService.ObtenerInformacionDeUsuario(nuevoUsuario.Usuario);
+                this.creditoService.GenerarCreditosCliente(clienteNuevo);
                 return Json(Url.Action("Index", "Home"));
+            }               
 
             else {
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;

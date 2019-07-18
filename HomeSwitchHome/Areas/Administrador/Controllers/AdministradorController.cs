@@ -424,18 +424,29 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
             var propiedad = this.servicioPropiedad.ObtenerPropiedades().Where(t => t.IdPropiedad == idPropiedad).SingleOrDefault();
             string mensaje;
 
-            if (reservasPropiedad.Where(t => (DateTime.Parse(fecha) <= DateTime.Parse(t.FechaReserva).AddDays(7)) && DateTime.Parse(t.FechaReserva) <= DateTime.Parse(fecha)
-                                    || (DateTime.Parse(fecha).AddDays(7) <= DateTime.Parse(t.FechaReserva).AddDays(7)  && DateTime.Parse(t.FechaReserva) <= DateTime.Parse(fecha).AddDays(7))).Any())
-            {
-                Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                mensaje = string.Format("La residencia {0} no está disponible durante la fecha seleccionada como HOT SALE.", propiedad.Nombre);
-            }
-
             if (valor <= 0)
             {
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 mensaje = "El valor ingresado no es válido. No se ha podido generar la semana HOT SALE.";
+
+                return Json(mensaje, JsonRequestBehavior.AllowGet);
             }
+
+            var subastasPropiedad = this.servicioSubasta.ObtenerSubastasDePropiedad(idPropiedad);
+
+            if (subastasPropiedad.Any(t => DateTime.Parse(fecha).CompareTo(Convert.ToDateTime(t.FechaReserva)) >= 0
+                                     && DateTime.Parse(fecha).CompareTo(Convert.ToDateTime(t.FechaReserva).AddDays(7)) <= 0))
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                mensaje = string.Format("La residencia {0} no está disponible durante la fecha seleccionada como HOT SALE, tiene definida una SUBASTA en el rango.", propiedad.Nombre);
+            }
+
+            if (reservasPropiedad.Any(t => DateTime.Parse(fecha).CompareTo(Convert.ToDateTime(t.FechaReserva)) >= 0
+                                     && DateTime.Parse(fecha).CompareTo(Convert.ToDateTime(t.FechaReserva).AddDays(7)) <= 0))
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                mensaje = string.Format("La residencia {0} no está disponible durante la fecha seleccionada como HOT SALE.", propiedad.Nombre);
+            }            
 
             HotSaleViewModel nuevoHotSale = new HotSaleViewModel();
             nuevoHotSale.FechaDisponible = fecha;

@@ -35,14 +35,17 @@ namespace HomeSwitchHome.Services
         {
             var hotsales = this.ObtenerHotSalesPropiedad(hotSaleModel.IdPropiedad);
 
-            if (!hotsales.Where(t => DateTime.Parse(t.FechaDisponible) <= DateTime.Parse(hotSaleModel.FechaDisponible) ||
-                                     DateTime.Parse(hotSaleModel.FechaDisponible) <= DateTime.Parse(t.FechaDisponible).AddDays(7)).Any()  )
+            if(hotsales.Any(t => DateTime.Parse(hotSaleModel.FechaDisponible).CompareTo(Convert.ToDateTime(t.FechaDisponible)) >= 0
+                                     && DateTime.Parse(hotSaleModel.FechaDisponible).CompareTo(Convert.ToDateTime(t.FechaDisponible).AddDays(7)) <= 0))
+
+                return false;
+            else
             {
                 var hotSaleNueva = new HOTSALE();
                 hotSaleNueva.IdPropiedad = hotSaleModel.IdPropiedad;
                 hotSaleNueva.FechaDisponible = DateTime.Parse(hotSaleModel.FechaDisponible);
                 hotSaleNueva.Precio = hotSaleModel.Precio;
-                hotSaleNueva.Estado = hotSaleModel.Estado;
+                hotSaleNueva.Estado = true;
 
                 this.HomeSwitchDB.HOTSALE.Add(hotSaleNueva);
                 this.HomeSwitchDB.SaveChanges();
@@ -50,8 +53,6 @@ namespace HomeSwitchHome.Services
 
                 return true;
             }
-
-            return false;
         }
 
         public bool ModificarSemanaHotSale(int idHotSale, decimal nuevoValor)

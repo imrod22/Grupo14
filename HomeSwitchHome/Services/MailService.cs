@@ -24,6 +24,14 @@ namespace HomeSwitchHome.Services
 
         public bool EnviarMailConRecuperacionContrasenia(ClienteViewModel clienteModel)
         {
+            var responseToken = string.Empty;
+            using (var sha = new System.Security.Cryptography.SHA256Managed())
+            {
+                byte[] textData = System.Text.Encoding.UTF8.GetBytes(string.Format("{0}{1}{2}{3}", clienteModel.Apellido, clienteModel.Nombre, clienteModel.Password, clienteModel.Banco));
+                byte[] hash = sha.ComputeHash(textData);
+                responseToken = BitConverter.ToString(hash).Replace("-", String.Empty);
+            }
+
             MailMessage msg = new MailMessage();
 
             msg.From = new MailAddress("notificaciones.hsh@gmail.com");
@@ -31,8 +39,8 @@ namespace HomeSwitchHome.Services
             msg.Subject = "HOME SWITCH HOME - Mail de recuperación de contraseña";
             msg.Body = string.Format("{0} {1}", clienteModel.Nombre, clienteModel.Apellido) +
                        ", usted ha solicitado la recuperación de su contraseña de acceso para el sistema HOME SWITCH HOME." + Environment.NewLine +
-                       string.Format("Usuario: {0}. ", clienteModel.Usuario) + Environment.NewLine +
-                       string.Format("Contraseña: {0}.", clienteModel.Password);
+                       string.Format("Por favor continue en el siguiente link:") + Environment.NewLine +
+                       string.Format("https://homeswitchhome.com/recovermypass$token='{0}", responseToken);
             try
             {
                 client.Send(msg);
