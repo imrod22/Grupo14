@@ -45,7 +45,9 @@ namespace HomeSwitchHome.Services
         public string PujarSubasta(SUBASTA subastaPujada, int idSubasta, int idCliente)
         {
             var subastaActualizar = this.HomeSwitchDB.SUBASTA.SingleOrDefault(t => t.IdSubasta == idSubasta);
-            
+
+            var pujaService = new PujaService();
+
             var reservas = new ReservaService();
 
             if (subastaActualizar == null)
@@ -54,7 +56,7 @@ namespace HomeSwitchHome.Services
             if(subastaActualizar.ValorActual >= subastaPujada.ValorActual || subastaActualizar.ValorMinimo >= subastaPujada.ValorActual)
                 return string.Format("El valor ingresado es menor al valor actual.");
 
-            if(reservas.ObtenerReservasCliente(idCliente).Count == 2)
+            if(reservas.ObtenerReservasClientePorAnio(idCliente, DateTime.Now.Year).Count == 2)
                 return string.Format("Ya posee dos reservas efectuadas, no puede participar de la puja.");
 
             if(reservas.ObtenerReservasCliente(idCliente).Any(t => (Convert.ToDateTime(t.FechaReserva).CompareTo(Convert.ToDateTime(subastaActualizar.FechaReserva)) <= 0
@@ -147,6 +149,18 @@ namespace HomeSwitchHome.Services
             return subastas.OrderByDescending(t => DateTime.Parse(t.FechaComienzo)).ToList();
         }
 
+        public bool ActualizarConMaximaPuja(PujaViewModel nuevaPuja)
+        {
+            var subastaModelo = this.HomeSwitchDB.SUBASTA.SingleOrDefault(t => t.IdSubasta == nuevaPuja.IdSubasta);
+            subastaModelo.ValorMinimo = nuevaPuja.Monto;
+            subastaModelo.IdCliente = nuevaPuja.IdCliente;
+
+            this.HomeSwitchDB.SaveChanges();
+            CacheHomeSwitchHome.RemoveOnCache("Subastas");
+
+            return true;
+
+        }
 
         public List<SubastaViewModel> ObtenerSubastasFuturas()
         {

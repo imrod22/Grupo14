@@ -281,7 +281,7 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
         {
             var reserva = this.servicioReserva.ObtenerReservas().Where(t => t.IdReserva == idReserva).SingleOrDefault();
 
-            if (this.servicioReserva.CancelarReserva(idReserva))
+            if ( DateTime.Parse(reserva.FechaReserva).CompareTo(DateTime.Now) > 0 && this.servicioReserva.CancelarReserva(idReserva))
             {   
                 if (reserva.Credito)
                 {
@@ -517,6 +517,8 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
 
             var maximoPujante = ultimasPuja.FirstOrDefault();
             var nuevoClienteMaximo = this.servicioUsuario.ObtenerInformacionCliente(maximoPujante.IdCliente);
+
+            this.servicioSubasta.ActualizarConMaximaPuja(maximoPujante);
 
             Response.StatusCode = (int)HttpStatusCode.BadRequest;
             return Json(string.Format("El sistema no puede confirmar la reserva para la propiedad {0} del cliente {1}, {2} ya que no posee créditos. La subasta se le ha adjudicado al cliente {3}, {4} con un monto de {5}.", subastaActual.Propiedad.Nombre, usuarioSubasta.Apellido, usuarioSubasta.Nombre, nuevoClienteMaximo.Apellido, nuevoClienteMaximo.Nombre, maximoPujante.Monto), JsonRequestBehavior.AllowGet);

@@ -222,9 +222,9 @@
                                         <td>{{subasta.ValorMinimo}} USD</td>
                                         <td>{{subasta.FechaComienzo}}</td>
                                         <td>{{subasta.FechaReserva}}</td>
-                                        <td ng-show="subasta.IdCliente === null">
-                                            <button id="{{subasta.IdSubasta}}" class="btn btn-group-sm btn-primary subasta-modificar" data-toggle="modal" data-target="#addEditSubastaModal"><i class="fa fa-fw fas fa-pencil-square-o"></i></button>
-                                            <button id="{{subasta.IdSubasta}}" ng-click="borrarsubasta($event.currentTarget.id)" class="btn btn-group-sm btn-danger propiedad-a-borrar"> <i class="fa fa-fw fas fa-remove"></i></button>
+                                        <td >
+                                            <button ng-show="subasta.ValorActual == 0" id="{{subasta.IdSubasta}}" class="btn btn-group-sm btn-primary subasta-modificar" data-toggle="modal" data-target="#addEditSubastaModal"><i class="fa fa-fw fas fa-pencil-square-o"></i></button>
+                                            <button ng-show="subasta.ValorActual == 0" id="{{subasta.IdSubasta}}" ng-click="borrarsubasta($event.currentTarget.id)" class="btn btn-group-sm btn-danger propiedad-a-borrar"> <i class="fa fa-fw fas fa-remove"></i></button>
                                         </td>
                                     </tr>
                                 </tbody>
