@@ -461,6 +461,12 @@ namespace HomeSwitchHome.Areas.Administrador.Controllers
             return Json(hotSaleActual, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult ObtenerInformacionCliente(int idUsuario)
+        {
+            var cliente = this.servicioUsuario.ObtenerInformacionCliente(idUsuario);
+            return Json(cliente, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult GuardarImagen(int idPropiedad, string nombre)
         {
             if (this.servicioPropiedad.AgregarImagen(idPropiedad, nombre))

@@ -179,4 +179,34 @@
         $('#identificadorPropImagenes').val(idPropiedad);
         
     });
+
+    $(document).on("click", ".cliente-mostrarinfo", function () {
+        var idUsuario = $(this).attr('id');
+
+        //$('#propiedad_hotsale').attr('disabled', true);
+
+        $("#fechahotsale").attr('readonly', true);
+        $("#fechahotsale").attr('disabled', true);
+
+        $.ajax({
+            type: "GET",
+            url: "/Administrador/Administrador/ObtenerInformacionCliente",
+            data: { idUsuario: idUsuario },
+            success: function (response) {
+
+                /*
+                $("#identificadorcliente").val(response.IdCliente)
+                $("#fechahotsale").val(response.FechaDisponible);
+                $("#valorhotsale").val(response.Precio);
+                $("#propiedad_hotsale").val(response.IdPropiedad);
+                */
+
+                $("")
+
+            },
+            error: function () {
+                swal("Home Switch Home", "Ha habido un problema en el servidor.", "error");
+            }
+        });
+    });
 })
